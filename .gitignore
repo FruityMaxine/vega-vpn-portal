@@ -24,5 +24,13 @@ __pycache__/
 *.pyc
 .venv/
 
+# Downloaded binaries (additional extensions)
+portal/html/downloads/*.msi
+
+# Logs
+*.log
+
 # Editor
 .DS_Store
+.idea/
+.vscode/
