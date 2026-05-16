@@ -89,11 +89,15 @@ Caddy (443 TLS termination)
 
 ## 截图
 
-_待填写——将截图文件放入 `docs/screenshots/` 并更新以下路径：_
+| 门户首页 | 邀请码注册 |
+|----------|-----------|
+| ![home](docs/screenshots/01-home.png) | ![signup](docs/screenshots/02-signup.png) |
 
-| 门户首页 | 我的账户 | 设备教程 | 下载页 |
-|----------|----------|----------|--------|
-| `docs/screenshots/home.png` | `docs/screenshots/me.png` | `docs/screenshots/tutorial.png` | `docs/screenshots/downloads.png` |
+| iPhone 教程 | 协议对比 |
+|------------|---------|
+| ![iphone](docs/screenshots/03-iphone-tutorial.png) | ![protocols](docs/screenshots/04-protocols.png) |
+
+![downloads](docs/screenshots/05-downloads.png)
 
 ## 技术栈
 
