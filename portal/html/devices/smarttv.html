@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>智能电视 · Vega VPN 教程</title>
+<link rel="stylesheet" href="../style.css" />
+<link rel="stylesheet" href="../animal-components.css" />
+<script src="../animal-components.js" defer></script>
+<script src="/favicon-today.js"></script>
+</head>
+<body class="home">
+<header class="navbar">
+  <div class="logo"><span class="badge"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-satellite-dish"/></svg></span><span>智能电视教程</span></div>
+  <nav class="nav-links"><a href="../index.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-home"/></svg> 首页</a><a href="help.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-help"/></svg> 求助</a></nav>
+</header>
+
+<main class="container">
+
+<div style="background:var(--animal-primary-bg); border:2.5px dashed var(--animal-primary); border-radius:14px; padding:10px 16px; margin-bottom:14px; font-weight:700; color:var(--animal-text-primary);">
+你的订阅含 4 个协议节点（VLESS / SS / Trojan / VMess）· <a href="protocols.html"><strong>看哪个该用 / 怎么切 →</strong></a>
+</div>
+  <a href="../index.html" class="back-home"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-arrow-left"/></svg> 返回首页</a>
+
+  <section class="hero" style="background:linear-gradient(135deg,#f7cd67 0%,#FFB84D 60%,#82d5bb 100%);">
+    <div class="mascot"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-satellite-dish"/></svg></div>
+    <div style="flex:1;min-width:240px">
+      <h1>智能电视接入指南</h1>
+      <p>三星 Tizen / LG webOS / 华为鸿蒙 / 索尼 Google TV</p>
+    </div>
+  </section>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-tv"/></svg> 简明对照</h2>
+    <div class="meta">
+      <span class="tag hard"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-x"/></svg> 复杂</span>
+      <span class="tag time"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-clock"/></svg> 视方案 10~30 分钟</span>
+      <span class="tag app"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-package"/></svg> 多数需路由器层</span>
+    </div>
+    <table class="simple">
+      <thead><tr><th>电视品牌 / 系统</th><th>可装 VPN App？</th><th>推荐方案</th></tr></thead>
+      <tbody>
+        <tr><td>三星 Tizen OS</td><td><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-x"/></svg> 不可（封闭）</td><td>路由器层</td></tr>
+        <tr><td>LG webOS</td><td><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-x"/></svg> 不可</td><td>路由器层</td></tr>
+        <tr><td>华为鸿蒙 HarmonyOS TV</td><td><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-x"/></svg> 不可（国行）</td><td>路由器层</td></tr>
+        <tr><td>小米 / TCL（Android TV 内核）</td><td><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-check"/></svg> 可侧载 v2rayNG</td><td>看 <a href="androidtv.html">Android TV 教程</a></td></tr>
+        <tr><td>索尼 Bravia (Google TV)</td><td><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-check"/></svg> 可侧载</td><td>看 <a href="androidtv.html">Android TV 教程</a></td></tr>
+        <tr><td>海信 Vidaa</td><td><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-x"/></svg> 不可</td><td>路由器层</td></tr>
+        <tr><td>Roku TV / Fire TV</td><td><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-triangle-alert"/></svg> 仅部分商业 VPN</td><td>路由器层</td></tr>
+      </tbody>
+    </table>
+    <p>简言之：<strong>除非你的电视是 Android TV / Google TV 内核（能装 APK），否则都得走"路由器层 VPN"</strong>。</p>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-wifi"/></svg> 推荐方案：路由器层 VPN</h2>
+    <p>把 VPN 装在路由器上，整个家里 WiFi 都自动走 Vega，电视只要连 WiFi 就有了德国 IP。<strong>这是封闭电视系统的唯一可行方案</strong>。</p>
+
+    <div class="download-row">
+      <a class="btn btn-primary" href="router.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-wifi"/></svg> 跳到路由器教程</a>
+      <a class="btn btn-warning" href="https://search.jd.com/Search?keyword=GL.iNet%20%E8%B7%AF%E7%94%B1%E5%99%A8" target="_blank" rel="noopener"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-link"/></svg> 京东搜 GL.iNet 旁路由</a>
+      <a class="btn btn-ghost" href="androidtv.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-tv"/></svg> 改走 Android TV 棒 (HDMI 盒子)</a>
+      <span class="meta-note">三星/LG/华为/海信无法直装 · 用路由器或外接盒子</span>
+    </div>
+
+    <p>完整流程见 <a href="router.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-wifi"/></svg> 路由器配置页</a>。这里给一个最简单方案（"小白盒子"旁路网关）：</p>
+
+    <ol class="steps">
+      <li>
+        <h4>买一台 GL.iNet 旅游路由器</h4>
+        <p>推荐：<strong>GL-MT3000（Beryl AX，约 380 元）</strong>。开箱即用，Web 后台原生支持 V2Ray / sing-box。如果只用来给一台电视，更便宜的 GL-MT300N（120 元）也行。</p>
+      </li>
+      <li>
+        <h4>用网线把这台小路由的 WAN 口连到你家主路由的 LAN 口</h4>
+        <p>或者让小路由 WISP 连接到你家 WiFi（旅行路由模式），两种都可以。</p>
+      </li>
+      <li>
+        <h4>电脑 / 手机连小路由的 WiFi（默认 GL-MT3000-xxxx）</h4>
+        <p>浏览器打开 <code>http://192.168.8.1</code> 进入管理后台。设默认密码。</p>
+      </li>
+      <li>
+        <h4>"应用程序 → V2Ray / Sing-Box" → 粘贴你的订阅 URL</h4>
+  <div class="sub-cta-card">
+    <div class="sub-cta-icon"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-ticket"/></svg></div>
+    <div class="sub-cta-body">
+      <strong>到这一步需要你的订阅链接 / 二维码？</strong>
+      <p>所有订阅都在「我的账户」里管理（含多个订阅时可自选）。点下面按钮跳过去复制 URL 或扫二维码。</p>
+      <a class="btn btn-primary" href="/me.html#subs"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-link"/></svg> 去「我的账户」拿订阅</a>
+    </div>
+  </div>
+        <p>导入后选你的德国节点，启动透明代理。</p>
+      </li>
+      <li>
+        <h4>把电视的 WiFi 切到小路由的 SSID</h4>
+        <p>三星 / LG / 华为 / 海信 → 设置 → 网络 → 选小路由 WiFi → 输密码 → 连接。</p>
+      </li>
+      <li>
+        <h4>测试</h4>
+        <p>电视上多数没有浏览器。可装一个 <strong>"WhatsMyIP" / "Speedtest" App</strong>（应用商店里大多有），看 IP/位置是否变德国。或直接打开 YouTube App 看推荐内容是否变成英文 + 德国。</p>
+      </li>
+    </ol>
+
+    <div class="tip"><strong><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-lightbulb"/></svg> 进阶：</strong>如果你想<strong>只让电视走 VPN，其他设备直连</strong>，在小路由的 PBR 规则里按 MAC 地址只对电视开代理，其他设备走直连。这样下载、刷抖音都不受影响。</div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-tv"/></svg> 各品牌特殊说明</h2>
+
+    <h3><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-satellite-dish"/></svg> 三星 Tizen OS</h3>
+    <p>Tizen 完全不允许第三方 VPN，Smart Hub 里只有几款官方合作 VPN App（NordVPN / ExpressVPN 等付费商业 VPN），不接受自定义订阅。<strong>唯一方案是路由器层</strong>。三星电视有"开发者模式"可侧载，但只能装 Tizen App，没有 V2Ray 客户端的 Tizen 移植，所以走不通。</p>
+
+    <h3><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-tv"/></svg> LG webOS</h3>
+    <p>同三星，webOS 是封闭系统。<strong>必须路由器层</strong>。LG TV 自带浏览器，可以用浏览器访问 ipinfo.io 验证。</p>
+
+    <h3><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-leaf"/></svg> 华为鸿蒙智慧屏（国行）</h3>
+    <p>国行华为电视的鸿蒙系统不开放侧载 + 默认禁用谷歌服务。配置完路由器层后，<strong>很多境外应用（YouTube App / Netflix App）也无法直接安装</strong>，只能用浏览器看。如果你买了海外行货华为电视（Vision S 等）则可用 Google Play 装 App。</p>
+
+    <h3><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-target"/></svg> 海信 Vidaa OS</h3>
+    <p>海信全球版用 Vidaa OS（自研），不可装 VPN App。<strong>路由器层 + 海外行货才有 Netflix/Disney+ App</strong>。</p>
+
+    <h3><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-apple"/></svg> 索尼 Bravia / TCL Google TV / 小米电视</h3>
+    <p>这些都是 Android TV / Google TV 内核，<strong>可以直接侧载 v2rayNG / NekoBox</strong>。直接看 <a href="androidtv.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-tv"/></svg> Android TV 教程</a>，无需路由器层。</p>
+
+    <h3><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-alert"/></svg> Roku TV / Fire TV Stick</h3>
+    <p>Roku 完全封闭，无侧载。Fire TV（亚马逊 Fire OS，基于 Android）可侧载 v2rayNG（看 Android TV 教程），但 Amazon 应用商店里没有，要 ADB 装。</p>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-life-buoy"/></svg> 常见问题</h2>
+    <details class="faq"><summary>Netflix 在三星 / LG 上提示"代理检测"？</summary><p>家用 VPS IP 大概率已被 Netflix 标记。让管理员切换出口 IP 到德国住宅 IP 池，或者用 Hysteria2 协议 + 较冷门端口。</p></details>
+    <details class="faq"><summary>电视上能看到德国 IP 但 Netflix 还是中国库？</summary><p>(1) 在电视 Netflix App 里登出再登入；(2) Apple ID / Netflix 账号绑定的国家会影响内容库，不是 IP 一变就立刻切；(3) DNS 也要走 VPN，路由器要劫持 DNS 到代理。</p></details>
+    <details class="faq"><summary>YouTube TV / Hulu / Disney+ 类似问题？</summary><p>同上。Hulu 对 VPN 检测最严，需要专门的"住宅 IP"中转。Vega 默认配的家用 VPS 多数能过 YouTube / Disney+，但 Hulu 可能不行。</p></details>
+    <details class="faq"><summary>路由器走 VPN 后家里其他设备变慢？</summary><p>用 PBR 规则只对电视走代理，或买双频路由器分两个 SSID：一个走 VPN（接电视）一个直连（手机用）。</p></details>
+    <details class="faq"><summary>电视没有应用商店，怎么装新 App？</summary><p>三星 / LG 不能装任何 App。鸿蒙 / Vidaa 偶尔可以在系统的"应用市场"找到（国行限定）。最便捷的办法：买个 Apple TV 4K 或 Onn 4K Pro 接 HDMI 当机顶盒。</p></details>
+  </div>
+
+  <p><a href="router.html" class="btn btn-warm"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-wifi"/></svg> 路由器教程</a> <a href="androidtv.html" class="btn btn-ghost"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-tv"/></svg> Android TV 教程</a></p>
+</main>
+
+<footer class="footer"><span class="paw"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-paw-print"/></svg></span> Vega VPN · 智能电视教程 <span class="paw"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-paw-print"/></svg></span></footer>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script src="../app.js"></script>
+</body>
+</html>

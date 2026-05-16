@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Linux · Vega VPN 教程</title>
+<link rel="stylesheet" href="../style.css" />
+<link rel="stylesheet" href="../animal-components.css" />
+<script src="../animal-components.js" defer></script>
+<script src="/favicon-today.js"></script>
+</head>
+<body class="home">
+<header class="navbar">
+  <div class="logo"><span class="badge"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-bird"/></svg></span><span>Linux 教程</span></div>
+  <nav class="nav-links"><a href="../index.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-home"/></svg> 首页</a><a href="help.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-help"/></svg> 求助</a></nav>
+</header>
+
+<main class="container">
+
+<div style="background:var(--animal-primary-bg); border:2.5px dashed var(--animal-primary); border-radius:14px; padding:10px 16px; margin-bottom:14px; font-weight:700; color:var(--animal-text-primary);">
+你的订阅含 4 个协议节点（VLESS / SS / Trojan / VMess）· <a href="protocols.html"><strong>看哪个该用 / 怎么切 →</strong></a>
+</div>
+  <a href="../index.html" class="back-home"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-arrow-left"/></svg> 返回首页</a>
+
+  <section class="hero" style="background:linear-gradient(135deg,#9a835a 0%,#FFB84D 60%,#FFF4D2 100%);">
+    <div class="mascot"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-bird"/></svg></div>
+    <div style="flex:1;min-width:240px">
+      <h1>Linux 接入指南</h1>
+      <p>Ubuntu / Debian / Arch / Fedora 通吃 · sing-box CLI 守护进程</p>
+    </div>
+  </section>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-cat"/></svg> 推荐方案：sing-box + systemd 守护</h2>
+    <div class="meta">
+      <span class="tag medium"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-dot"/></svg> 中等</span>
+      <span class="tag time"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-clock"/></svg> 5~10 分钟</span>
+      <span class="tag app"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-package"/></svg> 命令行</span>
+    </div>
+    <p>Linux 上最干净的方案是 sing-box CLI + systemd service。一次配好，开机自启，零界面零依赖，吃内存 ~30MB。</p>
+
+    <div class="download-row">
+      <code class="copy-cmd">curl -fsSL https://sing-box.app/install.sh | sh</code>
+      <button class="btn btn-sm btn-primary" data-copy-text="curl -fsSL https://sing-box.app/install.sh | sh"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-clipboard"/></svg> 复制一键脚本</button>
+      <a class="btn btn-primary" href="/downloads/sing-box-latest-linux-amd64.tar.gz" download><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-zap"/></svg> 下载 sing-box linux-amd64 (本地镜像)</a>
+      <a class="btn btn-ghost" href="https://github.com/SagerNet/sing-box/releases/latest" target="_blank" rel="noopener"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-globe"/></svg> 原始 GitHub</a>
+      <span class="meta-note">免费开源 · 跨发行版 · 一行装好</span>
+    </div>
+
+  <div class="sub-cta-card">
+    <div class="sub-cta-icon"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-ticket"/></svg></div>
+    <div class="sub-cta-body">
+      <strong>到这一步需要你的订阅链接 / 二维码？</strong>
+      <p>所有订阅都在「我的账户」里管理（含多个订阅时可自选）。点下面按钮跳过去复制 URL 或扫二维码。</p>
+      <a class="btn btn-primary" href="/me.html#subs"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-link"/></svg> 去「我的账户」拿订阅</a>
+    </div>
+  </div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-bird"/></svg> Ubuntu / Debian 安装</h2>
+    <ol class="steps">
+      <li>
+        <h4>添加 sing-box 官方源</h4>
+        <pre><code>sudo curl -fsSL https://sing-box.app/gpg.key -o /etc/apt/keyrings/sagernet.asc
+sudo chmod a+r /etc/apt/keyrings/sagernet.asc
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/sagernet.asc] https://deb.sagernet.org/ * *" | sudo tee /etc/apt/sources.list.d/sagernet.list
+sudo apt update && sudo apt install -y sing-box</code></pre>
+      </li>
+      <li>
+        <h4>下载你的订阅配置</h4>
+        <pre><code>sudo mkdir -p /etc/sing-box
+sudo curl -L "&lt;在 我的账户 页面复制你的订阅URL&gt;" -o /etc/sing-box/config.json
+sudo chmod 600 /etc/sing-box/config.json</code></pre>
+      </li>
+      <li>
+        <h4>启动 + 自启</h4>
+        <pre><code>sudo systemctl enable --now sing-box
+sudo systemctl status sing-box   # 看 active (running)</code></pre>
+      </li>
+      <li>
+        <h4>测试</h4>
+        <pre><code>curl -x socks5://127.0.0.1:1080 https://ipinfo.io
+# 看到 country=DE 即成功</code></pre>
+      </li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle"/></svg> Arch / Manjaro 安装</h2>
+    <pre><code>sudo pacman -S sing-box
+sudo curl -L "&lt;在 我的账户 页面复制你的订阅URL&gt;" -o /etc/sing-box/config.json
+sudo systemctl enable --now sing-box</code></pre>
+    <p>或用 AUR：<code>yay -S sing-box-beta</code> 拿到最新 beta 版。</p>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-graduation-cap"/></svg> Fedora / RHEL / CentOS 安装</h2>
+    <pre><code>sudo dnf config-manager --add-repo https://sing-box.app/sing-box.repo
+sudo dnf install sing-box
+sudo curl -L "&lt;在 我的账户 页面复制你的订阅URL&gt;" -o /etc/sing-box/config.json
+sudo systemctl enable --now sing-box</code></pre>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-globe"/></svg> 把整机流量都走代理（TUN 模式）</h2>
+    <p>默认配置只开 SOCKS5 (<code>127.0.0.1:1080</code>) + HTTP (<code>127.0.0.1:1081</code>) 代理，需要应用单独配置代理才走。如果想<strong>整机透明代理</strong>（所有 TCP/UDP 包都走 VPN，包括 apt 更新、git clone、Docker pull），需要 TUN 模式。</p>
+    <p>编辑 <code>/etc/sing-box/config.json</code>，在 inbounds 里加：</p>
+    <pre><code>{
+  "type": "tun",
+  "tag": "tun-in",
+  "interface_name": "sing-tun",
+  "inet4_address": "172.19.0.1/30",
+  "auto_route": true,
+  "strict_route": true,
+  "stack": "system"
+}</code></pre>
+    <pre><code>sudo systemctl restart sing-box</code></pre>
+    <p>重启后整机就走代理了。验证：<code>curl https://ipinfo.io</code>（不用 -x）应该直接返回德国 IP。</p>
+
+    <div class="tip warn">
+      <strong><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-triangle-alert"/></svg> 小心：</strong>开 TUN 后 ssh / apt 也会走 VPN。如果你 ssh 远程到这台机器，可能会断连（解决方法：在 route 规则里 exclude SSH 源 IP）。
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-waves"/></svg> Docker 用户</h2>
+    <p>如果你想用 Docker 跑 sing-box（不污染宿主系统），用官方镜像：</p>
+    <pre><code>docker run -d --name sing-box --restart=always \
+  --network host --cap-add NET_ADMIN \
+  -v /etc/sing-box:/etc/sing-box:ro \
+  ghcr.io/sagernet/sing-box:latest \
+  run -c /etc/sing-box/config.json</code></pre>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-package"/></svg> GUI 选项</h2>
+    <p>如果你的 Linux 桌面（GNOME / KDE）想要图形界面：</p>
+
+    <div class="download-row">
+      <a class="btn btn-primary" href="https://github.com/clash-verge-rev/clash-verge-rev/releases/latest" target="_blank" rel="noopener"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-download"/></svg> 下载 Clash Verge Rev (Linux)</a>
+      <a class="btn btn-warning" href="https://github.com/hiddify/hiddify-app/releases/latest" target="_blank" rel="noopener"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-download"/></svg> 下载 Hiddify (Linux AppImage)</a>
+      <a class="btn btn-ghost" href="https://github.com/MatsuriDayo/nekoray/releases/latest" target="_blank" rel="noopener"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-download"/></svg> NekoRay AppImage</a>
+      <span class="meta-note">.AppImage / .deb / .rpm 多种格式</span>
+    </div>
+
+    <div class="app-row">
+      <a class="app-card" href="https://github.com/clash-verge-rev/clash-verge-rev/releases" target="_blank" rel="noopener">
+        <span class="ico"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-cat"/></svg></span>
+        <div class="info"><b>Clash Verge Rev (Linux)</b><small>.AppImage / .deb / .rpm</small></div>
+      </a>
+      <a class="app-card" href="https://github.com/hiddify/hiddify-app/releases" target="_blank" rel="noopener">
+        <span class="ico"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-sparkles"/></svg></span>
+        <div class="info"><b>Hiddify (Linux)</b><small>.AppImage</small></div>
+      </a>
+    </div>
+    <p>下完直接双击 .AppImage 或 <code>sudo dpkg -i *.deb</code> 安装。导入订阅流程跟 Mac / Win 一样。</p>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-life-buoy"/></svg> 常见问题</h2>
+    <details class="faq"><summary>systemctl status sing-box 显示 failed？</summary><p>看 <code>journalctl -u sing-box -n 50</code> 找错误。常见：(1) config.json 格式错（用 <code>sing-box check -c /etc/sing-box/config.json</code> 验证）；(2) 端口被占（改 inbounds 端口）；(3) TUN 模式缺 NET_ADMIN cap。</p></details>
+    <details class="faq"><summary>怎么自动更新订阅？</summary><p>写 cron：<pre><code>0 4 * * * curl -L "你的订阅 URL" -o /etc/sing-box/config.json && systemctl restart sing-box</code></pre>每天凌晨 4 点拉新配置。</p></details>
+    <details class="faq"><summary>WSL2 里能用吗？</summary><p>能，但 TUN 模式有兼容性问题。WSL2 推荐直接用 Windows 宿主的 Clash Verge，WSL 里 export <code>http_proxy=http://localhost:7897</code> 即可。</p></details>
+    <details class="faq"><summary>纯命令行能测速吗？</summary><p><code>curl -x socks5://127.0.0.1:1080 -w "%{speed_download}\n" -o /dev/null -s https://speed.cloudflare.com/__down?bytes=104857600</code> 跑 100MB 下载测速。</p></details>
+    <details class="faq"><summary>能不能只对某个进程开代理？</summary><p>用 <code>proxychains-ng</code>：<code>sudo apt install proxychains4</code>，编辑 <code>/etc/proxychains.conf</code> 加 <code>socks5 127.0.0.1 1080</code>，然后 <code>proxychains4 git clone ...</code>。</p></details>
+  </div>
+
+  <p><a href="help.html" class="btn btn-ghost"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-life-buoy"/></svg> 完整 FAQ</a></p>
+</main>
+
+<footer class="footer"><span class="paw"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-paw-print"/></svg></span> Vega VPN · Linux 教程 <span class="paw"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-paw-print"/></svg></span></footer>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script src="../app.js"></script>
+</body>
+</html>

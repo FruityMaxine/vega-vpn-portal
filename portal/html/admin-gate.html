@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vega VPN · 管理员入口</title>
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="animal-components.css" />
+<script src="animal-components.js" defer></script>
+<script src="/favicon-today.js"></script>
+</head>
+<body class="home">
+
+<header class="navbar">
+  <div class="logo">
+    <span class="badge"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-cat"/></svg></span>
+    <span>Vega VPN · 管理员入口</span>
+  </div>
+  <nav class="nav-links">
+    <a href="index.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-home"/></svg> 首页</a>
+  </nav>
+</header>
+
+<main class="container" style="padding-top:40px;">
+  <section class="nookphone-card" style="max-width:520px; margin:0 auto;">
+    <div class="np-icon"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-lock"/></svg></div>
+    <div class="np-body">
+      <h2 style="margin-top:0">输入管理员密码</h2>
+      <p id="gate_dest_label" style="margin-top:0">即将前往：<strong id="gate_dest">—</strong></p>
+      <div class="ai-form" style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; align-items:center;">
+        <div style="flex:1; min-width:240px;">
+          <input id="gate_input" type="password" placeholder="请输入密码" autocomplete="off">
+        </div>
+        <button class="btn btn-primary" id="gate_submit"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-unlock"/></svg> 进入</button>
+      </div>
+      <div id="gate_err" class="err" style="display:none; margin-top:14px;"></div>
+      <p style="font-size:0.85rem; color:var(--animal-text-muted); margin-top:14px;">
+        密码错误会留在本页，输 5 次以上自动锁定 60 秒。<br>
+        进入后浏览器会记住 24 小时，下次直接放行。
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <span class="paw"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-paw-print"/></svg></span> Vega VPN · 通往世界的小动物驿站 <span class="paw"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-paw-print"/></svg></span>
+</footer>
+
+<script>
+(function() {
+  const params = new URLSearchParams(location.search);
+  const to = params.get('to') || 'setup';
+
+  const destMap = {
+    'dashboard': { label: '<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-wrench"/></svg> Marzban 后台',         url: '/dashboard-login.html' },
+    'setup':     { label: '<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-ticket"/></svg> 邀请码生成与管理',     url: '/setup.html' }
+  };
+  const dest = destMap[to] || destMap['setup'];
+  document.getElementById('gate_dest').innerHTML = dest.label;
+
+  const input = document.getElementById('gate_input');
+  const submit = document.getElementById('gate_submit');
+  const err = document.getElementById('gate_err');
+
+  // 简单防爆破：localStorage 计数
+  const KEY = 'vega_admin_gate_fails';
+  const TS_KEY = 'vega_admin_gate_lock_until';
+
+  function isLocked() {
+    const until = parseInt(localStorage.getItem(TS_KEY) || '0', 10);
+    if (Date.now() < until) return Math.ceil((until - Date.now()) / 1000);
+    return 0;
+  }
+
+  function showErr(msg) {
+    err.style.display = 'block';
+    err.innerHTML = '<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-triangle-alert"/></svg> ' + msg;
+  }
+
+  function go() {
+    const sec = isLocked();
+    if (sec > 0) { showErr('已锁定，剩 ' + sec + ' 秒'); return; }
+    const v = input.value;
+    if (!v) { input.focus(); return; }
+    // 密码就是访问 ?pass=XXX 这个值，提交到 dest.url?pass=XXX
+    // Caddy 那层会校验 pass 是否合法
+    // 不在前端硬比对密码（前端比对等于暴露），让 Caddy 服务端判定
+    const fails = parseInt(localStorage.getItem(KEY) || '0', 10);
+    // 预 fetch 试 setup.html?pass=v 看是否真放行；用 HEAD 看 status
+    fetch('/setup.html?pass=' + encodeURIComponent(v), { method: 'HEAD', redirect: 'manual' })
+      .then(r => {
+        // Caddy 守门：pass 对 → 302 set-cookie + redirect; pass 不对 → 302 redirect 回 /
+        // fetch with redirect:manual 都返回 opaqueredirect, 无法直接读 status
+        // 改用 GET 跟随，看最终 URL 是不是 /setup.html
+        return fetch('/setup.html?pass=' + encodeURIComponent(v), { redirect: 'follow' });
+      })
+      .then(r => {
+        // 若最终 URL 是 setup.html 自身 → 密码对
+        if (r.url.includes('/setup.html')) {
+          // 通过！跳目标
+          localStorage.setItem(KEY, '0');
+          location.href = dest.url + '?pass=' + encodeURIComponent(v);
+        } else {
+          // 被踢回主页
+          const nf = fails + 1;
+          localStorage.setItem(KEY, String(nf));
+          if (nf >= 5) {
+            localStorage.setItem(TS_KEY, String(Date.now() + 60 * 1000));
+            localStorage.setItem(KEY, '0');
+            showErr('已 5 次错误，锁定 60 秒');
+          } else {
+            showErr('密码错误（' + nf + '/5）');
+          }
+          input.value = '';
+          input.focus();
+        }
+      })
+      .catch(e => showErr('网络错误: ' + e.message));
+  }
+
+  submit.addEventListener('click', go);
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
+
+  // 如果已经有 cookie，免再输直接跳
+  if (document.cookie.includes('vegavpn_admin_pass=')) {
+    location.href = dest.url;
+  } else {
+    input.focus();
+  }
+
+  const sec = isLocked();
+  if (sec > 0) showErr('已锁定，剩 ' + sec + ' 秒');
+})();
+</script>
+</body>
+</html>

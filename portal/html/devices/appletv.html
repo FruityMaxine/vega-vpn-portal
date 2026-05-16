@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Apple TV · Vega VPN 教程</title>
+<link rel="stylesheet" href="../style.css" />
+<link rel="stylesheet" href="../animal-components.css" />
+<script src="../animal-components.js" defer></script>
+<script src="/favicon-today.js"></script>
+</head>
+<body class="home">
+<header class="navbar">
+  <div class="logo"><span class="badge"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-apple"/></svg></span><span>Apple TV 教程</span></div>
+  <nav class="nav-links"><a href="../index.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-home"/></svg> 首页</a><a href="help.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-help"/></svg> 求助</a></nav>
+</header>
+
+<main class="container">
+
+<div style="background:var(--animal-primary-bg); border:2.5px dashed var(--animal-primary); border-radius:14px; padding:10px 16px; margin-bottom:14px; font-weight:700; color:var(--animal-text-primary);">
+你的订阅含 4 个协议节点（VLESS / SS / Trojan / VMess）· <a href="protocols.html"><strong>看哪个该用 / 怎么切 →</strong></a>
+</div>
+  <a href="../index.html" class="back-home"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-arrow-left"/></svg> 返回首页</a>
+
+  <section class="hero" style="background:linear-gradient(135deg,#b77dee 0%,#f8a6b2 60%,#FFF4D2 100%);">
+    <div class="mascot"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-apple"/></svg></div>
+    <div style="flex:1;min-width:240px">
+      <h1>Apple TV / Apple TV 4K</h1>
+      <p>苹果机顶盒 · 不能装第三方 VPN App · 路由器方案是唯一路</p>
+    </div>
+  </section>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-apple"/></svg> 坏消息：Apple TV 不能直接装 VPN</h2>
+    <div class="meta">
+      <span class="tag hard"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-x"/></svg> 复杂（不能直装）</span>
+      <span class="tag time"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-clock"/></svg> 需要先配路由器</span>
+      <span class="tag app"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-package"/></svg> 路由器层 VPN</span>
+    </div>
+    <p>tvOS 是<strong>封闭系统</strong>，App Store 里没有 v2rayNG、Clash、Shadowrocket 这类客户端，也无法侧载（除非越狱 + 已淘汰）。tvOS 17 之后苹果<strong>勉强加入</strong>了对 Pre-shared key VPN 描述文件的支持，但能用的协议有限（仅 IKEv2 / IPsec）。</p>
+
+    <p>所以 Apple TV 接入 Vega 有两条路：</p>
+    <table class="simple">
+      <thead><tr><th>方案</th><th>难度</th><th>体验</th></tr></thead>
+      <tbody>
+        <tr><td>A · 路由器层 VPN（推荐）</td><td><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-dot"/></svg> 一次性配置</td><td>透明，所有 App 自动走，无需 Apple TV 上做任何操作</td></tr>
+        <tr><td>B · tvOS 17+ IKEv2 描述文件</td><td><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-check"/></svg> 简单</td><td>能用但 Netflix 等会检测到 VPN 阻断</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-wifi"/></svg> 方案 A · 路由器层 VPN（推荐）</h2>
+    <p>把 VPN 装在你的家庭路由器上，整个家里 WiFi 都走 Vega 出口。Apple TV 连这个 WiFi 就自动有了德国 IP，<strong>无需在 Apple TV 上做任何操作</strong>。Netflix / Disney+ / YouTube / Apple TV+ App 全部正常解锁。</p>
+
+    <div class="download-row">
+      <a class="btn btn-primary" href="router.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-wifi"/></svg> 跳到路由器配置教程</a>
+      <a class="btn btn-warning" href="https://search.jd.com/Search?keyword=GL.iNet%20%E8%B7%AF%E7%94%B1%E5%99%A8" target="_blank" rel="noopener"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-link"/></svg> 京东搜 GL.iNet 旁路由</a>
+      <a class="btn btn-ghost" href="https://apps.apple.com/app/shadowrocket/id932747118" target="_blank" rel="noopener"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-download"/></svg> 备选：iPhone 装 Shadowrocket 共享热点</a>
+      <span class="meta-note">推荐 GL.iNet GL-MT3000 / Flint 2 · 开箱即用 sing-box</span>
+    </div>
+
+    <p>完整教程见 <a href="router.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-wifi"/></svg> 路由器配置页</a>。简要步骤：</p>
+    <ol class="steps">
+      <li>
+        <h4>准备一台支持 OpenWRT / 华硕 Merlin / GL.iNet 的路由器</h4>
+        <p>推荐入门款：<strong>GL.iNet GL-MT3000</strong>（500 元左右，开箱即用）、<strong>GL.iNet Flint 2</strong>（千兆万兆）、华硕 AX86U。如果只是给 Apple TV 单设备用，可以用一台 GL-MT300N 当"VPN 旁路网关"，主路由器不动。</p>
+      </li>
+      <li>
+        <h4>在路由器上配 sing-box / V2Ray 透明代理</h4>
+        <p>按 <a href="router.html">路由器教程</a>导入订阅。GL.iNet 用户最简单：GUI 里直接粘订阅 URL。</p>
+      </li>
+      <li>
+        <h4>Apple TV 连这台路由器的 WiFi</h4>
+        <p>设置 → 网络 → WiFi → 选你的 VPN WiFi → 连接。</p>
+      </li>
+      <li>
+        <h4>测试</h4>
+        <p>Apple TV 桌面打开 <strong>Apple TV App / YouTube App</strong>。如果是首次连接，可能要重新登录 Apple ID（账户区域需切到美区/德区才能看相应地区内容）。</p>
+      </li>
+    </ol>
+
+    <div class="tip">
+      <strong><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-thumbs-up"/></svg> 优点：</strong>一次配好，所有设备共享；Netflix 看美/德区内容；不需要折腾 Apple TV。<br>
+      <strong><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-triangle-alert"/></svg> 缺点：</strong>家里其他设备也都走代理（可以用 PBR 规则区分，详见路由器页）；如果路由器宕了所有设备都没网。
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-apple"/></svg> 方案 B · tvOS 17+ IKEv2 描述文件</h2>
+    <p>Apple 在 tvOS 17（2023 秋）加入了对 VPN 描述文件的有限支持。只能用 IKEv2，且需要通过 <strong>Apple Configurator 2</strong>（Mac App Store 免费）推送。</p>
+
+    <p>前置条件：Apple TV HD / 4K（2nd / 3rd Gen）已升级到 tvOS 17 或更高 + 一台 Mac。</p>
+
+    <ol class="steps">
+      <li>
+        <h4>Mac 上从 App Store 装 <strong>Apple Configurator 2</strong></h4>
+      </li>
+      <li>
+        <h4>下载我们提供的 IKEv2 描述文件</h4>
+        <p>用 Safari 在 Mac 上打开：</p>
+  <div class="sub-cta-card">
+    <div class="sub-cta-icon"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-ticket"/></svg></div>
+    <div class="sub-cta-body">
+      <strong>到这一步需要你的订阅链接 / 二维码？</strong>
+      <p>所有订阅都在「我的账户」里管理（含多个订阅时可自选）。点下面按钮跳过去复制 URL 或扫二维码。</p>
+      <a class="btn btn-primary" href="/me.html#subs"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-link"/></svg> 去「我的账户」拿订阅</a>
+    </div>
+  </div>
+      </li>
+      <li>
+        <h4>把 Apple TV 和 Mac 放在同一 WiFi</h4>
+        <p>Apple TV 设置 → 远程控制 → 显示在 Apple Configurator 里。Apple Configurator 会自动发现局域网里的 Apple TV。</p>
+      </li>
+      <li>
+        <h4>右键 Apple TV → 添加 → 描述文件 → 选 .mobileconfig</h4>
+        <p>Apple TV 会重启并提示安装描述文件。在遥控器上确认安装。</p>
+      </li>
+      <li>
+        <h4>启用 VPN</h4>
+        <p>Apple TV → 设置 → 通用 → VPN和设备管理 → 选 Vega-IKEv2 → 开关打开。</p>
+      </li>
+      <li>
+        <h4>测试</h4>
+        <p>Apple TV 桌面没有浏览器，无法直接验 ipinfo。下载一个 <strong>Speedtest by Ookla</strong> 看测试节点是否变德国，或开 YouTube App 看推荐内容是否变化。</p>
+      </li>
+    </ol>
+
+    <div class="tip warn">
+      <strong><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-triangle-alert"/></svg> Netflix 限制：</strong>tvOS 上的 Netflix App 检测 VPN 比浏览器严格，方案 B 多半会触发"VPN 错误"。看 Netflix 一定用方案 A（路由器层）。
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-life-buoy"/></svg> 常见问题</h2>
+    <details class="faq"><summary>能用 ATV 上的 Smart DNS / DNS 改成 1.1.1.1 解锁吗？</summary><p>仅能解锁部分轻度地理限制（比如 Netflix 美国库切到美国库）。要真正改 IP 还得 VPN。</p></details>
+    <details class="faq"><summary>路由器太贵，有没有更便宜方案？</summary><p>GL.iNet GL-MT300N-V2（"小白盒子"，约 150 元）可当旁路 VPN 网关。只接 Apple TV 这一台，主路由不动。</p></details>
+    <details class="faq"><summary>Apple TV 看 4K 卡？</summary><p>(1) 路由器 CPU 不够（IPsec 加密很吃 CPU），换 Flint 2 / 华硕 AX86U 这种千兆机型；(2) 路由器到 ATV 用网线别用 WiFi。</p></details>
+    <details class="faq"><summary>家里有些设备不想走 VPN？</summary><p>在路由器上做 <strong>Policy-Based Routing (PBR)</strong>，按 MAC 地址分流。详见 <a href="router.html">路由器页</a>。</p></details>
+    <details class="faq"><summary>Apple TV 上能看到当前 IP 吗？</summary><p>装 <strong>"WhatsMyIP"</strong> App（App Store 免费）即可显示当前出口 IP 和国家。</p></details>
+  </div>
+
+  <p><a href="router.html" class="btn btn-warm"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-wifi"/></svg> 配置路由器</a> <a href="help.html" class="btn btn-ghost"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-life-buoy"/></svg> 完整 FAQ</a></p>
+</main>
+
+<footer class="footer"><span class="paw"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-paw-print"/></svg></span> Vega VPN · Apple TV 教程 <span class="paw"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-paw-print"/></svg></span></footer>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script src="../app.js"></script>
+</body>
+</html>

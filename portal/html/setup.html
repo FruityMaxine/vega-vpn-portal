@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Vega VPN · 管理员配置</title>
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="animal-components.css" />
+<script src="animal-components.js" defer></script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23a67c52'/%3E%3Cpath d='M32 12 L50 20 V32 C50 44 32 54 32 54 C32 54 14 44 14 32 V20 Z' fill='none' stroke='%23fff8e7' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E" />
+<style>
+  .tab-bar { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+  .tab-btn {
+    padding: 10px 22px; border-radius: var(--animal-radius-pill);
+    border: 2.5px solid var(--animal-text-primary);
+    background: #fffdf2; color: var(--animal-text-primary);
+    cursor: pointer; font-weight: 800; font-family: var(--animal-font); font-size: 0.95rem;
+    box-shadow: 0 3px 0 0 var(--animal-shadow-btn);
+    transition: var(--animal-transition);
+  }
+  .tab-btn:hover:not(.active) { background: var(--animal-primary-bg, #e6f9f6); border-color: var(--animal-primary); }
+  .tab-btn.active {
+    background: var(--animal-primary, #19c8b9);
+    color: #fff;
+    border-color: var(--animal-primary-active, #11a89b);
+    box-shadow: 0 4px 0 0 var(--animal-primary-active, #11a89b);
+    transform: translateY(-1px);
+  }
+  .tab-btn.active:hover { box-shadow: 0 5px 0 0 var(--animal-primary-active, #11a89b); transform: translateY(-2px); }
+  .tab-btn.active:active { box-shadow: 0 1px 0 0 var(--animal-primary-active, #11a89b); transform: translateY(2px); }
+  .tab-pane { display: none; }
+  .tab-pane.active { display: block; }
+  .form-row { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+  .form-row label { font-weight: 800; color: var(--animal-text-primary); }
+  .form-row input, .form-row select, .form-row textarea {
+    padding: 10px 14px; border: 2.5px solid var(--animal-border-input);
+    border-radius: var(--animal-radius-pill); background: #fffdf2;
+    font-family: var(--animal-font); font-weight: 600; font-size: 1rem;
+    color: var(--animal-text-body);
+    transition: all 0.18s ease;
+  }
+  .form-row input:focus, .form-row select:focus, .form-row textarea:focus {
+    outline: none; border-color: var(--animal-primary);
+    box-shadow: 0 0 0 3px var(--animal-primary-bg);
+  }
+  .form-row select {
+    appearance: none; -webkit-appearance: none; -moz-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23794f27'%3E%3Cpath d='M3 5l5 6 5-6z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 18px center;
+    background-size: 14px; padding-right: 42px; cursor: pointer;
+  }
+  .form-row select option { background: #fffdf2; color: #794f27; font-weight: 600; padding: 8px 14px; }
+  .form-row input[type="number"]::-webkit-outer-spin-button,
+  .form-row input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .form-row input[type="number"] { -moz-appearance: textfield; }
+  .form-row .hint { color: var(--animal-text-muted); font-size: 0.85rem; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 18px; }
+  @media (max-width: 640px) { .form-grid { grid-template-columns: 1fr; } }
+  table.invites { width: 100%; border-collapse: collapse; margin-top: 10px; }
+  table.invites th, table.invites td {
+    padding: 8px 10px; border-bottom: 1.5px solid var(--animal-border-input);
+    text-align: left; font-size: 0.92rem; vertical-align: top;
+  }
+  table.invites th { color: var(--animal-text-primary); font-weight: 800; background: var(--animal-bg-content); }
+  table.invites code { background: #fffdf2; padding: 3px 8px; border-radius: 8px; border: 1.5px solid var(--animal-border-input); font-weight: 700; }
+  .state-available { color: #4d7e1a; font-weight: 800; }
+  .state-used      { color: var(--animal-text-muted); font-weight: 800; }
+  .err { background: #fde8e8; color: #c94444; border: 2px solid #e05a5a; border-radius: var(--animal-radius-sm); padding: 10px 14px; margin-top: 10px; font-weight: 700; display:none; }
+  .ok  { background: #e9f7d8; color: #4d7e1a; border: 2px solid #6fba2c; border-radius: var(--animal-radius-sm); padding: 10px 14px; margin-top: 10px; font-weight: 700; display:none; }
+  .gate-card { max-width: 540px; margin: 40px auto; }
+  .codes-blob {
+    background: #fffdf2; border: 2.5px dashed var(--animal-primary);
+    border-radius: 14px; padding: 12px 14px; margin-top: 10px;
+    font-family: ui-monospace, monospace; font-size: 0.95rem; word-break: break-all;
+    display: none;
+  }
+  .codes-blob.show { display: block; }
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+  .stat-card { background: #fffdf2; border: 2.5px solid var(--animal-border-input); border-radius: 14px; padding: 14px 16px; }
+  .stat-card .lbl { color: var(--animal-text-muted); font-size: 0.85rem; font-weight: 700; }
+  .stat-card .val { color: var(--animal-text-primary); font-size: 1.6rem; font-weight: 900; margin-top: 4px; }
+  .stat-card.ok   { border-color: #6fba2c; background: #f0f9e0; }
+  .stat-card.bad  { border-color: #e05a5a; background: #fde8e8; }
+  .filter-bar { display: flex; gap: 10px; flex-wrap: wrap; margin: 12px 0; align-items: center; }
+  .filter-bar input, .filter-bar select {
+    padding: 8px 14px; border: 2.5px solid var(--animal-border-input);
+    border-radius: var(--animal-radius-pill); background: #fffdf2;
+    font-family: var(--animal-font); font-weight: 600;
+  }
+  .copy-btn { cursor: pointer; }
+  .pill-cfg { display: inline-block; padding: 2px 9px; border-radius: 999px; background: var(--animal-bg-content); border: 1.5px solid var(--animal-border-input); font-size: 0.82rem; margin-right: 4px; font-weight: 700; }
+</style>
+<script src="/favicon-today.js"></script>
+</head>
+<body class="home">
+
+<header class="navbar">
+  <div class="logo">
+    <span class="badge"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-wrench"/></svg></span>
+    <span>Vega VPN · 管理员配置</span>
+  </div>
+  <nav class="nav-links">
+    <a href="index.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-home"/></svg> 首页</a>
+    <a href="signup.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-ticket"/></svg> 注册页</a>
+    <a href="#" id="logout"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-log-out"/></svg> 退出</a>
+  </nav>
+</header>
+
+<main class="container">
+
+  <!-- 守门：先输 admin token -->
+  <section class="nookphone-card gate-card" id="gate">
+    <div class="np-icon"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-lock"/></svg></div>
+    <div class="np-body">
+      <h2 style="margin-top:0">管理员入口</h2>
+      <p>请粘贴 <code>signup-service/data/admin_token.txt</code> 中的 token。</p>
+      <div class="form-row">
+        <label for="g_token">Admin Token</label>
+        <input type="password" id="g_token" placeholder="48 位 hex" autocomplete="off" />
+      </div>
+      <button class="btn btn-primary" id="g_submit"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-unlock"/></svg> 解锁</button>
+      <div class="err" id="g_err"></div>
+    </div>
+  </section>
+
+  <!-- 主体 -->
+  <div id="panel" style="display:none">
+
+    <div class="tab-bar">
+      <button class="tab-btn active" data-tab="stats"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-bar-chart-3"/></svg> 系统状态</button>
+      <button class="tab-btn" data-tab="invites"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-ticket"/></svg> 邀请码管理</button>
+      <button class="tab-btn" data-tab="signups"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-check"/></svg> 激活的订阅</button>
+      <button class="tab-btn" data-tab="accounts"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-user"/></svg> 朋友账户</button>
+    </div>
+
+    <!-- Tab 1: 系统状态 -->
+    <section class="card tab-pane active" id="tab-stats">
+      <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-bar-chart-3"/></svg> 系统状态</h2>
+      <button class="btn btn-ghost btn-sm" id="st_refresh"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-refresh-cw"/></svg> 刷新</button>
+      <span class="muted" id="st_ts" style="margin-left:10px;color:var(--animal-text-muted);font-size:0.85rem"></span>
+      <div class="err" id="st_err"></div>
+
+      <h3 style="margin-top:18px"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-server"/></svg> 资源占用</h3>
+      <p style="margin-top:0; color:var(--animal-text-muted); font-size:0.85rem">每秒刷新 · 与首页同源 <code>/stats/current.json</code></p>
+      <div id="rm_grid_admin" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px;"></div>
+
+      <h3 style="margin-top:22px"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-activity"/></svg> 项目运行状态</h3>
+      <div class="stat-grid" id="st_running"></div>
+
+      <h3 style="margin-top:22px"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-gauge"/></svg> 流量统计</h3>
+      <div class="stat-grid" id="st_traffic"></div>
+      <div id="st_quota_wrap" style="margin-top:12px;background:#fffdf2;border:2.5px solid var(--animal-border-input);border-radius:14px;padding:12px 14px">
+        <div style="display:flex;justify-content:space-between;font-weight:800;color:var(--animal-text-primary)">
+          <span>月配额进度</span>
+          <span id="st_quota_lbl">— / 20 TB</span>
+        </div>
+        <div style="margin-top:6px;height:14px;background:#e9e2d4;border:2px solid var(--animal-border-input);border-radius:999px;overflow:hidden">
+          <div id="st_quota_bar" style="height:100%;width:0%;background:var(--animal-primary,#19c8b9);transition:width 0.4s ease"></div>
+        </div>
+      </div>
+
+      <h3 style="margin-top:22px"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-trophy"/></svg> 流量 Top 5 · 订阅</h3>
+      <table class="invites" id="st_top_subs">
+        <thead><tr><th>Marzban 用户名</th><th>所属账户</th><th>累计/上限</th><th>Top 内占比</th><th>状态</th></tr></thead>
+        <tbody></tbody>
+      </table>
+
+      <h3 style="margin-top:22px"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-trophy"/></svg> 流量 Top 5 · 账户</h3>
+      <table class="invites" id="st_top_accounts">
+        <thead><tr><th>账户名</th><th>订阅数</th><th>累计流量</th></tr></thead>
+        <tbody></tbody>
+      </table>
+
+      <h3 style="margin-top:22px"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-line-chart"/></svg> 每订阅实时累计流量</h3>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:8px 0">
+        <label for="ut_select" style="font-weight:800;color:var(--animal-text-primary)">订阅</label>
+        <select id="ut_select" data-ai-select style="min-width:240px"></select>
+        <span class="muted" id="ut_meta" style="color:var(--animal-text-muted);font-size:0.85rem"></span>
+        <span style="display:inline-flex;gap:14px;font-size:0.8rem;color:var(--animal-text-muted);margin-left:auto">
+          <span><span style="display:inline-block;width:14px;height:3px;background:var(--animal-primary,#19c8b9);vertical-align:middle;border-radius:2px"></span> 累计流量</span>
+          <span><span style="display:inline-block;width:14px;height:3px;background:#FFB84D;vertical-align:middle;border-radius:2px"></span> 当前速率</span>
+        </span>
+      </div>
+      <div style="position:relative;background:#fffdf2;border:2.5px solid var(--animal-text-primary);border-radius:14px;padding:14px 16px 8px;box-shadow:0 4px 0 0 var(--animal-shadow-btn);">
+        <svg id="ut_chart" viewBox="0 0 600 140" preserveAspectRatio="none" style="width:100%;height:140px;display:block">
+          <defs><linearGradient id="ut_grad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="var(--animal-primary,#19c8b9)" stop-opacity="0.35"/>
+            <stop offset="100%" stop-color="var(--animal-primary,#19c8b9)" stop-opacity="0"/>
+          </linearGradient></defs>
+          <!-- 累计流量 (带阴影面积) -->
+          <path id="ut_area" d="" fill="url(#ut_grad)" stroke="none"/>
+          <polyline id="ut_line" points="" fill="none" stroke="var(--animal-primary,#19c8b9)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+          <!-- 实时速率 (无阴影 · 橙色细线) -->
+          <polyline id="ut_speed_line" points="" fill="none" stroke="#FFB84D" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="0"/>
+        </svg>
+        <div id="ut_empty" style="position:absolute;inset:0;display:none;align-items:center;justify-content:center;color:var(--animal-text-muted);font-weight:700">数据采集中…</div>
+      </div>
+    </section>
+
+    <!-- Tab 2: 邀请码 -->
+    <section class="card tab-pane" id="tab-invites">
+      <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-ticket"/></svg> 生成新邀请码</h2>
+
+      <div class="form-grid">
+        <div class="form-row">
+          <label for="i_count">数量</label>
+          <input type="number" id="i_count" min="1" max="100" value="1" />
+        </div>
+        <div class="form-row">
+          <label for="i_data">流量上限（GB）</label>
+          <input type="number" id="i_data" min="1" max="10000" value="200" />
+        </div>
+        <div class="form-row">
+          <label for="i_expire">最长有效期（天）</label>
+          <input type="number" id="i_expire" min="1" max="3650" value="30" />
+        </div>
+        <div class="form-row">
+          <label for="i_reset">最快重置频率</label>
+          <select id="i_reset" data-ai-select>
+            <option value="day">每日</option>
+            <option value="week">每周</option>
+            <option value="month" selected>每月</option>
+            <option value="year">每年</option>
+            <option value="no_reset">不重置</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <label for="i_note">备注（可选）</label>
+        <input type="text" id="i_note" maxlength="120" />
+      </div>
+
+      <button class="btn btn-primary" id="i_gen"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-send"/></svg> 生成邀请码</button>
+      <div class="err" id="i_err"></div>
+      <div class="ok" id="i_ok"></div>
+      <div class="codes-blob" id="i_codes"></div>
+
+      <div class="divider teal"></div>
+
+      <h2><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-list"/></svg> 已生成邀请码</h2>
+      <div style="display:flex; gap:10px; margin-bottom:10px; flex-wrap:wrap;">
+        <button class="btn btn-danger btn-sm" id="i_purge_unused"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-trash-2"/></svg> 一键删除所有未用邀请码</button>
+        <span style="color:var(--animal-text-muted); font-size:0.85rem; align-self:center">已用码不动；未用码立即失效。</span>
+      </div>
+      <div class="filter-bar">
+        <input type="text" id="f_q" placeholder="搜索邀请码 / 备注 / 朋友名" />
+        <select id="f_state" data-ai-select>
+          <option value="">全部状态</option>
+          <option value="available">未使用</option>
+          <option value="used">已使用</option>
+        </select>
+        <button class="btn btn-ghost btn-sm" id="i_refresh"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-refresh-cw"/></svg> 刷新</button>
+        <span class="muted" id="i_count_lbl"></span>
+      </div>
+
+      <table class="invites" id="i_table">
+        <thead>
+          <tr>
+            <th>邀请码</th><th>配置</th><th>状态</th>
+            <th>朋友</th><th>时间</th><th>备注</th><th>操作</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <!-- Tab 4: accounts -->
+    <section class="card tab-pane" id="tab-accounts">
+      <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-users"/></svg> 朋友账户</h2>
+      <button class="btn btn-ghost btn-sm" id="a_refresh"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-refresh-cw"/></svg> 刷新</button>
+      <span class="muted" id="a_legacy_lbl" style="margin-left:10px;color:var(--animal-text-muted);font-size:0.85rem"></span>
+      <table class="invites" id="a_table" style="margin-top:10px">
+        <thead>
+          <tr>
+            <th>用户名</th><th>注册时间</th><th>最近登录</th>
+            <th>订阅数</th><th>总用流量</th><th>状态</th><th>操作</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <!-- Tab 3: signups -->
+    <section class="card tab-pane" id="tab-signups">
+      <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-check"/></svg> 激活的订阅</h2>
+      <p style="margin-top:0;color:var(--animal-text-muted);font-size:0.88rem">实时与 Marzban 同步:已被 Marzban 删除的订阅会自动从列表移除。</p>
+      <button class="btn btn-ghost btn-sm" id="s_refresh"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-refresh-cw"/></svg> 刷新</button>
+      <table class="ai-table" id="s_table" style="margin-top:14px">
+        <thead>
+          <tr><th>昵称</th><th>Marzban 用户名</th><th>状态</th><th>邀请码</th><th>注册时间</th><th>操作</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div class="err" id="s_err"></div>
+    </section>
+
+  </div>
+
+
+<!-- Account detail modal -->
+<div id="acc_modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:9999;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:#fffdf2;border:3px solid var(--animal-text-primary);border-radius:18px;max-width:780px;width:100%;max-height:90vh;overflow:auto;padding:24px;box-shadow:0 8px 0 0 var(--animal-shadow-btn);">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <h2 id="amd_title" style="margin:0">账户详情</h2>
+      <button class="btn btn-ghost btn-sm" id="amd_close"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-x"/></svg></button>
+    </div>
+    <div id="amd_body"></div>
+  </div>
+</div>
+
+</main>
+
+<!-- Animal Island Modal · 朋友账户详情 -->
+<div class="ai-modal-mask" id="detail_modal">
+  <div class="ai-modal">
+    <h3 id="detail_title" style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-cat"/></svg> 朋友账户详情</h3>
+    <div class="ai-modal-body" id="detail_body">
+      <div class="loading-island"></div>
+    </div>
+    <div class="ai-modal-actions">
+      <button class="btn btn-ghost btn-sm" id="detail_close">关闭</button>
+    </div>
+  </div>
+</div>
+
+<!-- Animal Island Modal · 确认操作 -->
+<div class="ai-modal-mask" id="confirm_modal">
+  <div class="ai-modal" style="max-width:420px">
+    <h3 id="confirm_title" style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-paw-print"/></svg> 请确认</h3>
+    <div class="ai-modal-body" id="confirm_body">…</div>
+    <div class="ai-modal-actions">
+      <button class="btn btn-ghost btn-sm" id="confirm_cancel">取消</button>
+      <button class="btn btn-danger btn-sm" id="confirm_ok">确认</button>
+    </div>
+  </div>
+</div>
+
+<!-- Animal Island Toast -->
+<div class="ai-toast-stack" id="toast_stack"></div>
+
+<footer class="footer">
+  <span class="paw"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-paw-print"/></svg></span>
+  Vega VPN Admin Panel · v0.6.1.0
+  <span class="paw"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-paw-print"/></svg></span>
+</footer>
+
+<script>
+(function() {
+  const TOK_KEY = 'vega_admin_token';
+  // Admin token is loaded from signup-service/data/admin_token.txt at startup.
+  // Paste it here or leave empty to be prompted.
+  const HARDCODED_ADMIN_TOKEN = '';
+  let TOK = sessionStorage.getItem(TOK_KEY) || HARDCODED_ADMIN_TOKEN;
+  let ALL_INVITES = [];
+
+  const gate = document.getElementById('gate');
+  const panel = document.getElementById('panel');
+
+  function show(el, msg) { el.style.display = 'block'; el.innerHTML = msg; }
+  function hide(el) { el.style.display = 'none'; }
+  function escapeHtml(s) { return (s == null ? '' : String(s)).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+  // ----- Animal Island Toast / Modal helpers -----
+  function toast(msg, kind) {
+    const stack = document.getElementById('toast_stack');
+    const el = document.createElement('div');
+    el.className = 'ai-toast' + (kind ? ' ' + kind : '');
+    el.innerHTML = msg;
+    stack.appendChild(el);
+    setTimeout(() => { el.classList.add('fade'); }, 2400);
+    setTimeout(() => { el.remove(); }, 2750);
+  }
+  function aiConfirm(msg, opts) {
+    opts = opts || {};
+    return window.AnimalModal.open({
+      title: opts.title || '<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-paw-print"/></svg> 请确认',
+      body: msg,
+      okText: opts.okText || '确认',
+      cancelText: opts.cancelText || '取消',
+      okDanger: !!opts.danger,
+      typewriter: opts.typewriter !== false,
+    });
+  }
+  function openDetailModal(htmlBody, title) {
+    document.getElementById('detail_title').innerHTML = title || '<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-cat"/></svg> 朋友账户详情';
+    document.getElementById('detail_body').innerHTML = htmlBody;
+    document.getElementById('detail_modal').classList.add('show');
+  }
+  document.getElementById('detail_close').addEventListener('click', () => {
+    document.getElementById('detail_modal').classList.remove('show');
+  });
+  document.getElementById('detail_modal').addEventListener('click', (e) => {
+    if (e.target.id === 'detail_modal') e.currentTarget.classList.remove('show');
+  });
+
+  async function api(method, path, body) {
+    const opts = { method, headers: { 'Authorization': 'Bearer ' + TOK } };
+    if (body !== undefined) {
+      opts.headers['Content-Type'] = 'application/json';
+      opts.body = JSON.stringify(body);
+    }
+    const r = await fetch(path, opts);
+    const data = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(data.detail || ('HTTP ' + r.status));
+    return data;
+  }
+
+  async function unlock(tok) {
+    TOK = tok;
+    try {
+      await api('GET', '/api/admin/stats');
+      sessionStorage.setItem(TOK_KEY, tok);
+      gate.style.display = 'none';
+      panel.style.display = 'block';
+      loadStats();
+      startStatsTimers();
+      loadInvites();
+    } catch (e) {
+      show(document.getElementById('g_err'), '<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-triangle-alert"/></svg> ' + e.message);
+      TOK = '';
+    }
+  }
+
+  document.getElementById('g_submit').addEventListener('click', () => {
+    const v = document.getElementById('g_token').value.trim();
+    if (v.length < 16) { show(document.getElementById('g_err'), '<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-triangle-alert"/></svg> token 看着不像'); return; }
+    hide(document.getElementById('g_err'));
+    unlock(v);
+  });
+  document.getElementById('g_token').addEventListener('keypress', (e) => { if (e.key === 'Enter') document.getElementById('g_submit').click(); });
+  document.getElementById('logout').addEventListener('click', (e) => { e.preventDefault(); sessionStorage.removeItem(TOK_KEY); location.reload(); });
+
+  if (TOK) unlock(TOK);
+
+  // Tabs
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(x => x.classList.toggle('active', x === b));
+      const t = b.dataset.tab;
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.toggle('active', p.id === 'tab-' + t));
+      if (t === 'stats') { loadStats(); startStatsTimers(); } else { stopStatsTimers(); }
+      if (t === 'invites') loadInvites();
+      if (t === 'signups') loadSignups();
+      if (t === 'accounts') loadAccounts();
+    });
+  });
+
+  // ----- Accounts tab -----
+  async function loadAccounts() {
+    try {
+      const data = await api('GET', '/api/admin/accounts');
+      document.getElementById('a_legacy_lbl').textContent = `Legacy 散户订阅：${data.legacy_signups} 条`;
+      const tbody = document.querySelector('#a_table tbody');
+      tbody.innerHTML = '';
+      data.accounts.forEach(a => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><code>${escapeHtml(a.username)}</code></td>
+          <td style="font-size:0.82rem;color:var(--animal-text-muted)">${(a.created_at||'').replace('T',' ').slice(0,16)}</td>
+          <td style="font-size:0.82rem;color:var(--animal-text-muted)">${(a.last_login_at||'—').replace('T',' ').slice(0,16)}</td>
+          <td>${a.subscription_count}</td>
+          <td>${a.total_used_gb} GB</td>
+          <td><button class="ai-switch ${a.disabled?'':'on'}" data-aiswitch="${escapeHtml(a.username)}" aria-label="启用/禁用账户" title="${a.disabled?'已禁用 · 点击启用':'活跃 · 点击禁用'}"></button> <span style="margin-left:6px;font-weight:700;color:${a.disabled?'#c94444':'#4d7e1a'};font-size:0.85rem">${a.disabled?'已禁用':'活跃'}</span></td>
+          <td>
+            <button class="btn btn-ghost btn-sm" data-detail="${escapeHtml(a.username)}"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-clipboard"/></svg> 详情</button>
+            <button class="btn btn-ghost btn-sm" data-resetpw="${escapeHtml(a.username)}"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-key-round"/></svg> 重置密码</button>
+            <button class="btn btn-danger btn-sm" data-delacc="${escapeHtml(a.username)}" data-subs="${a.subscription_count}"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-trash-2"/></svg> 删除账户</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+      tbody.querySelectorAll('button[data-detail]').forEach(b => b.addEventListener('click', () => showAccountDetail(b.dataset.detail)));
+      tbody.querySelectorAll('button[data-aiswitch]').forEach(b => b.addEventListener('click', async () => {
+        const u = b.dataset.aiswitch; const isOn = b.classList.contains('on');
+        const ok = await aiConfirm((isOn?'禁用':'启用') + ' 账户 ' + u + '？' + (isOn?'<br><span style=\"color:#c94444\">禁用后该用户所有订阅暂停服务</span>':''), {okText: isOn?'禁用':'启用'});
+        if (!ok) return;
+        try { await api('POST', '/api/admin/accounts/' + encodeURIComponent(u) + (isOn ? '/disable' : '/enable')); loadAccounts(); toast(isOn?'已禁用':'已启用', 'ok'); }
+        catch (e) { toast('失败: ' + e.message, 'err'); }
+      }));
+      tbody.querySelectorAll('button[data-delacc]').forEach(b => b.addEventListener('click', async () => {
+        const u = b.dataset.delacc; const n = parseInt(b.dataset.subs || '0');
+        const warn = `<strong style="color:#c94444">即将删除账户 ${escapeHtml(u)}</strong><br>` +
+          `清空 <strong>${n}</strong> 个订阅 &rarr; 设备立即断连,且<strong>无法恢复</strong>。`;
+        const ok = await aiConfirm(warn, { okText: '<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-trash-2"/></svg> 确认删除' });
+        if (!ok) return;
+        try {
+          const r = await api('DELETE', '/api/admin/accounts/' + encodeURIComponent(u));
+          toast(`已删除账户 ${u} · ${r.deleted_subs} 个订阅`, 'ok');
+          loadAccounts();
+        } catch (e) { toast('删除失败: ' + e.message, 'err'); }
+      }));
+      tbody.querySelectorAll('button[data-resetpw]').forEach(b => b.addEventListener('click', async () => {
+        const u = b.dataset.resetpw;
+        if (!await aiConfirm('重置 <strong>' + u + '</strong> 的密码？将生成临时密码替换旧密码。', {okText: '重置密码'})) return;
+        try {
+          const r = await api('POST', '/api/admin/accounts/' + encodeURIComponent(u) + '/reset-password');
+          prompt('临时密码（请复制并转发给朋友，关闭后无法再看）：', r.temporary_password);
+        } catch (e) { toast('失败: ' + e.message, 'err'); }
+      }));
+    } catch (e) {
+      toast('加载失败: ' + e.message, 'err');
+    }
+  }
+  document.getElementById('a_refresh').addEventListener('click', loadAccounts);
+
+  async function showAccountDetail(username) {
+    try {
+      const d = await api('GET', '/api/admin/accounts/' + encodeURIComponent(username));
+      document.getElementById('amd_title').textContent = '账户：' + d.account.username;
+      const body = document.getElementById('amd_body');
+      const subsHtml = d.subscriptions.length === 0 ? '<p>无订阅</p>' : d.subscriptions.map(s => `
+        <div style="border:2px solid var(--animal-border-input);border-radius:14px;padding:12px;margin-bottom:10px;background:#fff">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+            <div>
+              <strong>${escapeHtml(s.username_marzban||'—')}</strong>
+              <span class="pill-cfg">${escapeHtml(s.status_zh||'')}</span>
+              <span class="pill-cfg">邀请：${escapeHtml(s.invite_code||'')}</span>
+            </div>
+            <button class="btn btn-ghost btn-sm" data-delsub="${escapeHtml(s.subscription_token)}"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-trash-2"/></svg> 删订阅</button>
+          </div>
+          <div style="font-size:0.85rem;color:var(--animal-text-muted);margin-top:6px">
+            已用 ${escapeHtml(s.used_human)} / ${escapeHtml(s.limit_human)} · ${(s.used_pct||0).toFixed(1)}%
+          </div>
+          <div style="font-size:0.78rem;word-break:break-all;font-family:ui-monospace,monospace;margin-top:4px">
+            ${escapeHtml(s.subscription_url||'')}
+          </div>
+        </div>
+      `).join('');
+      body.innerHTML = `
+        <p>注册时间：${(d.account.created_at||'').replace('T',' ').slice(0,16)} · 最近登录：${(d.account.last_login_at||'—').replace('T',' ').slice(0,16)}</p>
+        <p>状态：${d.account.disabled ? '<span style="color:#c94444">已禁用</span>' : '<span style="color:#4d7e1a">活跃</span>'} · 共 ${d.account.subscription_count} 个订阅</p>
+        <h3>订阅列表</h3>
+        ${subsHtml}
+      `;
+      body.querySelectorAll('button[data-delsub]').forEach(b => b.addEventListener('click', async () => {
+        if (!await aiConfirm('确认删除该订阅？同步删除 Marzban user，不可恢复。', {okText: '删除订阅'})) return;
+        try { await api('DELETE', '/api/admin/subscription/' + encodeURIComponent(b.dataset.delsub)); showAccountDetail(username); loadAccounts(); }
+        catch (e) { toast('删除失败: ' + e.message, 'err'); }
+      }));
+      document.getElementById('acc_modal').style.display = 'flex';
+    } catch (e) { toast('加载失败: ' + e.message, 'err'); }
+  }
+  document.getElementById('amd_close').addEventListener('click', () => { document.getElementById('acc_modal').style.display = 'none'; });
+  document.getElementById('acc_modal').addEventListener('click', (e) => { if (e.target.id === 'acc_modal') e.currentTarget.style.display = 'none'; });
+
+  // ----- Stats tab -----
+  let STATS_CURRENT = null;
+  let USER_TRAFFIC = null;
+  let UT_TIMER = null;
+  let RM_TIMER = null;
+
+  function fmtBytes(b) {
+    if (!b || b < 0) return '0 B';
+    const u = ['B','KB','MB','GB','TB','PB'];
+    let i = 0; let v = b;
+    while (v >= 1024 && i < u.length-1) { v /= 1024; i++; }
+    return v.toFixed(v >= 100 ? 0 : 2) + ' ' + u[i];
+  }
+  function fmtUptime(sec) {
+    sec = Math.max(0, sec|0);
+    const d = Math.floor(sec/86400); sec -= d*86400;
+    const h = Math.floor(sec/3600); sec -= h*3600;
+    const m = Math.floor(sec/60);
+    return (d?d+' 天 ':'') + (h?h+' 小时 ':'') + m + ' 分';
+  }
+  function statusZh(s) {
+    return ({active:'活跃',limited:'流量耗尽',expired:'已过期',disabled:'已禁用',on_hold:'待激活'}[s] || s);
+  }
+
+  async function loadStats() {
+    try {
+      const s = await api('GET', '/api/admin/system-status');
+      STATS_CURRENT = s;
+      document.getElementById('st_ts').textContent = '最后更新 ' + new Date().toLocaleTimeString();
+
+      // 运行状态
+      const r = s.running;
+      const sb = r.status_breakdown || {};
+      document.getElementById('st_running').innerHTML = `
+        <div class="stat-card ${r.marzban_ok?'ok':'bad'}">
+          <div class="lbl">Marzban 状态</div>
+          <div class="val">${r.marzban_ok?'<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-check"/></svg> 在线':'<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-triangle-alert"/></svg> 离线'}</div>
+        </div>
+        <div class="stat-card"><div class="lbl">账户总数</div><div class="val">${r.account_count}</div></div>
+        <div class="stat-card"><div class="lbl">激活订阅总数</div><div class="val">${r.signup_count}</div>
+          <div style="font-size:0.78rem;color:var(--animal-text-muted);margin-top:4px">
+            活跃 ${sb.active||0} · 过期 ${sb.expired||0} · 禁用 ${sb.disabled||0} · 限流 ${sb.limited||0}
+          </div>
+        </div>
+        <div class="stat-card"><div class="lbl">邀请码使用率</div><div class="val">${r.invite_used_pct}%</div>
+          <div style="font-size:0.78rem;color:var(--animal-text-muted);margin-top:4px">${r.invite_used} / ${r.invite_total} · 剩 ${r.invite_unused}</div>
+        </div>
+        <div class="stat-card"><div class="lbl">服务启动至今</div><div class="val" style="font-size:1.1rem">${fmtUptime(r.uptime_seconds)}</div></div>
+      `;
+
+      // 流量
+      const t = s.traffic;
+      document.getElementById('st_traffic').innerHTML = `
+        <div class="stat-card"><div class="lbl">实时下行 (Mbps)</div><div class="val">${(t.rx_mbps||0).toFixed(2)}</div></div>
+        <div class="stat-card"><div class="lbl">实时上行 (Mbps)</div><div class="val">${(t.tx_mbps||0).toFixed(2)}</div></div>
+        <div class="stat-card"><div class="lbl">本月已用流量</div><div class="val" style="font-size:1.3rem">${fmtBytes(t.monthly_used_bytes)}</div>
+          <div style="font-size:0.78rem;color:var(--animal-text-muted);margin-top:4px">月配额 ${t.monthly_cap_tb} TB</div>
+        </div>
+        <div class="stat-card"><div class="lbl">历史总转发流量</div><div class="val" style="font-size:1.3rem">${fmtBytes(t.lifetime_total_bytes)}</div></div>
+      `;
+      document.getElementById('st_quota_lbl').textContent = `${(t.monthly_used_tb||0).toFixed(3)} TB / ${t.monthly_cap_tb} TB · ${t.monthly_used_pct||0}%`;
+      document.getElementById('st_quota_bar').style.width = Math.min(100, t.monthly_used_pct||0) + '%';
+
+      // Top subs
+      const tsBody = document.querySelector('#st_top_subs tbody');
+      tsBody.innerHTML = '';
+      if (!s.top_subs || s.top_subs.length === 0) {
+        tsBody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--animal-text-muted);padding:14px">暂无数据</td></tr>';
+      } else {
+        const tsMax = Math.max(...s.top_subs.map(u => u.used_bytes || 0), 1);
+        s.top_subs.forEach(u => {
+          const ratio = (u.used_bytes || 0) / tsMax * 100;
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td><code>${escapeHtml(u.marzban_username)}</code></td>
+            <td>${escapeHtml(u.account||'—')}</td>
+            <td>${fmtBytes(u.used_bytes)}${u.limit_bytes?' / '+fmtBytes(u.limit_bytes):''}</td>
+            <td><div style="width:140px;height:10px;background:#e9e2d4;border:1.5px solid var(--animal-border-input);border-radius:999px;overflow:hidden"><div style="height:100%;width:${ratio.toFixed(1)}%;background:linear-gradient(90deg,var(--animal-primary,#19c8b9),#FFB84D);border-radius:999px"></div></div></td>
+            <td>${statusZh(u.status)}</td>
+          `;
+          tsBody.appendChild(tr);
+        });
+      }
+      // Top accounts (含 Top 内占比 bar)
+      const taBody = document.querySelector('#st_top_accounts tbody');
+      taBody.innerHTML = '';
+      if (!s.top_accounts || s.top_accounts.length === 0) {
+        taBody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--animal-text-muted);padding:14px">暂无数据</td></tr>';
+      } else {
+        const taMax = Math.max(...s.top_accounts.map(a => a.used_bytes || 0), 1);
+        s.top_accounts.forEach(a => {
+          const ratio = (a.used_bytes || 0) / taMax * 100;
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td><code>${escapeHtml(a.username)}</code></td>
+            <td>${a.subscription_count}</td>
+            <td>${fmtBytes(a.used_bytes)}</td>
+            <td><div style="width:140px;height:10px;background:#e9e2d4;border:1.5px solid var(--animal-border-input);border-radius:999px;overflow:hidden"><div style="height:100%;width:${ratio.toFixed(1)}%;background:linear-gradient(90deg,var(--animal-primary,#19c8b9),#FFB84D);border-radius:999px"></div></div></td>
+          `;
+          taBody.appendChild(tr);
+        });
+      }
+
+      // 下拉填充 (默认选 Top 1)
+      const sel = document.getElementById('ut_select');
+      const prev = sel.value;
+      sel.innerHTML = '';
+      (s.top_subs || []).forEach(u => {
+        const o = document.createElement('option');
+        o.value = u.marzban_username; o.textContent = `${u.marzban_username} · ${fmtBytes(u.used_bytes)}`;
+        sel.appendChild(o);
+      });
+      if (prev && Array.from(sel.options).some(o => o.value === prev)) sel.value = prev;
+
+      hide(document.getElementById('st_err'));
+      loadUserTraffic();
+    } catch (e) {
+      show(document.getElementById('st_err'), '<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-triangle-alert"/></svg> ' + e.message);
+    }
+  }
+
+  // 资源占用卡片 (复制主页) - 每秒刷新
+  async function pullRm() {
+    try {
+      const r = await fetch('/stats/current.json?_=' + Date.now());
+      const cur = await r.json();
+      const grid = document.getElementById('rm_grid_admin');
+      const cMap = {
+        'vega-vpn-marzban': 'Marzban · Xray',
+        'vega-vpn-portal': '门户 nginx',
+        'vega-vpn-signup': '注册服务',
+      };
+      let html = '';
+      for (const [k, label] of Object.entries(cMap)) {
+        const v = (cur.containers || {})[k] || {};
+        html += `<div class="rm-card"><div class="rm-label">${label}</div><div class="rm-val">${(v.mem_mb||0).toFixed(0)} MB</div><div class="rm-sub">${(v.cpu_pct||0).toFixed(2)}% CPU</div></div>`;
+      }
+      const tot = cur.vega_vpn_total || {mem_mb:0,cpu_pct:0};
+      html += `<div class="rm-card rm-total"><div class="rm-label">项目合计</div><div class="rm-val">${tot.mem_mb.toFixed(0)} MB</div><div class="rm-sub">${tot.cpu_pct.toFixed(2)}% CPU</div></div>`;
+      html += `<div class="rm-card"><div class="rm-label">出口下行</div><div class="rm-val">${(cur.traffic?.rx_mbps||0).toFixed(2)} <span style="font-size:0.7em">Mbps</span></div><div class="rm-sub">峰值 1 Gbps</div></div>`;
+      html += `<div class="rm-card"><div class="rm-label">出口上行</div><div class="rm-val">${(cur.traffic?.tx_mbps||0).toFixed(2)} <span style="font-size:0.7em">Mbps</span></div><div class="rm-sub">峰值 1 Gbps</div></div>`;
+      grid.innerHTML = html;
+    } catch (_) {}
+  }
+
+  async function loadUserTraffic() {
+    try {
+      USER_TRAFFIC = await api('GET', '/api/admin/user-traffic-history');
+      drawUtChart();
+    } catch (e) {
+      document.getElementById('ut_empty').style.display = 'flex';
+      document.getElementById('ut_empty').textContent = '加载失败: ' + e.message;
+    }
+  }
+  function drawUtChart() {
+    const sel = document.getElementById('ut_select');
+    const name = sel.value;
+    const users = (USER_TRAFFIC && USER_TRAFFIC.users) || {};
+    const arr = users[name] || [];
+    const empty = document.getElementById('ut_empty');
+    const line = document.getElementById('ut_line');
+    const area = document.getElementById('ut_area');
+    const speedLine = document.getElementById('ut_speed_line');
+    if (arr.length < 2) {
+      empty.style.display = 'flex';
+      empty.textContent = `数据采集中… ${arr.length}/2 个采样`;
+      line.setAttribute('points', ''); area.setAttribute('d', '');
+      if (speedLine) speedLine.setAttribute('points', '');
+      document.getElementById('ut_meta').textContent = '';
+      return;
+    }
+    empty.style.display = 'none';
+
+    const W = 600, H = 140;
+    // 累计折线
+    const used = arr.map(p => p.used);
+    const mn = Math.min(...used), mx = Math.max(...used);
+    const span = Math.max(mx - mn, 1);
+    const pts = arr.map((p, i) => {
+      const x = (i / (arr.length - 1)) * W;
+      const y = H - ((p.used - mn) / span) * (H - 8) - 4;
+      return `${x.toFixed(1)},${y.toFixed(1)}`;
+    });
+    line.setAttribute('points', pts.join(' '));
+    area.setAttribute('d', `M${pts[0]} L${pts.join(' L')} L${W},${H} L0,${H} Z`);
+
+    // 实时速率折线 (derivatives of cumulative)
+    // speed[i] = (used[i] - used[i-1]) / (ts[i] - ts[i-1]) 字节/秒
+    const speeds = [];
+    for (let i = 1; i < arr.length; i++) {
+      const dt = Math.max(arr[i].ts - arr[i-1].ts, 1);
+      const ds = Math.max(arr[i].used - arr[i-1].used, 0);
+      speeds.push(ds / dt);
+    }
+    if (speeds.length > 1) {
+      const smn = 0;  // 速率最低就是 0
+      const smx = Math.max(...speeds, 1);
+      const sspan = smx - smn || 1;
+      const speedPts = speeds.map((v, i) => {
+        const x = ((i + 1) / (arr.length - 1)) * W;
+        const y = H - ((v - smn) / sspan) * (H - 8) - 4;
+        return `${x.toFixed(1)},${y.toFixed(1)}`;
+      });
+      // 第一个点：用第二个的位置（让速率线从图开头开始）
+      speedPts.unshift(`0,${speedPts[0].split(',')[1]}`);
+      if (speedLine) speedLine.setAttribute('points', speedPts.join(' '));
+      // meta 显示当前速率（最后一个 dt 内的 B/s）
+      const lastSpeed = speeds[speeds.length - 1];
+      document.getElementById('ut_meta').textContent =
+        `${arr.length}/300 采样 · 累计 ${fmtBytes(mx)} · 当前速率 ${fmtBytes(lastSpeed)}/s · 区间增 ${fmtBytes(mx - mn)}`;
+    } else {
+      if (speedLine) speedLine.setAttribute('points', '');
+      document.getElementById('ut_meta').textContent =
+        `${arr.length}/300 采样 · 累计 ${fmtBytes(mx)} · 区间增 ${fmtBytes(mx - mn)}`;
+    }
+  }
+  document.getElementById('ut_select').addEventListener('change', drawUtChart);
+
+  document.getElementById('st_refresh').addEventListener('click', loadStats);
+
+  // 进入 stats tab 时开始秒级刷新; 离开时停掉
+  function startStatsTimers() {
+    if (!RM_TIMER) { pullRm(); RM_TIMER = setInterval(pullRm, 1000); }
+    if (!UT_TIMER) { UT_TIMER = setInterval(loadUserTraffic, 5000); }
+  }
+  function stopStatsTimers() {
+    if (RM_TIMER) { clearInterval(RM_TIMER); RM_TIMER = null; }
+    if (UT_TIMER) { clearInterval(UT_TIMER); UT_TIMER = null; }
+  }
+
+  // ----- Invites tab -----
+  function renderInvites() {
+    const q = document.getElementById('f_q').value.trim().toLowerCase();
+    const stFilter = document.getElementById('f_state').value;
+    const tbody = document.querySelector('#i_table tbody');
+    tbody.innerHTML = '';
+    let shown = 0;
+    ALL_INVITES.forEach(i => {
+      if (stFilter && i.state !== stFilter) return;
+      if (q) {
+        const hay = (i.code + ' ' + (i.note || '') + ' ' + (i.used_by || '')).toLowerCase();
+        if (!hay.includes(q)) return;
+      }
+      shown++;
+      const tr = document.createElement('tr');
+      const resetZh = { month: '每月', year: '每年', no_reset: '不重置' }[i.min_reset_strategy] || i.min_reset_strategy;
+      tr.innerHTML = `
+        <td><code>${escapeHtml(i.code)}</code></td>
+        <td>
+          <span class="pill-cfg">≤ ${i.max_data_limit_gb} GB</span>
+          <span class="pill-cfg">≤ ${i.max_expire_days} 天</span>
+          <span class="pill-cfg">≥ ${resetZh}</span>
+        </td>
+        <td>${i.state === 'used' ? '<span class="tag tag-muted"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-check"/></svg> 已使用</span>' : '<span class="tag tag-active"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-check"/></svg> 未使用</span>'}</td>
+        <td>${escapeHtml(i.used_by || '—')}</td>
+        <td style="font-size:0.82rem; color:var(--animal-text-muted)">
+          建：${(i.created_at || '').replace('T',' ').slice(5,16)}<br>
+          ${i.used_at ? '用：' + i.used_at.replace('T',' ').slice(5,16) : ''}
+        </td>
+        <td>${escapeHtml(i.note || '')}</td>
+        <td>
+          <button class="btn btn-ghost btn-sm copy-btn" data-copy="${escapeHtml(i.code)}"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-clipboard"/></svg> 复制</button>
+          <button class="btn btn-ghost btn-sm" data-del="${escapeHtml(i.code)}"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-trash-2"/></svg></button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+    document.getElementById('i_count_lbl').textContent = `（共 ${shown} 条）`;
+    tbody.querySelectorAll('button[data-del]').forEach(b => {
+      b.addEventListener('click', async () => {
+        const ok = await aiConfirm('确认删除邀请码 ' + b.dataset.del + ' ？此操作不可撤销。', { okText: '<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-trash-2"/></svg> 删除' });
+        if (!ok) return;
+        try {
+          await api('DELETE', '/api/admin/invites/' + encodeURIComponent(b.dataset.del));
+          toast('<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-sparkles"/></svg> 已删除邀请码', 'ok');
+          loadInvites();
+        } catch (e) { toast('<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-triangle-alert"/></svg> 删除失败: ' + e.message, 'err'); }
+      });
+    });
+    tbody.querySelectorAll('button[data-copy]').forEach(b => {
+      b.addEventListener('click', () => {
+        navigator.clipboard.writeText(b.dataset.copy).then(() => {
+          const orig = b.textContent; b.innerHTML = '<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-check"/></svg> 已复制';
+          setTimeout(() => b.textContent = orig, 1200);
+        });
+      });
+    });
+  }
+
+
+  // 一键删除所有未用邀请码
+  document.getElementById('i_purge_unused')?.addEventListener('click', async () => {
+    const unused = ALL_INVITES.filter(x => !x.used_by);
+    if (unused.length === 0) { toast('当前没有未用邀请码', 'warn'); return; }
+    const ok = await aiConfirm(`确认删除 ${unused.length} 个未用邀请码？删除后这些码立即失效，无法恢复。`, { okText: '<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-trash-2"/></svg> 全部删除' });
+    if (!ok) return;
+    let okCount = 0, errCount = 0;
+    for (const inv of unused) {
+      try { await api('DELETE', '/api/admin/invites/' + encodeURIComponent(inv.code)); okCount++; }
+      catch(_) { errCount++; }
+    }
+    toast(`删除完成：${okCount} 成功${errCount? ' / ' + errCount + ' 失败':''}`, errCount ? 'warn' : 'ok');
+    loadInvites();
+  });
+
+  async function loadInvites() {
+    try {
+      const data = await api('GET', '/api/admin/invites');
+      ALL_INVITES = data.invites;
+      renderInvites();
+    } catch (e) {
+      show(document.getElementById('i_err'), '<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-triangle-alert"/></svg> ' + e.message);
+    }
+  }
+
+  document.getElementById('i_refresh').addEventListener('click', loadInvites);
+  document.getElementById('f_q').addEventListener('input', renderInvites);
+  document.getElementById('f_state').addEventListener('change', renderInvites);
+
+  document.getElementById('i_gen').addEventListener('click', async () => {
+    hide(document.getElementById('i_err'));
+    hide(document.getElementById('i_ok'));
+    const codesBox = document.getElementById('i_codes');
+    codesBox.classList.remove('show');
+    try {
+      const payload = {
+        count: parseInt(document.getElementById('i_count').value),
+        max_data_limit_gb: parseInt(document.getElementById('i_data').value),
+        max_expire_days: parseInt(document.getElementById('i_expire').value),
+        min_reset_strategy: document.getElementById('i_reset').value,
+        note: document.getElementById('i_note').value,
+      };
+      const data = await api('POST', '/api/admin/invites', payload);
+      show(document.getElementById('i_ok'), `<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-sparkles"/></svg> 已生成 ${data.codes.length} 个邀请码`);
+      codesBox.innerHTML = data.codes.map(c => `<div>${c} <button class="btn btn-ghost btn-sm copy-btn" data-copy="${c}"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-clipboard"/></svg></button></div>`).join('');
+      codesBox.classList.add('show');
+      codesBox.querySelectorAll('button[data-copy]').forEach(b => {
+        b.addEventListener('click', () => {
+          navigator.clipboard.writeText(b.dataset.copy).then(() => {
+            const o = b.textContent; b.innerHTML = '<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-check"/></svg>';
+            setTimeout(() => b.textContent = o, 1200);
+          });
+        });
+      });
+      loadInvites();
+      loadStats();
+    } catch (e) {
+      show(document.getElementById('i_err'), '<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-triangle-alert"/></svg> ' + e.message);
+    }
+  });
+
+  // ----- Signups tab -----
+  function statusPill(s) {
+    // 后端 signups 可能返回 status / is_active 字段；缺省按 'active' 算
+    const raw = (s.status || (s.is_active === false ? 'disabled' : 'active') || 'active').toLowerCase();
+    const map = {
+      'active':   { cls: 'tag-active',   txt: '<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-sparkles"/></svg> 活跃' },
+      'disabled': { cls: 'tag-disabled', txt: '<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-ban"/></svg> 禁用' },
+      'locked':   { cls: 'tag-locked',   txt: '<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-lock"/></svg> 锁定' },
+      'expired':  { cls: 'tag-muted',    txt: '<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-hourglass"/></svg> 过期' },
+    };
+    const m = map[raw] || { cls: 'tag-muted', txt: raw };
+    return `<span class="tag ${m.cls}">${m.txt}</span>`;
+  }
+
+  async function loadSignups() {
+    hide(document.getElementById('s_err'));
+    try {
+      const data = await api('GET', '/api/admin/signups');
+      const tbody = document.querySelector('#s_table tbody');
+      tbody.innerHTML = '';
+      if (!data.signups || data.signups.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:var(--animal-text-muted); padding:30px"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-leaf"/></svg> 暂无朋友注册</td></tr>`;
+        return;
+      }
+      data.signups.forEach(s => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong style="color:var(--animal-text-primary)">${escapeHtml(s.friend_name)}</strong></td>
+          <td><code>${escapeHtml(s.marzban_username)}</code></td>
+          <td>${statusPill(s)}</td>
+          <td><code>${escapeHtml(s.invite_code)}</code></td>
+          <td style="font-size:0.82rem; color:var(--animal-text-muted)">${escapeHtml((s.created_at||'').replace('T',' ').slice(0,16))}</td>
+          <td>
+            <button class="btn btn-ghost btn-sm" data-view='${escapeHtml(JSON.stringify(s))}'><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-search"/></svg> 详情</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+      tbody.querySelectorAll('button[data-view]').forEach(b => {
+        b.addEventListener('click', () => {
+          let s;
+          try { s = JSON.parse(b.dataset.view); } catch(_) { return; }
+          const rows = [
+            ['朋友昵称', s.friend_name],
+            ['Marzban 用户名', s.marzban_username],
+            ['账户状态', (s.status || (s.is_active === false ? 'disabled' : 'active'))],
+            ['邀请码', s.invite_code],
+            ['订阅 token', s.subscription_token || '—'],
+            ['订阅 URL', s.subscription_url || '—'],
+            ['流量上限 (GB)', s.data_limit_gb != null ? s.data_limit_gb : '—'],
+            ['重置策略', s.reset_strategy || '—'],
+            ['到期 (天)', s.expire_days != null ? s.expire_days : '永久'],
+            ['注册时间', s.created_at || '—'],
+          ];
+          const html = '<dl>' + rows.map(([k,v]) =>
+            `<dt>${escapeHtml(k)}</dt><dd>${escapeHtml(String(v))}</dd>`
+          ).join('') + '</dl>';
+          openDetailModal(html, '<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-cat"/></svg> ' + (s.friend_name || '朋友') + ' 的账户');
+        });
+      });
+    } catch (e) {
+      show(document.getElementById('s_err'), '<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-triangle-alert"/></svg> ' + e.message);
+      toast('加载失败: ' + e.message, 'err');
+    }
+  }
+  document.getElementById('s_refresh').addEventListener('click', loadSignups);
+})();
+</script>
+</body>
+</html>

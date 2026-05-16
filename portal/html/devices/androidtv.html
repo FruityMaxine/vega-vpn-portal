@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Android TV 盒子 · Vega VPN 教程</title>
+<link rel="stylesheet" href="../style.css" />
+<link rel="stylesheet" href="../animal-components.css" />
+<script src="../animal-components.js" defer></script>
+<script src="/favicon-today.js"></script>
+</head>
+<body class="home">
+<header class="navbar">
+  <div class="logo"><span class="badge"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-tv"/></svg></span><span>Android TV 盒子</span></div>
+  <nav class="nav-links"><a href="../index.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-home"/></svg> 首页</a><a href="help.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-help"/></svg> 求助</a></nav>
+</header>
+
+<main class="container">
+
+<div style="background:var(--animal-primary-bg); border:2.5px dashed var(--animal-primary); border-radius:14px; padding:10px 16px; margin-bottom:14px; font-weight:700; color:var(--animal-text-primary);">
+你的订阅含 4 个协议节点（VLESS / SS / Trojan / VMess）· <a href="protocols.html"><strong>看哪个该用 / 怎么切 →</strong></a>
+</div>
+  <a href="../index.html" class="back-home"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-arrow-left"/></svg> 返回首页</a>
+
+  <section class="hero" style="background:linear-gradient(135deg,#d1da49 0%,#FFB84D 60%,#8ac68a 100%);">
+    <div class="mascot"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-tv"/></svg></div>
+    <div style="flex:1;min-width:240px">
+      <h1>Android TV 盒子 / 智能机顶盒</h1>
+      <p>小米 / Shield / Onn 4K Pro / 华为 / 天猫魔盒</p>
+    </div>
+  </section>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-cat"/></svg> 通用思路</h2>
+    <div class="meta">
+      <span class="tag medium"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-dot"/></svg> 中等</span>
+      <span class="tag time"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-clock"/></svg> 5~10 分钟</span>
+      <span class="tag app"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-package"/></svg> 装 v2rayNG APK</span>
+    </div>
+    <p>所有<strong>带 Android TV 系统</strong>的盒子（Android TV 9+ 或国产 Android 系统盒子）都可以通过侧载（sideload）安装 <code>v2rayNG</code> 或 <code>NekoBox</code> APK，把订阅导入，然后整机走 VPN，包括预装的 Netflix / YouTube / Disney+ App。</p>
+    <p>关键步骤：<strong>下载 APK → 用 U 盘 / 文件管理器装上 → 导入订阅 → 启动 VPN</strong>。</p>
+
+    <div class="download-row">
+      <a class="btn btn-primary" href="/downloads/v2rayng-latest-arm64.apk" download><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-zap"/></svg> 下载 v2rayNG arm64 (本地镜像 · TV 侧载)</a>
+      <a class="btn btn-warning" href="/downloads/nekobox-latest-arm64.apk" download><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-zap"/></svg> 下载 NekoBox arm64 (本地镜像)</a>
+      <a class="btn btn-ghost" href="https://github.com/2dust/v2rayNG/releases/latest" target="_blank" rel="noopener"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-globe"/></svg> 原始 GitHub</a>
+      <span class="meta-note">arm64-v8a 版 · 现代 TV 盒子首选 · 用 Send Files to TV 推到盒子</span>
+    </div>
+
+    <div class="download-row">
+      <code class="copy-cmd">adb install v2rayng.apk</code>
+      <button class="btn btn-sm btn-primary" data-copy-text="adb install v2rayng.apk"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-clipboard"/></svg> 复制 adb 命令</button>
+      <span class="meta-note">USB 调试 / adb connect 盒子IP:5555 后执行</span>
+    </div>
+
+  <div class="sub-cta-card">
+    <div class="sub-cta-icon"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-ticket"/></svg></div>
+    <div class="sub-cta-body">
+      <strong>到这一步需要你的订阅链接 / 二维码？</strong>
+      <p>所有订阅都在「我的账户」里管理（含多个订阅时可自选）。点下面按钮跳过去复制 URL 或扫二维码。</p>
+      <a class="btn btn-primary" href="/me.html#subs"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-link"/></svg> 去「我的账户」拿订阅</a>
+    </div>
+  </div>
+    <p style="font-size:0.88rem;color:var(--text-muted)">用手机扫这个码可以直接打开你的订阅 URL，然后用 <strong>Send Files to TV</strong> 把它发到电视上。</p>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-tv"/></svg> 通用：v2rayNG for Android TV</h2>
+    <ol class="steps">
+      <li>
+        <h4>在电视上装"Send Files to TV"（Play 商店搜）</h4>
+        <p>这是 TV 端官方的文件传送 App。同时在手机也装一个。</p>
+      </li>
+      <li>
+        <h4>在手机浏览器下载 <code>v2rayNG_x.x.x_arm64-v8a.apk</code></h4>
+        <p>从 <a href="https://github.com/2dust/v2rayNG/releases/latest" target="_blank">GitHub Releases</a> 拿最新版。</p>
+      </li>
+      <li>
+        <h4>手机 Send Files to TV → 选 APK → 发送到电视</h4>
+        <p>电视和手机要在同一局域网。电视端会自动收到。</p>
+      </li>
+      <li>
+        <h4>电视上打开"文件管理器" → 找到刚收到的 APK → 安装</h4>
+        <p>第一次会提示"未知来源应用"，去 <strong>设置 → 设备 → 应用 → 安全 → 未知来源</strong> 允许文件管理器。</p>
+      </li>
+      <li>
+        <h4>电视上启动 v2rayNG → 右上角 + → 从剪贴板导入</h4>
+        <p>但 TV 上没办法直接复制订阅 URL。两种办法：<br>
+        (A) 用蓝牙键盘手敲；<br>
+        (B) 推荐：用 <strong>Sponsor</strong> 或 <strong>v2rayNG 内置二维码扫描</strong>，用手机显示订阅二维码（上面那个二维码），TV 扫码导入。</p>
+      </li>
+      <li>
+        <h4>启动 VPN → 测试</h4>
+        <p>装个浏览器 App（Puffin TV / TV Bro）打开 <a href="https://ipinfo.io" target="_blank">ipinfo.io</a> 验证。或直接打开 YouTube 看能不能播 4K。</p>
+      </li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-package"/></svg> 各品牌差异</h2>
+
+    <h3><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-check"/></svg> Nvidia Shield TV / Shield TV Pro</h3>
+    <p>原生 Android TV，体验最佳。Play 商店里 v2rayNG / NekoBox 都能直接搜到（如果 Play 商店区域是美国）。开启"开发者选项 → 未知来源"后侧载也很顺滑。<strong>推荐方案 A：Play 商店直装</strong>。</p>
+
+    <h3><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-check"/></svg> Onn 4K Pro / Chromecast with Google TV (4K)</h3>
+    <p>纯净 Google TV 系统。装"Downloader"（Play 商店搜）→ 输入 APK 下载直链 → 自动安装。或用 Send Files to TV。<strong>推荐 NekoBox</strong>（更省内存，盒子内存通常 2GB）。</p>
+
+    <h3><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-dot"/></svg> 小米盒子（国际版 Mi Box S / 4K Stick）</h3>
+    <p>原生 Android TV，操作同上。<strong>国行小米盒子（MIUI TV）</strong>要先开"设置 → 账户与安全 → 安装未知来源" + 删掉小米的 App 商店推送，否则装好的 v2rayNG 第二天会被自动清理。</p>
+
+    <h3><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-dot"/></svg> 华为悦盒 / 海美迪 / 国产盒子</h3>
+    <p>多数是 Android 9~11 魔改版。流程：</p>
+    <ol class="steps">
+      <li><h4>开发者模式</h4><p>"关于设备 → 版本号"狂按 7 下，开发者模式出现。</p></li>
+      <li><h4>开 USB 调试 + ADB 安装</h4><p>电脑装 ADB，<code>adb connect 盒子IP:5555</code> → <code>adb install v2rayNG.apk</code>。</p></li>
+      <li><h4>盒子可能没"打开 App"按钮</h4><p>装 <strong>"应用启动器"</strong>（比如 ATV Launcher）才能进 v2rayNG 主界面。</p></li>
+    </ol>
+
+    <h3><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-x"/></svg> 天猫魔盒 / 当贝 / 创维等闭源系统</h3>
+    <p>这些盒子改了 Android，自带 App 商店里没有 v2rayNG。流程：U 盘装 APK，然后用 <strong>当贝市场</strong> / <strong>沙发管家</strong> 跳到"我的应用 → 隐藏的应用"找到 v2rayNG 入口。部分严格机型禁用了侧载，<strong>建议改方案 B（路由器层）</strong>，见下。</p>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-wifi"/></svg> 方案 B：路由器层 VPN（一劳永逸）</h2>
+    <p>如果盒子装不了 APK，或者你家 4~5 台设备都要看 Netflix，<strong>把 VPN 装在路由器上</strong>整个家庭网络就都走代理了。详见 <a href="router.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-wifi"/></svg> 路由器教程</a>。</p>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-life-buoy"/></svg> 常见问题</h2>
+    <details class="faq"><summary>v2rayNG 装好但电视主界面找不到？</summary><p>Android TV launcher 默认只显示"TV App"。装 <strong>"Sideload Launcher"</strong>（Play 商店搜）或 <strong>"ATV Launcher"</strong>，里面能看到所有侧载的非 TV App。</p></details>
+    <details class="faq"><summary>遥控器没法输入订阅 URL？</summary><p>(1) 接 USB 键盘；(2) 用 <strong>Google TV 手机 App</strong> 当虚拟键盘；(3) 用手机显示二维码，TV 上 v2rayNG → 扫码导入（v2rayNG 6.0+ 支持摄像头扫码，盒子没摄像头则不行，回到法 (1)(2)）。</p></details>
+    <details class="faq"><summary>Netflix / Disney+ 显示"VPN 检测到，无法播放"？</summary><p>家用 VPS 的 IP 通常已被 Netflix 标记。解决：(1) 换出口 IP（到 /setup.html 管理员可换 IP 池）；(2) 用住宅 IP 中转；(3) 改协议为 IKEv2 + 较冷门端口。Vega 默认配 Netflix-DE 友好出口。</p></details>
+    <details class="faq"><summary>盒子内存不够，v2rayNG 闪退？</summary><p>用 NekoBox（更轻量）。或精简 v2rayNG 配置：设置里关掉 GeoIP / 路由模式改"全局"。</p></details>
+    <details class="faq"><summary>看 4K 卡顿？</summary><p>(1) 测速达不到 25Mbps 卡 4K 正常；(2) 协议改 Hysteria2（基于 QUIC，跨洋大带宽更稳）；(3) 检查盒子的 WiFi 是否 WiFi 5/6 双频。</p></details>
+  </div>
+
+  <p><a href="router.html" class="btn btn-warm"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-wifi"/></svg> 看路由器方案</a> <a href="help.html" class="btn btn-ghost"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-life-buoy"/></svg> 完整 FAQ</a></p>
+</main>
+
+<footer class="footer"><span class="paw"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-paw-print"/></svg></span> Vega VPN · Android TV 教程 <span class="paw"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-paw-print"/></svg></span></footer>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script src="../app.js"></script>
+</body>
+</html>

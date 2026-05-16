@@ -1,0 +1,67 @@
+# docker-compose.yml
+# Marzban + Animal Island VPN Portal
+#
+# Before starting:
+#   cp .env.example .env
+#   Edit .env with your values
+#   docker compose up -d
+
+services:
+
+  marzban:
+    # Version-pinned to a known-good build (2025-01-09).
+    # Remove the digest and use :latest if you want to track upstream.
+    image: gozargah/marzban@sha256:8e422c21997e5d2e3fa231eeff73c0a19193c20fc02fa4958e9368abb9623b8d
+    container_name: vpn-marzban
+    restart: always
+    env_file: ./marzban/.env
+    network_mode: host
+    volumes:
+      - /var/lib/marzban:/var/lib/marzban
+      - ./marzban/xray/xray_config.json:/code/xray_config.json:ro
+      - ./marzban/templates/clash/default.yml:/code/app/templates/clash/default.yml:ro
+    mem_limit: 512m
+    cpus: 1.5
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  signup-service:
+    build: ./signup-service
+    container_name: vpn-signup
+    restart: always
+    network_mode: host
+    volumes:
+      - ./signup-service/data:/app/data
+      - ./portal/html/stats:/portal-stats:ro
+    environment:
+      MARZBAN_API_BASE: http://127.0.0.1:8000
+      MARZBAN_ADMIN_USER: ${MARZBAN_SUDO_USERNAME}
+      MARZBAN_ADMIN_PASS: ${MARZBAN_SUDO_PASSWORD}
+      SIGNUP_DATA_DIR: /app/data
+      PORTAL_BASE_URL: ${PORTAL_BASE_URL}
+    mem_limit: 128m
+    cpus: 0.3
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"
+
+  portal:
+    image: nginx:1.27-alpine
+    container_name: vpn-portal
+    restart: always
+    network_mode: host
+    volumes:
+      - ./portal/html:/usr/share/nginx/html:ro
+      - ./portal/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    mem_limit: 64m
+    cpus: 0.3
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "2"

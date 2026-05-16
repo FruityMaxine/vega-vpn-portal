@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>macOS · Vega VPN 教程</title>
+<link rel="stylesheet" href="../style.css" />
+<link rel="stylesheet" href="../animal-components.css" />
+<script src="../animal-components.js" defer></script>
+<script src="/favicon-today.js"></script>
+</head>
+<body class="home">
+<header class="navbar">
+  <div class="logo"><span class="badge"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-laptop"/></svg></span><span>macOS 教程</span></div>
+  <nav class="nav-links"><a href="../index.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-home"/></svg> 首页</a><a href="help.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-help"/></svg> 求助</a></nav>
+</header>
+
+<main class="container">
+
+<div style="background:var(--animal-primary-bg); border:2.5px dashed var(--animal-primary); border-radius:14px; padding:10px 16px; margin-bottom:14px; font-weight:700; color:var(--animal-text-primary);">
+你的订阅含 4 个协议节点（VLESS / SS / Trojan / VMess）· <a href="protocols.html"><strong>看哪个该用 / 怎么切 →</strong></a>
+</div>
+  <a href="../index.html" class="back-home"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-arrow-left"/></svg> 返回首页</a>
+
+  <section class="hero" style="background:linear-gradient(135deg,#889df0 0%,#69B5E1 60%,#FFF4D2 100%);">
+    <div class="mascot"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-laptop"/></svg></div>
+    <div style="flex:1;min-width:240px">
+      <h1>Mac · macOS 接入指南</h1>
+      <p>Intel / Apple Silicon 全支持，三种方案任选！</p>
+    </div>
+  </section>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-cat"/></svg> 方案 A：原生 IKEv2（最省事）</h2>
+    <div class="meta">
+      <span class="tag easy"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-check"/></svg> 简单</span>
+      <span class="tag time"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-clock"/></svg> 1~5 分钟</span>
+    </div>
+    <p>和 iPhone 一样，macOS 内置 IKEv2 客户端，**完全不用装第三方 App**。我们提供 .mobileconfig 描述文件，双击就能装。</p>
+
+    <p><strong>专属订阅链接：</strong></p>
+  <div class="sub-cta-card">
+    <div class="sub-cta-icon"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-ticket"/></svg></div>
+    <div class="sub-cta-body">
+      <strong>到这一步需要你的订阅链接 / 二维码？</strong>
+      <p>所有订阅都在「我的账户」里管理（含多个订阅时可自选）。点下面按钮跳过去复制 URL 或扫二维码。</p>
+      <a class="btn btn-primary" href="/me.html#subs"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-link"/></svg> 去「我的账户」拿订阅</a>
+    </div>
+  </div>
+    <ol class="steps">
+      <li>
+        <h4>在 Safari 里打开上面的描述文件 URL</h4>
+        <p>会下载一个 <code>.mobileconfig</code> 文件到下载目录。</p>
+        </li>
+      <li>
+        <h4>双击下载的 .mobileconfig 文件</h4>
+        <p>macOS 会提示"已下载描述文件 Vega-IKEv2"。打开 <strong>系统设置 → 隐私与安全性 → 描述文件</strong>（旧版 macOS 在"系统偏好设置 → 描述文件"）。</p>
+        </li>
+      <li>
+        <h4>选中 Vega-IKEv2 → 点"安装" → 输入 Mac 登录密码</h4>
+      </li>
+      <li>
+        <h4>菜单栏图标连接</h4>
+        <p>安装完成后，菜单栏右上角会出现 VPN 图标（或在"系统设置 → 网络"里看到 Vega-VPN 条目）。点一下选择"连接"即可。</p>
+        </li>
+      <li>
+        <h4>测试：浏览器打开 <a href="https://ipinfo.io" target="_blank" rel="noopener">ipinfo.io</a></h4>
+        <p>看到德国 IP 即成功。</p>
+      </li>
+    </ol>
+
+    <div class="tip"><strong><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-thumbs-up"/></svg> 优点：</strong>零依赖、开机自动连（可在网络设置里勾"自动连接"）、超低 CPU 占用。<br><strong><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-triangle-alert"/></svg> 缺点：</strong>遇到网络环境严苛时 IKEv2 可能不稳定，那时用方案 B/C。</div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-cat"/></svg> 方案 B：ClashX Pro / Clash Verge Rev</h2>
+    <div class="meta">
+      <span class="tag medium"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-dot"/></svg> 中等</span>
+      <span class="tag time"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-clock"/></svg> 3 分钟</span>
+      <span class="tag app"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-package"/></svg> 需下载 App</span>
+    </div>
+    <p>ClashX Pro 是 macOS 上最流行的代理 GUI。原版 ClashX 已停更，推荐 <strong>Clash Verge Rev</strong>（活跃维护、支持 Apple Silicon 原生）。</p>
+
+    <div class="download-row">
+      <a class="btn btn-primary" href="/downloads/clash-verge-rev-latest-mac-arm64.dmg" download><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-zap"/></svg> Clash Verge Rev · Apple Silicon (本地镜像)</a>
+      <a class="btn btn-primary" href="/downloads/clash-verge-rev-latest-mac-x64.dmg" download><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-zap"/></svg> Clash Verge Rev · Intel x64 (本地镜像)</a>
+      <a class="btn btn-warning" href="/downloads/hiddify-latest-macos.dmg" download><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-zap"/></svg> Hiddify macOS (本地镜像)</a>
+      <a class="btn btn-ghost" href="https://github.com/clash-verge-rev/clash-verge-rev/releases/latest" target="_blank" rel="noopener"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-globe"/></svg> 原始 GitHub（需已有梯子）</a>
+      <span class="meta-note">免费开源 · macOS 12+ · M1/M2/M3/M4 选 aarch64，Intel 选 x64</span>
+    </div>
+
+    <div class="app-row">
+      <a class="app-card" href="/downloads/clash-verge-rev-latest-mac-arm64.dmg" download>
+        <span class="ico"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-zap"/></svg></span>
+        <div class="info"><b>Clash Verge Rev · 本地镜像</b><small>Apple Silicon · 推荐</small></div>
+      </a>
+      <a class="app-card" href="https://github.com/MetaCubeX/mihomo/releases" target="_blank" rel="noopener">
+        <span class="ico"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-settings"/></svg></span>
+        <div class="info"><b>mihomo (内核)</b><small>底层 · 已内置在 Verge</small></div>
+      </a>
+    </div>
+
+    <p>你的 <strong>Clash 订阅</strong>：</p>
+  <div class="sub-cta-card">
+    <div class="sub-cta-icon"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-ticket"/></svg></div>
+    <div class="sub-cta-body">
+      <strong>到这一步需要你的订阅链接 / 二维码？</strong>
+      <p>所有订阅都在「我的账户」里管理（含多个订阅时可自选）。点下面按钮跳过去复制 URL 或扫二维码。</p>
+      <a class="btn btn-primary" href="/me.html#subs"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-link"/></svg> 去「我的账户」拿订阅</a>
+    </div>
+  </div>
+    <ol class="steps">
+      <li><h4>从 GitHub Releases 下载 <code>.dmg</code> 安装包</h4><p>Apple Silicon (M1/M2/M3/M4) 选 <code>aarch64</code>，Intel Mac 选 <code>x86_64</code>。把 Verge 拖到 Applications。</p></li>
+      <li><h4>首次启动 → 同意管理员权限（用于设置系统代理）</h4></li>
+      <li><h4>左侧"订阅" → 点 + → 粘贴 URL</h4><p>把上面 Clash 订阅 URL 贴进去，点导入。等几秒会显示节点列表。</p></li>
+      <li><h4>"代理"页 → 选中你的德国节点</h4><p>顶部"模式"建议选 <strong>规则 (Rule)</strong>，国内站点直连、国外走代理。也可以选 <strong>全局 (Global)</strong> 强制全走。</p></li>
+      <li><h4>开启"系统代理"开关 + "TUN 模式"开关</h4><p>TUN 模式可以代理那些不走系统代理的 App（比如 Telegram）。开 TUN 时会请求安装 helper，给权限即可。</p></li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-dog"/></svg> 方案 C：sing-box CLI（极客）</h2>
+    <div class="meta">
+      <span class="tag hard"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-x"/></svg> 复杂</span>
+      <span class="tag time"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-clock"/></svg> 10 分钟</span>
+      <span class="tag app"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-package"/></svg> 命令行</span>
+    </div>
+    <p>如果你喜欢命令行、想做 launchd 自启、或者要在脚本里用，可以直接跑 sing-box。</p>
+    <div class="download-row">
+      <code class="copy-cmd">brew install sing-box</code>
+      <button class="btn btn-sm btn-primary" data-copy-text="brew install sing-box"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-clipboard"/></svg> 复制命令</button>
+      <span class="meta-note">需先装 Homebrew (brew.sh)</span>
+    </div>
+    <pre><code># 用 Homebrew 装
+brew install sing-box
+
+# 下载你的配置（用 token 替换）
+curl -L "&lt;在 我的账户 页面复制你的订阅URL&gt;" -o ~/.config/sing-box/config.json
+
+# 跑
+sudo sing-box run -c ~/.config/sing-box/config.json</code></pre>
+    <p>需要自启的可以写一个 launchd plist 到 <code>~/Library/LaunchAgents/com.vega.singbox.plist</code>，然后 <code>launchctl load</code>。</p>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-life-buoy"/></svg> 常见问题</h2>
+    <details class="faq"><summary>双击 .mobileconfig 没反应？</summary><p>macOS Ventura 之后描述文件不会自动弹安装窗口，要去"系统设置 → 隐私与安全性 → 最下面有描述文件"里手动安装。</p></details>
+    <details class="faq"><summary>ClashX 开了，浏览器还不走代理？</summary><p>看一眼 macOS"系统设置 → 网络 → 你的 WiFi → 详细信息 → 代理"那一栏，HTTP/HTTPS 代理是不是指向 <code>127.0.0.1:7890</code>。如果不是，ClashX 没成功设系统代理，重启 App 重试。</p></details>
+    <details class="faq"><summary>Apple Silicon Mac 跑出"已损坏"？</summary><p>开终端跑 <code>sudo xattr -rd com.apple.quarantine /Applications/Clash\ Verge.app</code> 解除隔离标记。</p></details>
+    <details class="faq"><summary>怎么测速？</summary><p>Verge 节点列表右边有 <svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-zap"/></svg> 闪电图标，点一下测延迟。或访问 <a href="https://fast.com" target="_blank">fast.com</a> 看带宽。</p></details>
+  </div>
+
+  <p><a href="help.html" class="btn btn-ghost"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-life-buoy"/></svg> 还有问题？</a></p>
+</main>
+
+<footer class="footer"><span class="paw"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-paw-print"/></svg></span> Vega VPN · Mac 教程 <span class="paw"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-paw-print"/></svg></span></footer>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script src="../app.js"></script>
+</body>
+</html>

@@ -1,0 +1,254 @@
+mode: rule
+port: 7890
+socks-port: 7891
+allow-lan: false
+log-level: warning
+external-controller: 127.0.0.1:9090
+
+dns:
+  enable: true
+  ipv6: false
+  default-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter:
+    - "*.vpn.example.com"
+    - "vpn.example.com"
+    - "+.lan"
+    - "+.local"
+    - "+.localhost"
+    - "stun.*.*"
+    - "+.stun.*.*"
+    - "time.*.com"
+    - "+.market.xiaomi.com"
+    - "+.push.apple.com"
+  nameserver:
+    - https://doh.pub/dns-query
+    - https://dns.alidns.com/dns-query
+  fallback:
+    - https://1.1.1.1/dns-query
+    - https://dns.google/dns-query
+  fallback-filter:
+    geoip: true
+    geoip-code: CN
+
+{{ conf | except("proxy-groups", "port", "mode") | yaml }}
+
+proxy-groups:
+- name: 🚀 节点选择
+  type: select
+  proxies:
+  - ♻️ 自动选择
+  - DIRECT
+  {{ proxy_remarks | yaml | indent(2) }}
+
+- name: ♻️ 自动选择
+  type: url-test
+  url: http://www.gstatic.com/generate_204
+  interval: 300
+  tolerance: 50
+  proxies:
+  {{ proxy_remarks | yaml | indent(2) }}
+
+- name: 🌏 国内直连
+  type: select
+  proxies:
+  - DIRECT
+  - 🚀 节点选择
+
+- name: 🐟 漏网之鱼
+  type: select
+  proxies:
+  - 🚀 节点选择
+  - DIRECT
+
+{{ conf.get("proxy-groups", []) | yaml }}
+
+rules:
+- DOMAIN-SUFFIX,vpn.example.com,DIRECT
+- DOMAIN-SUFFIX,duckdns.org,DIRECT
+- IP-CIDR,YOUR_SERVER_IP/32,DIRECT,no-resolve
+- IP-CIDR,127.0.0.0/8,DIRECT,no-resolve
+- IP-CIDR,10.0.0.0/8,DIRECT,no-resolve
+- IP-CIDR,172.16.0.0/12,DIRECT,no-resolve
+- IP-CIDR,192.168.0.0/16,DIRECT,no-resolve
+- IP-CIDR,100.64.0.0/10,DIRECT,no-resolve
+- IP-CIDR,169.254.0.0/16,DIRECT,no-resolve
+- IP-CIDR6,::1/128,DIRECT,no-resolve
+- IP-CIDR6,fc00::/7,DIRECT,no-resolve
+- IP-CIDR6,fe80::/10,DIRECT,no-resolve
+- DOMAIN-SUFFIX,cn,🌏 国内直连
+- DOMAIN-KEYWORD,baidu,🌏 国内直连
+- DOMAIN-KEYWORD,alibaba,🌏 国内直连
+- DOMAIN-KEYWORD,aliyun,🌏 国内直连
+- DOMAIN-KEYWORD,alicdn,🌏 国内直连
+- DOMAIN-KEYWORD,alipay,🌏 国内直连
+- DOMAIN-KEYWORD,taobao,🌏 国内直连
+- DOMAIN-KEYWORD,tmall,🌏 国内直连
+- DOMAIN-KEYWORD,jd,🌏 国内直连
+- DOMAIN-KEYWORD,pdd,🌏 国内直连
+- DOMAIN-KEYWORD,pinduoduo,🌏 国内直连
+- DOMAIN-KEYWORD,tencent,🌏 国内直连
+- DOMAIN-KEYWORD,qq,🌏 国内直连
+- DOMAIN-KEYWORD,weixin,🌏 国内直连
+- DOMAIN-KEYWORD,wechat,🌏 国内直连
+- DOMAIN-KEYWORD,gtimg,🌏 国内直连
+- DOMAIN-KEYWORD,bilibili,🌏 国内直连
+- DOMAIN-KEYWORD,biliapi,🌏 国内直连
+- DOMAIN-KEYWORD,biliimg,🌏 国内直连
+- DOMAIN-KEYWORD,bilivideo,🌏 国内直连
+- DOMAIN-KEYWORD,acgvideo,🌏 国内直连
+- DOMAIN-KEYWORD,xiaomi,🌏 国内直连
+- DOMAIN-KEYWORD,mi-img,🌏 国内直连
+- DOMAIN-KEYWORD,mijia,🌏 国内直连
+- DOMAIN-KEYWORD,huawei,🌏 国内直连
+- DOMAIN-KEYWORD,hicloud,🌏 国内直连
+- DOMAIN-KEYWORD,sohu,🌏 国内直连
+- DOMAIN-KEYWORD,sina,🌏 国内直连
+- DOMAIN-KEYWORD,weibo,🌏 国内直连
+- DOMAIN-KEYWORD,sinaimg,🌏 国内直连
+- DOMAIN-KEYWORD,miaopai,🌏 国内直连
+- DOMAIN-KEYWORD,163,🌏 国内直连
+- DOMAIN-KEYWORD,126,🌏 国内直连
+- DOMAIN-KEYWORD,netease,🌏 国内直连
+- DOMAIN-KEYWORD,bytedance,🌏 国内直连
+- DOMAIN-KEYWORD,douyin,🌏 国内直连
+- DOMAIN-KEYWORD,iesdouyin,🌏 国内直连
+- DOMAIN-KEYWORD,toutiao,🌏 国内直连
+- DOMAIN-KEYWORD,snssdk,🌏 国内直连
+- DOMAIN-KEYWORD,amemv,🌏 国内直连
+- DOMAIN-KEYWORD,xigua,🌏 国内直连
+- DOMAIN-KEYWORD,ixigua,🌏 国内直连
+- DOMAIN-KEYWORD,kuaishou,🌏 国内直连
+- DOMAIN-KEYWORD,gifshow,🌏 国内直连
+- DOMAIN-KEYWORD,kwai,🌏 国内直连
+- DOMAIN-KEYWORD,meituan,🌏 国内直连
+- DOMAIN-KEYWORD,dianping,🌏 国内直连
+- DOMAIN-KEYWORD,didi,🌏 国内直连
+- DOMAIN-KEYWORD,zhihu,🌏 国内直连
+- DOMAIN-KEYWORD,zhimg,🌏 国内直连
+- DOMAIN-KEYWORD,iqiyi,🌏 国内直连
+- DOMAIN-KEYWORD,youku,🌏 国内直连
+- DOMAIN-KEYWORD,letv,🌏 国内直连
+- DOMAIN-KEYWORD,mgtv,🌏 国内直连
+- DOMAIN-KEYWORD,bdimg,🌏 国内直连
+- DOMAIN-KEYWORD,bdstatic,🌏 国内直连
+- DOMAIN-KEYWORD,doubao,🌏 国内直连
+- DOMAIN-KEYWORD,deepseek,🌏 国内直连
+- DOMAIN-KEYWORD,kimi,🌏 国内直连
+- DOMAIN-KEYWORD,moonshot,🌏 国内直连
+- DOMAIN-KEYWORD,siliconflow,🌏 国内直连
+- DOMAIN-KEYWORD,xiaohongshu,🌏 国内直连
+- DOMAIN-KEYWORD,xhscdn,🌏 国内直连
+- DOMAIN-KEYWORD,12306,🌏 国内直连
+- DOMAIN-KEYWORD,rail,🌏 国内直连
+- DOMAIN-KEYWORD,unionpay,🌏 国内直连
+- DOMAIN-KEYWORD,cmbchina,🌏 国内直连
+- DOMAIN-KEYWORD,icbc,🌏 国内直连
+- DOMAIN-KEYWORD,ccb,🌏 国内直连
+- DOMAIN-KEYWORD,abchina,🌏 国内直连
+- DOMAIN-KEYWORD,boc,🌏 国内直连
+- DOMAIN-KEYWORD,psbc,🌏 国内直连
+- DOMAIN-KEYWORD,jdfinance,🌏 国内直连
+- DOMAIN-KEYWORD,alipayobjects,🌏 国内直连
+- DOMAIN-KEYWORD,kugou,🌏 国内直连
+- DOMAIN-KEYWORD,kuwo,🌏 国内直连
+- DOMAIN-KEYWORD,qqmusic,🌏 国内直连
+- DOMAIN-KEYWORD,xmcdn,🌏 国内直连
+- DOMAIN-KEYWORD,ximalaya,🌏 国内直连
+- DOMAIN-KEYWORD,dingtalk,🌏 国内直连
+- DOMAIN-KEYWORD,dingding,🌏 国内直连
+- DOMAIN-KEYWORD,feishu,🌏 国内直连
+- DOMAIN-KEYWORD,lark,🌏 国内直连
+- DOMAIN-KEYWORD,wps,🌏 国内直连
+- DOMAIN-KEYWORD,office-cn,🌏 国内直连
+- DOMAIN-KEYWORD,office365.cn,🌏 国内直连
+- DOMAIN-KEYWORD,12306,🌏 国内直连
+- DOMAIN-KEYWORD,iciba,🌏 国内直连
+- DOMAIN-KEYWORD,youdao,🌏 国内直连
+- DOMAIN-KEYWORD,daodao,🌏 国内直连
+- DOMAIN-KEYWORD,ctrip,🌏 国内直连
+- DOMAIN-KEYWORD,trip.com,🌏 国内直连
+- DOMAIN-KEYWORD,xiecheng,🌏 国内直连
+- DOMAIN-KEYWORD,fliggy,🌏 国内直连
+- DOMAIN-KEYWORD,qunar,🌏 国内直连
+- DOMAIN-KEYWORD,360,🌏 国内直连
+- DOMAIN-KEYWORD,qihoo,🌏 国内直连
+- DOMAIN-KEYWORD,so.com,🌏 国内直连
+- DOMAIN-KEYWORD,sogou,🌏 国内直连
+- DOMAIN-KEYWORD,iflytek,🌏 国内直连
+- DOMAIN-KEYWORD,xunlei,🌏 国内直连
+- DOMAIN-KEYWORD,thunder,🌏 国内直连
+- DOMAIN-KEYWORD,115,🌏 国内直连
+- DOMAIN-KEYWORD,pinpin,🌏 国内直连
+- DOMAIN-KEYWORD,pddpic,🌏 国内直连
+- DOMAIN-KEYWORD,zhuanzhuan,🌏 国内直连
+- DOMAIN-KEYWORD,xianyu,🌏 国内直连
+- DOMAIN-KEYWORD,goofish,🌏 国内直连
+- DOMAIN-KEYWORD,ele.me,🌏 国内直连
+- DOMAIN-KEYWORD,koubei,🌏 国内直连
+- DOMAIN-KEYWORD,vipsinaapp,🌏 国内直连
+- DOMAIN-SUFFIX,gov.cn,🌏 国内直连
+- DOMAIN-SUFFIX,edu.cn,🌏 国内直连
+- DOMAIN-SUFFIX,com.cn,🌏 国内直连
+- DOMAIN-KEYWORD,google,🚀 节点选择
+- DOMAIN-KEYWORD,gstatic,🚀 节点选择
+- DOMAIN-KEYWORD,gmail,🚀 节点选择
+- DOMAIN-KEYWORD,youtube,🚀 节点选择
+- DOMAIN-KEYWORD,ggpht,🚀 节点选择
+- DOMAIN-KEYWORD,ytimg,🚀 节点选择
+- DOMAIN-KEYWORD,facebook,🚀 节点选择
+- DOMAIN-KEYWORD,fbcdn,🚀 节点选择
+- DOMAIN-KEYWORD,instagram,🚀 节点选择
+- DOMAIN-KEYWORD,cdninstagram,🚀 节点选择
+- DOMAIN-KEYWORD,twitter,🚀 节点选择
+- DOMAIN-KEYWORD,twimg,🚀 节点选择
+- DOMAIN-SUFFIX,x.com,🚀 节点选择
+- DOMAIN-KEYWORD,github,🚀 节点选择
+- DOMAIN-KEYWORD,githubusercontent,🚀 节点选择
+- DOMAIN-KEYWORD,githubassets,🚀 节点选择
+- DOMAIN-KEYWORD,openai,🚀 节点选择
+- DOMAIN-KEYWORD,chatgpt,🚀 节点选择
+- DOMAIN-KEYWORD,oaistatic,🚀 节点选择
+- DOMAIN-KEYWORD,anthropic,🚀 节点选择
+- DOMAIN-KEYWORD,claude,🚀 节点选择
+- DOMAIN-KEYWORD,telegram,🚀 节点选择
+- DOMAIN-SUFFIX,t.me,🚀 节点选择
+- DOMAIN-KEYWORD,discord,🚀 节点选择
+- DOMAIN-KEYWORD,discordapp,🚀 节点选择
+- DOMAIN-KEYWORD,reddit,🚀 节点选择
+- DOMAIN-KEYWORD,redditmedia,🚀 节点选择
+- DOMAIN-KEYWORD,wikipedia,🚀 节点选择
+- DOMAIN-KEYWORD,wikimedia,🚀 节点选择
+- DOMAIN-KEYWORD,netflix,🚀 节点选择
+- DOMAIN-KEYWORD,nflx,🚀 节点选择
+- DOMAIN-KEYWORD,disney,🚀 节点选择
+- DOMAIN-KEYWORD,hbomax,🚀 节点选择
+- DOMAIN-KEYWORD,spotify,🚀 节点选择
+- DOMAIN-KEYWORD,scdn,🚀 节点选择
+- DOMAIN-KEYWORD,twitch,🚀 节点选择
+- DOMAIN-KEYWORD,tiktok,🚀 节点选择
+- DOMAIN-KEYWORD,tiktokcdn,🚀 节点选择
+- DOMAIN-KEYWORD,musical.ly,🚀 节点选择
+- DOMAIN-KEYWORD,whatsapp,🚀 节点选择
+- DOMAIN-KEYWORD,signal,🚀 节点选择
+- DOMAIN-KEYWORD,steamcommunity,🚀 节点选择
+- DOMAIN-KEYWORD,steamusercontent,🚀 节点选择
+- DOMAIN-KEYWORD,steamstatic,🚀 节点选择
+- DOMAIN-KEYWORD,cloudflare,🚀 节点选择
+- DOMAIN-KEYWORD,cloudfront,🚀 节点选择
+- DOMAIN-KEYWORD,akamai,🚀 节点选择
+- DOMAIN-SUFFIX,jp,🚀 节点选择
+- DOMAIN-SUFFIX,kr,🚀 节点选择
+- DOMAIN-SUFFIX,tw,🚀 节点选择
+- DOMAIN-SUFFIX,hk,🚀 节点选择
+- DOMAIN-SUFFIX,uk,🚀 节点选择
+- DOMAIN-SUFFIX,us,🚀 节点选择
+- DOMAIN-SUFFIX,co.jp,🚀 节点选择
+- DOMAIN-SUFFIX,co.uk,🚀 节点选择
+- DOMAIN-SUFFIX,onion,🚀 节点选择
+- GEOIP,LAN,DIRECT,no-resolve
+- GEOIP,CN,🌏 国内直连,no-resolve
+- MATCH,🐟 漏网之鱼

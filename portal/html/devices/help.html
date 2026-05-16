@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>求助 · FAQ · Vega VPN</title>
+<link rel="stylesheet" href="../style.css" />
+<link rel="stylesheet" href="../animal-components.css" />
+<script src="../animal-components.js" defer></script>
+<script src="/favicon-today.js"></script>
+</head>
+<body class="home">
+<header class="navbar">
+  <div class="logo"><span class="badge"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-life-buoy"/></svg></span><span>求助中心 · FAQ</span></div>
+  <nav class="nav-links"><a href="../index.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-home"/></svg> 首页</a></nav>
+</header>
+
+<main class="container">
+  <a href="../index.html" class="back-home"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-arrow-left"/></svg> 返回首页</a>
+
+  <section class="hero" style="background:linear-gradient(135deg,#fc736d 0%,#FFB84D 60%,#FFF4D2 100%);">
+    <div class="mascot"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-life-buoy"/></svg></div>
+    <div style="flex:1;min-width:240px">
+      <h1>求助 · 常见问题</h1>
+      <p>遇到问题先翻这里，90% 答案在下面 <svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-paw-print"/></svg></p>
+    </div>
+  </section>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-navigation"/></svg> 三步排查法</h2>
+    <ol class="steps">
+      <li>
+        <h4>① 看图标 — VPN 真的连上了吗？</h4>
+        <p>iPhone 状态栏顶部有 <code>VPN</code> 字样吗？Android 有钥匙图标吗？Mac 菜单栏图标变了吗？没看到代表客户端没启动或权限被拒。</p>
+      </li>
+      <li>
+        <h4>② 看 IP — 出口真的变德国了吗？</h4>
+        <p>浏览器打开 <a href="https://ipinfo.io" target="_blank" rel="noopener">https://ipinfo.io</a>。<br>
+        <svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-check"/></svg> 看到 <code>country: DE</code> + <code>city: Frankfurt</code> → 代理生效；<br>
+        <svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-x"/></svg> 还是你的本地 IP → 系统代理 / TUN 没开（看下面对应平台问题）。</p>
+      </li>
+      <li>
+        <h4>③ 看延迟 — 节点是否健康？</h4>
+        <p>每个客户端都有"测延迟"按钮。健康节点 <strong>&lt; 300ms</strong>，超过 500ms 大概率出口拥塞或被封。换协议（IKEv2 / VLESS / Hysteria2）再试。</p>
+      </li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-wrench"/></svg> 通用故障速查</h2>
+
+    <details class="faq">
+      <summary>客户端显示已连接，但所有网站都打不开</summary>
+      <p>(1) DNS 没走代理：客户端里把 DNS 改成 <code>1.1.1.1</code> / <code>8.8.8.8</code>，或开"DNS 走代理"；<br>
+      (2) 路由模式错了：选"规则"或"全局"，别选"直连"；<br>
+      (3) 防火墙拦了：临时关掉杀软 / Windows 防火墙试试。</p>
+    </details>
+
+    <details class="faq">
+      <summary>能上 Google 但 YouTube / Netflix 不能播</summary>
+      <p>(1) DNS 污染：把客户端 DNS 改 Cloudflare (1.1.1.1)；<br>
+      (2) Netflix 检测到 VPN IP：让管理员切换出口；<br>
+      (3) App 缓存了旧 IP：清缓存 → 重启 App。</p>
+    </details>
+
+    <details class="faq">
+      <summary>速度慢，看视频卡顿</summary>
+      <p>(1) 测速：<a href="https://fast.com" target="_blank">fast.com</a>，应该 50Mbps+ 才能流畅 4K；<br>
+      (2) 协议换 Hysteria2（QUIC 协议，跨洋稳定）；<br>
+      (3) 时间：晚上 8~11 点跨洋拥堵，凌晨快一倍；<br>
+      (4) 别用公共 WiFi 看 4K，5GHz 频段更好。</p>
+    </details>
+
+    <details class="faq">
+      <summary>每隔几分钟断一次</summary>
+      <p>(1) 客户端把"自动重连"打开；<br>
+      (2) 协议改 IKEv2（自带 MOBIKE，切网络不断连）；<br>
+      (3) 手机省电策略把 VPN 客户端加白名单（小米 / 华为常坑）。</p>
+    </details>
+
+    <details class="faq">
+      <summary>订阅 URL 复制不上 / 粘贴失败</summary>
+      <p>(1) 在 iOS 用 Safari 复制（其他浏览器可能不给剪贴板权限）；<br>
+      (2) 长按 URL → "拷贝链接"；<br>
+      (3) 实在不行，用二维码扫码导入。</p>
+    </details>
+
+    <details class="faq">
+      <summary>更新订阅后节点全没了</summary>
+      <p>多半是订阅 URL 失效（token 被管理员重置）。到 /signup.html 用新邀请码重新注册。</p>
+    </details>
+
+    <details class="faq">
+      <summary>访问国内网站变慢</summary>
+      <p>路由模式选"规则 (Rule)"而非"全局 (Global)"。规则模式会让国内站点直连。</p>
+    </details>
+
+    <details class="faq">
+      <summary>客户端崩溃 / 闪退</summary>
+      <p>(1) 升级到最新版；<br>
+      (2) 卸载重装；<br>
+      (3) 老机型（Android 5/6, iOS 13 以下）可能不支持，用 IKEv2 系统级方案。</p>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-shield"/></svg> 隐私 / 安全 / 法律</h2>
+    <details class="faq"><summary>管理员能看到我访问什么吗？</summary><p>Vega VPN 默认 <strong>不记日志</strong>。技术上：服务器只转发加密流量，连接断开即销毁；不记录访问的域名 / URL / 流量内容。但管理员理论上可以"如果有意"打开抓包，所以请<strong>只对信任的管理员使用</strong>。</p></details>
+    <details class="faq"><summary>德国警察会找上门吗？</summary><p>德国法律允许私人运营 VPN。只要不做违法事（盗版 / DDoS / 儿童色情等），不会有问题。管理员一般会忽略 abuse report，但严重违规（比如版权方告侵权）他可能会被迫披露使用者。</p></details>
+    <details class="faq"><summary>能用来做 P2P / BT 下载吗？</summary><p>Vega 不禁，但出于"不给管理员惹麻烦"原则，<strong>请别下盗版</strong>。下 Linux ISO 之类合法 BT 没问题。</p></details>
+    <details class="faq"><summary>token 泄漏会怎样？</summary><p>别人能蹭你的流量。月流量超限管理员会停服。<strong>专属链接千万别发群里</strong>。怀疑泄漏立刻找管理员重置 token。</p></details>
+    <details class="faq"><summary>我能转发链接给朋友吗？</summary><p>不行。每个朋友自己用收到的邀请码到 /signup.html 注册，方便流量追溯和管理。</p></details>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-dollar-sign"/></svg> 流量 / 配额</h2>
+    <details class="faq"><summary>有流量上限吗？</summary><p>家庭服务器月共享 20 TB 池。一般个人用户每月 50~200 GB 完全够。看 4K Netflix 一个月可能 100GB。</p></details>
+    <details class="faq"><summary>怎么看我已经用了多少？</summary><p>打开 <a href="/me.html">"我的账户"页面</a>查（输你的订阅 token 看实时流量）。或客户端里"流量统计"页可看本地累计（不一定准）。</p></details>
+    <details class="faq"><summary>超流量了会怎样？</summary><p>限速到 1Mbps 或直接停服，看管理员政策。</p></details>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-wrench"/></svg> 进阶 / 极客</h2>
+    <details class="faq"><summary>能改 DNS 吗？</summary><p>客户端里 DNS 默认是 Cloudflare 1.1.1.1。可以改成 Quad9 (9.9.9.9) / Google (8.8.8.8) / AdGuard (94.140.14.14)。建议保持走代理。</p></details>
+    <details class="faq"><summary>能给手机分应用代理吗？</summary><p>v2rayNG / NekoBox / Verge 都支持"分应用代理"。指定只代理 Chrome / YouTube，其他 App 直连。</p></details>
+    <details class="faq"><summary>能在 Linux 服务器上跑（中转）吗？</summary><p>可以。sing-box CLI + systemd 即可。详见 <a href="linux.html">Linux 教程</a>。</p></details>
+    <details class="faq"><summary>能加自定义节点吗？</summary><p>你的订阅里多个协议节点（IKEv2 / VLESS / Hysteria2 / Trojan）已经提供。如果想加自己的 VPS 中转，联系管理员开通"双层代理"配置。</p></details>
+    <details class="faq"><summary>API / 编程接口？</summary><p>订阅 URL 本身就是 API：<code>GET /sub/{token}</code> 返回 V2Ray 格式；<code>?type=clash</code> 返回 Clash 格式；<code>?type=singbox</code> 返回 sing-box 格式。可以 cron 自动拉。</p></details>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-toolbox"/></svg> 常用工具 (一点即开)</h2>
+    <div class="app-row">
+      <a class="app-card" href="https://fast.com" target="_blank" rel="noopener">
+        <span class="ico"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-rocket"/></svg></span>
+        <div class="info"><b>Fast.com</b><small>Netflix 测速 · 验代理带宽</small></div>
+      </a>
+      <a class="app-card" href="https://ipinfo.io" target="_blank" rel="noopener">
+        <span class="ico"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-globe"/></svg></span>
+        <div class="info"><b>IPinfo.io</b><small>看自己当前出口 IP / 国家</small></div>
+      </a>
+      <a class="app-card" href="https://www.speedtest.net" target="_blank" rel="noopener">
+        <span class="ico"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-signal"/></svg></span>
+        <div class="info"><b>Speedtest</b><small>多节点测速 · Ookla</small></div>
+      </a>
+    </div>
+    <div class="download-row">
+      <a class="btn btn-primary" href="https://fast.com" target="_blank" rel="noopener"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-rocket"/></svg> 测速 Fast.com</a>
+      <a class="btn btn-warning" href="https://ipinfo.io" target="_blank" rel="noopener"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-globe"/></svg> 看我的 IP</a>
+      <a class="btn btn-ghost" href="https://www.dnsleaktest.com" target="_blank" rel="noopener"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-microscope"/></svg> DNS 泄漏检测</a>
+      <span class="meta-note">订阅码解析 → 手机原生相机扫描即可</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-phone"/></svg> 还是搞不定？</h2>
+    <p>把以下信息发给管理员：</p>
+    <ol>
+      <li>你的设备型号 + 系统版本（如：iPhone 13 / iOS 17.2）</li>
+      <li>你用了哪个教程（哪个客户端 / 协议）</li>
+      <li>错误现象（截图最好）</li>
+      <li>ipinfo.io 截图（如果能打开的话）</li>
+      <li>客户端日志（v2rayNG / NekoBox 里有"日志"页）</li>
+    </ol>
+    <p>管理员联系方式：<strong>当初给你邀请码的那个人</strong> <svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-cat"/></svg></p>
+  </div>
+
+  <p><a href="../index.html" class="btn"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-home"/></svg> 回首页选其他设备</a></p>
+</main>
+
+<footer class="footer"><span class="paw"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-paw-print"/></svg></span> Vega VPN · 求助中心 <span class="paw"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-paw-print"/></svg></span></footer>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script src="../app.js"></script>
+</body>
+</html>

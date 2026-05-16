@@ -1,0 +1,264 @@
+/* ===========================================================
+ * Animal Components — 1:1 Animal Island 复刻
+ * Modal / Select / Checkbox
+ * Reference: github.com/guokaigdg/animal-island-ui
+ * =========================================================== */
+
+/* ============ MODAL ============ */
+.am-mask {
+  position: fixed; inset: 0; z-index: 9000;
+  display: none; align-items: center; justify-content: center;
+  background: rgba(0,0,0,0.35);
+  animation: am-fade-in .25s ease;
+}
+.am-mask.am-open { display: flex; }
+@keyframes am-fade-in { from{opacity:0} to{opacity:1} }
+
+.am-modal {
+  position: relative;
+  width: 520px;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100vh - 64px);
+  display: flex; flex-direction: column;
+  animation: am-zoom-in .3s ease;
+}
+@keyframes am-zoom-in {
+  from { opacity:0; transform: scale(.92); }
+  to   { opacity:1; transform: scale(1); }
+}
+.am-modal-clipped {
+  width: 100%; height: 100%;
+  -webkit-clip-path: url(#animal-modal-clip);
+          clip-path: url(#animal-modal-clip);
+  padding: 48px 48px 32px 48px;
+  background: rgb(247, 243, 223);
+  color: rgb(128, 115, 89);
+  font-family: 'Nunito', 'Noto Sans SC', 'Zen Maru Gothic', sans-serif;
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.am-modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-bottom: 15px;
+}
+.am-modal-title {
+  font-size: 24px; font-weight: 700; color: rgba(114,93,66,1);
+  line-height: 1.3;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.am-modal-close {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px;
+  border: none; background: transparent; cursor: pointer;
+  font-size: 22px; color: rgba(114,93,66,.6);
+  border-radius: 50%;
+  transition: all .2s;
+  margin-left: 8px;
+}
+.am-modal-close:hover {
+  background: rgba(114,93,66,.1);
+  color: rgba(114,93,66,1);
+}
+.am-modal-body {
+  padding-bottom: 20px;
+  display: flex; flex-direction: column; align-items: flex-start;
+  overflow-y: auto; flex: 1;
+  font-size: 18px; font-weight: 600; line-height: 1.6;
+  color: #8a7b66;
+  width: 100%;
+  word-break: break-word;
+}
+.am-modal-body > * { width: 100%; }
+.am-modal-footer {
+  display: flex; align-items: center; justify-content: flex-end;
+  gap: 12px;
+  padding-top: 4px;
+}
+.am-modal-btn {
+  height: 40px; padding: 0 24px;
+  font-size: 16px; font-family: inherit; font-weight: 700;
+  border: 2px solid rgba(114,93,66,.3);
+  border-radius: 39.81px;
+  background: transparent;
+  color: rgba(114,93,66,1);
+  transition: all .2s; line-height: 1;
+  cursor: pointer;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.am-modal-btn:hover {
+  border-color: rgba(114,93,66,.6);
+  background: rgba(114,93,66,.08);
+}
+.am-modal-btn.am-primary {
+  color: rgba(114,93,66,1);
+  background: rgba(255,204,0,1);
+  border-color: rgba(255,204,0,1);
+}
+.am-modal-btn.am-primary:hover {
+  background: rgba(255,204,0,.85);
+  border-color: rgba(255,204,0,.85);
+}
+.am-modal-btn.am-danger {
+  color: #fff;
+  background: #e05a5a;
+  border-color: #e05a5a;
+}
+.am-modal-btn.am-danger:hover {
+  background: #c94444;
+  border-color: #c94444;
+}
+/* lock scroll while modal open */
+body.am-modal-lock { overflow: hidden; }
+
+/* ============ SELECT (custom dropdown) ============ */
+.am-select {
+  position: relative;
+  display: inline-block;
+  min-width: 140px;
+  font-family: 'Nunito', 'Noto Sans SC', sans-serif;
+  -webkit-user-select: none;
+          user-select: none;
+  width: 100%;
+}
+.am-select.am-disabled { opacity: .5; cursor: not-allowed; }
+.am-select-trigger {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 13px;
+  background: #fff;
+  border: 2px solid #e8dcc8;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all .2s ease;
+  font-size: 14px;
+  color: #725d42;
+  font-weight: 600;
+  min-height: 38px;
+  box-sizing: border-box;
+}
+.am-select-trigger:hover { border-color: #d4c4a8; background: #fffdf7; }
+.am-select.am-open > .am-select-trigger { background: #fff; }
+.am-select-placeholder { color: #a09080; font-weight: 500; }
+.am-select-arrow {
+  color: #a09080;
+  transition: transform .2s ease, color .2s;
+  display: inline-flex; align-items: center;
+  margin-left: 8px;
+}
+.am-select.am-open .am-select-arrow {
+  transform: rotate(180deg);
+  color: #19c8b9;
+}
+.am-select-dropdown {
+  position: absolute;
+  z-index: 9100;
+  background: #FFEEA0;
+  border-radius: 28px;
+  padding: 12px 0;
+  min-width: 100%;
+  box-shadow: 0 6px 0 #d4b800, 0 8px 14px rgba(0,0,0,.12);
+  animation: am-dropdown-fade .2s ease forwards;
+  opacity: 0;
+}
+@keyframes am-dropdown-fade { from{opacity:0; transform: translateY(-4px)} to{opacity:1; transform: translateY(0)} }
+.am-select-option {
+  display: flex; align-items: center; justify-content: center;
+  padding: 10px 30px 10px 30px;
+  font-size: 14px; font-weight: 500; color: #725d42;
+  cursor: pointer; position: relative;
+  white-space: nowrap;
+  transition: font-weight .15s;
+}
+.am-select-option.am-hovered { font-weight: 700; }
+.am-select-option.am-active { font-weight: 700; }
+.am-select-option.am-active::after {
+  content: '';
+  position: absolute;
+  left: 12px; right: 12px;
+  top: 50%; transform: translateY(-50%);
+  height: 18px;
+  background: #FFCC00;
+  border-radius: 9px;
+  z-index: -1;
+  opacity: .45;
+}
+.am-select-option.am-hovered::before {
+  content: '';
+  position: absolute;
+  left: 4px; top: 50%;
+  width: 14px; height: 14px;
+  transform: translateY(-50%);
+  background: #19c8b9;
+  border-radius: 50%;
+  animation: am-cursor-slide .45s ease-out forwards;
+}
+@keyframes am-cursor-slide {
+  0%   { opacity: 0; transform: translateY(-50%) translateX(-10px) scale(.6); }
+  60%  { opacity: 1; transform: translateY(-50%) translateX(2px) scale(1.1); }
+  100% { opacity: 1; transform: translateY(-50%) translateX(0) scale(1); }
+}
+
+/* ============ CHECKBOX ============ */
+.am-checkbox {
+  display: inline-flex; align-items: center; gap: 8px;
+  cursor: pointer; -webkit-user-select: none; user-select: none;
+  font-family: 'Nunito', 'Noto Sans SC', sans-serif;
+  transition: all .2s;
+}
+.am-checkbox.am-disabled { cursor: not-allowed; opacity: .55; }
+.am-checkbox-box {
+  position: relative;
+  display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  width: 22px; height: 22px;
+  background: rgb(247, 243, 223);
+  border: 2px solid #c4b89e;
+  border-radius: 6px;
+  transition: all .2s;
+}
+.am-checkbox.am-size-small  .am-checkbox-box { width: 18px; height: 18px; border-radius: 4px; }
+.am-checkbox.am-size-large  .am-checkbox-box { width: 28px; height: 28px; border-radius: 8px; }
+.am-checkbox.am-checked .am-checkbox-box {
+  background: #19c8b9;
+  border-color: #11a89b;
+}
+.am-checkbox-checkmark {
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; line-height: 1;
+  animation: am-checkbox-pop .2s ease;
+}
+@keyframes am-checkbox-pop {
+  0%   { transform: scale(.4); opacity: 0; }
+  60%  { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+.am-checkbox-label {
+  color: #725d42;
+  font-weight: 500;
+  letter-spacing: .01em;
+  font-size: 15px;
+}
+.am-checkbox.am-disabled .am-checkbox-box {
+  background: #f0ece2; border-color: #d4c9b4;
+}
+.am-checkbox.am-disabled .am-checkbox-label { color: #c4b89e; }
+
+.am-checkbox-group { display: flex; flex-wrap: wrap; gap: 14px; }
+.am-checkbox-group.am-vertical { flex-direction: column; gap: 8px; }
+
+/* ============ Hide native select once enhanced ============ */
+select.am-native-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap;
+  border: 0;
+}
+
+/* ============ Tighter mobile padding ============ */
+@media (max-width: 480px) {
+  .am-modal { width: calc(100vw - 16px); }
+  .am-modal-clipped { padding: 36px 28px 24px 28px; }
+  .am-modal-title { font-size: 20px; }
+  .am-modal-body { font-size: 16px; }
+}

@@ -1,0 +1,1461 @@
+/* =========================================================================
+   Vega VPN Portal · Animal Island UI 主题 · 严格按官方 DESIGN_PROMPT 实现
+   参考: github.com/guokaigdg/animal-island-ui
+   ========================================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;700;800&family=Zen+Maru+Gothic:wght@400;500;700&display=swap');
+
+/* ---------- 设计 Token（精确照搬 variables.less） ---------- */
+:root {
+  /* 主色 · 薄荷青 */
+  --animal-primary:        #19c8b9;
+  --animal-primary-hover:  #3dd4c6;
+  --animal-primary-active: #11a89b;
+  --animal-primary-bg:     #e6f9f6;
+
+  /* 文字 · 暖棕 */
+  --animal-text-primary:   #794f27;   /* 标题 / Header */
+  --animal-text-body:      #725d42;   /* 正文 */
+  --animal-text-secondary: #9f927d;
+  --animal-text-muted:     #8a7b66;
+  --animal-text-disabled:  #c4b89e;
+  --animal-text-placeholder:#c4b89e;
+
+  /* 背景 · 羊皮纸 */
+  --animal-bg:             #f8f8f0;
+  --animal-bg-content:     rgb(247, 243, 223);
+  --animal-bg-home:        #7DC395;
+
+  /* 状态色 */
+  --animal-success:        #6fba2c;
+  --animal-success-active: #5a9e1e;
+  --animal-warning:        #f5c31c;
+  --animal-warning-active: #dba90e;
+  --animal-error:          #e05a5a;
+  --animal-error-active:   #c94444;
+
+  /* 游戏特色 */
+  --animal-focus-yellow:   #ffcc00;
+  --animal-focus-yellow-dark:#e0b800;
+
+  /* 边框 */
+  --animal-border:         #9f927d;
+  --animal-border-input:   #c4b89e;
+  --animal-border-input-hover:#a89878;
+
+  /* 立体阴影色 */
+  --animal-shadow-btn:     #bdaea0;
+  --animal-shadow-input:   #d4c9b4;
+
+  /* 圆角 */
+  --animal-radius-pill:    50px;
+  --animal-radius-card:    20px;
+  --animal-radius-lg:      24px;
+  --animal-radius-md:      18px;
+  --animal-radius-sm:      12px;
+
+  /* NookPhone 调色板 */
+  --np-pink:    #f8a6b2;
+  --np-purple:  #b77dee;
+  --np-blue:    #889df0;
+  --np-yellow:  #f7cd67;
+  --np-orange:  #e59266;
+  --np-teal:    #82d5bb;
+  --np-green:   #8ac68a;
+  --np-red:     #fc736d;
+  --np-lime:    #d1da49;
+  --np-yellowg: #ecdf52;
+  --np-brown:   #9a835a;
+  --np-peach:   #e18c6f;
+
+  --animal-font: 'Nunito', 'Noto Sans SC', 'Zen Maru Gothic', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+
+  --animal-transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ---------- 基础 ---------- */
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0;
+  font-family: var(--animal-font);
+  font-weight: 500;
+  color: var(--animal-text-body);
+  background-color: var(--animal-bg);
+  min-height: 100vh;
+  line-height: 1.65;
+  letter-spacing: 0.01em;
+}
+
+body {
+  background-image: url('assets/content_bg_pc.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+body.home {
+  background-color: var(--animal-bg-home);
+  background-image: url('assets/home_bg.webp');
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center top;
+}
+
+a { color: var(--animal-primary-active); text-decoration: none; font-weight: 700; }
+a:hover { color: var(--animal-primary); text-decoration: underline; text-decoration-style: wavy; text-underline-offset: 3px; }
+
+h1, h2, h3, h4 {
+  color: var(--animal-text-primary);
+  font-family: var(--animal-font);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  margin: 0.6em 0 0.4em;
+  line-height: 1.25;
+}
+h1 { font-size: 2.4rem; }
+h2 { font-size: 1.7rem; }
+h3 { font-size: 1.25rem; }
+h4 { font-size: 1.05rem; font-weight: 700; }
+
+p { margin: 0.5em 0 1em; }
+strong { color: var(--animal-text-primary); font-weight: 700; }
+
+code {
+  font-family: 'SF Mono','Fira Code','Cascadia Code',Consolas,monospace;
+  background: #2b2118;
+  color: #e8d5bc;
+  border-radius: 8px;
+  padding: 2px 8px;
+  font-weight: 600;
+  font-size: 0.9em;
+}
+pre {
+  font-family: 'SF Mono','Fira Code','Cascadia Code',Consolas,monospace;
+  background: #2b2118;
+  color: #e8d5bc;
+  border: 1px solid #3d3028;
+  border-radius: var(--animal-radius-card);
+  padding: 20px 24px;
+  overflow-x: auto;
+  font-weight: 600;
+  font-size: 0.88rem;
+  line-height: 1.7;
+  margin: 14px 0;
+  box-shadow: 0 4px 10px rgba(107,92,67,0.20);
+}
+pre code { background: transparent; padding: 0; color: inherit; }
+
+/* ---------- 顶部导航 ---------- */
+.navbar {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(248, 248, 240, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 2px solid var(--animal-border-input);
+  padding: 12px 28px;
+  display: flex; align-items: center; gap: 16px;
+}
+.navbar .logo {
+  font-family: var(--animal-font);
+  font-weight: 800;
+  font-size: 1.25rem;
+  color: var(--animal-text-primary);
+  display: flex; align-items: center; gap: 10px;
+  letter-spacing: 0.02em;
+}
+.navbar .logo .badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 38px; height: 38px;
+  background: var(--animal-primary);
+  border-radius: 50%;
+  border: 2.5px solid var(--animal-text-primary);
+  box-shadow: 0 3px 0 0 var(--animal-primary-active);
+  font-size: 1.3rem;
+}
+.navbar .nav-links { margin-left: auto; display: flex; gap: 10px; flex-wrap: wrap; }
+.navbar .nav-links a {
+  color: var(--animal-text-body);
+  padding: 8px 16px;
+  border-radius: var(--animal-radius-pill);
+  font-weight: 700;
+  font-size: 0.92rem;
+  letter-spacing: 0.02em;
+  transition: var(--animal-transition);
+}
+.navbar .nav-links a:hover {
+  background: var(--animal-primary-bg);
+  color: var(--animal-primary-active);
+  text-decoration: none;
+}
+
+/* ---------- 容器 ---------- */
+.container {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 28px 24px 80px;
+}
+
+/* ---------- Hero（首页大横幅 · 草地背景） ---------- */
+.hero {
+  background: linear-gradient(180deg, rgba(125,195,149,0.78) 0%, rgba(125,195,149,0.55) 100%), url('assets/home_bg.webp') center/cover no-repeat;
+  border-radius: 40px 35px 45px 38px / 38px 45px 35px 40px;
+  border: 3px solid var(--animal-text-primary);
+  box-shadow: 0 6px 0 0 var(--animal-shadow-btn), 0 14px 30px rgba(107,92,67,0.20);
+  padding: 38px 40px;
+  display: flex; align-items: center; gap: 28px; flex-wrap: wrap;
+  margin-bottom: 28px;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: ""; position: absolute; right: 14px; bottom: 10px;
+  width: 120px; height: 120px;
+  background: url('assets/nook-phone/Property-Helicopter.svg') center/contain no-repeat;
+  opacity: 0.85; pointer-events: none;
+}
+.hero h1 {
+  color: #fff;
+  text-shadow: 2px 3px 0 var(--animal-text-primary), 0 4px 12px rgba(0,0,0,0.20);
+  font-size: 2.5rem; margin: 0; font-weight: 900;
+  letter-spacing: 0.02em;
+}
+.hero p {
+  color: #fff;
+  font-size: 1.1rem; font-weight: 700;
+  text-shadow: 1px 2px 0 rgba(121,79,39,0.55);
+  margin: 8px 0 0;
+}
+.hero .mascot {
+  width: 120px; height: 120px; flex-shrink: 0;
+  background: var(--animal-bg-content);
+  border-radius: 50%;
+  border: 3px solid var(--animal-text-primary);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 4.2rem;
+  box-shadow: 0 5px 0 0 var(--animal-shadow-btn);
+  animation: animal-bobble 3.5s ease-in-out infinite;
+}
+@keyframes animal-bobble {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50%      { transform: translateY(-8px) rotate(3deg); }
+}
+
+/* ---------- Card · 默认羊皮纸内容卡 ---------- */
+.card {
+  background: var(--animal-bg-content);
+  border-radius: var(--animal-radius-lg);
+  border: 2px solid var(--animal-border);
+  box-shadow: 0 4px 10px rgba(107, 92, 67, 0.30);
+  padding: 24px 26px;
+  margin-bottom: 22px;
+  transition: var(--animal-transition);
+}
+.card:hover {
+  box-shadow: 0 8px 24px rgba(114, 93, 66, 0.18);
+}
+.card.title-card {
+  border-radius: 40px 35px 45px 38px / 38px 45px 35px 40px;
+  background: linear-gradient(180deg, #fff 0%, var(--animal-bg-content) 100%);
+}
+
+/* ---------- NookPhone 风订阅卡（首页顶部装饰卡） ---------- */
+.nookphone-card {
+  background: var(--animal-bg-content);
+  border: 2.5px solid var(--animal-border);
+  border-radius: 36px;
+  padding: 22px 26px;
+  margin-bottom: 24px;
+  position: relative;
+  box-shadow: 0 5px 0 0 var(--animal-shadow-btn), 0 12px 24px rgba(107,92,67,0.18);
+  display: flex; gap: 22px; align-items: flex-start; flex-wrap: wrap;
+}
+.nookphone-card::before {
+  content: ""; position: absolute; right: -18px; top: -22px;
+  width: 96px; height: 96px;
+  background: url('assets/nook-phone/Property-Shopping.svg') center/contain no-repeat;
+  opacity: 0.9; transform: rotate(8deg);
+  pointer-events: none;
+}
+.nookphone-card .np-icon {
+  width: 78px; height: 78px; flex-shrink: 0;
+  background: var(--np-blue); border-radius: 22px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.6rem;
+  border: 2.5px solid var(--animal-text-primary);
+  box-shadow: 0 4px 0 0 var(--animal-shadow-btn);
+}
+.nookphone-card .np-body { flex: 1; min-width: 220px; }
+.nookphone-card h2 { margin: 0 0 6px; }
+
+/* ---------- Device 网格 · AppIcons 风 ---------- */
+.device-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 22px;
+  margin-top: 22px;
+}
+.device-card {
+  background: var(--animal-bg-content);
+  border: 2.5px solid var(--animal-border);
+  border-radius: 28px;
+  padding: 22px 16px 18px;
+  text-align: center;
+  cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  box-shadow: 0 5px 0 0 var(--animal-shadow-btn);
+  transition: var(--animal-transition);
+  position: relative;
+  color: var(--animal-text-body);
+  text-decoration: none;
+}
+.device-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 9px 0 0 var(--animal-shadow-btn), 0 14px 28px rgba(107,92,67,0.18);
+  text-decoration: none;
+}
+.device-card:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 0 var(--animal-shadow-btn);
+}
+.device-card .emoji {
+  width: 72px; height: 72px;
+  border-radius: 22px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.6rem;
+  background: rgba(255,255,255,0.5);
+  border: 2px solid var(--animal-text-primary);
+  box-shadow: 0 3px 0 0 var(--animal-shadow-btn);
+  margin-top: 2px;
+}
+.device-card .name {
+  font-weight: 800; font-size: 1.05rem;
+  color: var(--animal-text-primary);
+  letter-spacing: 0.01em;
+}
+.device-card .desc {
+  font-size: 0.82rem; color: var(--animal-text-muted);
+  font-weight: 600;
+}
+.device-card.detected {
+  border-color: var(--animal-primary);
+}
+.device-card.detected::after {
+  content: "✨ 像是你的设备";
+  position: absolute; top: -12px; right: -8px;
+  background: var(--animal-focus-yellow);
+  color: var(--animal-text-body);
+  padding: 4px 12px;
+  border-radius: var(--animal-radius-pill);
+  font-size: 0.72rem; font-weight: 700;
+  border: 2px solid var(--animal-text-primary);
+  box-shadow: 0 2px 0 0 var(--animal-shadow-btn);
+}
+
+/* 每个设备图标用 NookPhone 调色板 */
+.device-card[data-color="pink"]   .emoji { background: var(--np-pink); }
+.device-card[data-color="purple"] .emoji { background: var(--np-purple); }
+.device-card[data-color="blue"]   .emoji { background: var(--np-blue); }
+.device-card[data-color="yellow"] .emoji { background: var(--np-yellow); }
+.device-card[data-color="orange"] .emoji { background: var(--np-orange); }
+.device-card[data-color="teal"]   .emoji { background: var(--np-teal); }
+.device-card[data-color="green"]  .emoji { background: var(--np-green); }
+.device-card[data-color="red"]    .emoji { background: var(--np-red); }
+.device-card[data-color="lime"]   .emoji { background: var(--np-lime); }
+.device-card[data-color="brown"]  .emoji { background: var(--np-brown); color: #fff; }
+
+/* ---------- Button · Nintendo 立体 pill ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  height: 45px; padding: 0 22px;
+  background: var(--animal-primary);
+  color: #fff;
+  font-family: var(--animal-font);
+  font-weight: 700; font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  border: none;
+  border-radius: var(--animal-radius-pill);
+  cursor: pointer;
+  box-shadow: 0 5px 0 0 var(--animal-primary-active);
+  transition: var(--animal-transition);
+  text-decoration: none;
+  line-height: 1;
+}
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 0 0 var(--animal-primary-active);
+  background: var(--animal-primary-hover);
+  color: #fff; text-decoration: none;
+}
+.btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 0 var(--animal-primary-active);
+}
+.btn:focus-visible {
+  outline: 2px solid var(--animal-primary);
+  outline-offset: 2px;
+}
+.btn.btn-warm {
+  background: var(--animal-focus-yellow);
+  color: var(--animal-text-body);
+  box-shadow: 0 5px 0 0 var(--animal-focus-yellow-dark);
+}
+.btn.btn-warm:hover { background: #ffd633; box-shadow: 0 6px 0 0 var(--animal-focus-yellow-dark); color: var(--animal-text-body); }
+.btn.btn-warm:active { box-shadow: 0 1px 0 0 var(--animal-focus-yellow-dark); }
+.btn.btn-ghost {
+  background: var(--animal-bg-content);
+  color: var(--animal-text-primary);
+  border: 2.5px solid var(--animal-border);
+  box-shadow: 0 5px 0 0 var(--animal-shadow-btn);
+}
+.btn.btn-ghost:hover { background: #fff; color: var(--animal-text-primary); box-shadow: 0 6px 0 0 var(--animal-shadow-btn); }
+.btn.btn-ghost:active { box-shadow: 0 1px 0 0 var(--animal-shadow-btn); }
+.btn.btn-sm {
+  height: 32px; padding: 0 16px;
+  font-size: 0.78rem;
+  border-radius: 12px;
+  box-shadow: 0 3px 0 0 var(--animal-primary-active);
+}
+.btn.btn-sm:hover { box-shadow: 0 4px 0 0 var(--animal-primary-active); }
+.btn.btn-sm:active { box-shadow: 0 1px 0 0 var(--animal-primary-active); }
+
+/* ---------- Tag / 难度标签 ---------- */
+.meta { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0 20px; }
+.tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 14px;
+  background: var(--animal-bg-content);
+  border: 2px solid var(--animal-border-input);
+  border-radius: var(--animal-radius-pill);
+  font-size: 0.82rem; font-weight: 700;
+  color: var(--animal-text-body);
+  box-shadow: 0 2px 0 0 var(--animal-shadow-input);
+  letter-spacing: 0.01em;
+}
+.tag.easy   { background: #e9f7d8; border-color: var(--animal-success); color: var(--animal-success-active); box-shadow: 0 2px 0 0 #b7d99a; }
+.tag.medium { background: #fff3cf; border-color: var(--animal-warning); color: var(--animal-warning-active); box-shadow: 0 2px 0 0 #e0c870; }
+.tag.hard   { background: #fcdada; border-color: var(--animal-error); color: var(--animal-error-active); box-shadow: 0 2px 0 0 #d99595; }
+.tag.time   { background: var(--animal-primary-bg); border-color: var(--animal-primary); color: var(--animal-primary-active); box-shadow: 0 2px 0 0 #a8e0d8; }
+.tag.app    { background: #f0e0ff; border-color: var(--np-purple); color: #5d3a8c; box-shadow: 0 2px 0 0 #d4c0e8; }
+
+/* ---------- 步骤 ---------- */
+.steps { counter-reset: step; list-style: none; padding: 0; margin: 18px 0; }
+.steps > li {
+  position: relative;
+  padding: 18px 20px 18px 70px;
+  margin-bottom: 16px;
+  background: #fff;
+  border: 2.5px solid var(--animal-border-input);
+  border-radius: var(--animal-radius-lg);
+  box-shadow: 0 3px 0 0 var(--animal-shadow-input);
+  counter-increment: step;
+}
+.steps > li::before {
+  content: counter(step);
+  position: absolute; left: 16px; top: 16px;
+  width: 40px; height: 40px;
+  background: var(--animal-primary);
+  color: #fff;
+  border: 2.5px solid var(--animal-text-primary);
+  border-radius: 50%;
+  font-weight: 900; font-size: 1.15rem;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 0 0 var(--animal-primary-active);
+}
+.steps li h4 { margin: 0 0 6px; color: var(--animal-text-primary); }
+.steps li p:last-child { margin-bottom: 0; }
+.steps li img {
+  max-width: 100%;
+  border-radius: var(--animal-radius-md);
+  border: 2px solid var(--animal-border-input);
+  margin-top: 10px;
+  box-shadow: 0 3px 0 0 var(--animal-shadow-input);
+}
+
+/* ---------- 订阅链接框（input 视觉） ---------- */
+.sub-box {
+  display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+  background: #fff;
+  border: 2.5px solid var(--animal-border-input);
+  border-radius: var(--animal-radius-pill);
+  padding: 8px 10px 8px 22px;
+  margin: 14px 0;
+  box-shadow: 0 3px 0 0 var(--animal-shadow-input);
+  transition: var(--animal-transition);
+}
+.sub-box:focus-within {
+  border-color: var(--animal-focus-yellow);
+  box-shadow: 0 3px 0 0 var(--animal-focus-yellow-dark), 0 0 0 3px rgba(255,204,0,0.15);
+}
+.sub-box .url {
+  flex: 1; min-width: 200px;
+  font-family: 'SF Mono','Fira Code',Consolas,monospace;
+  font-size: 0.86rem; color: var(--animal-text-body);
+  font-weight: 600;
+  overflow-x: auto; white-space: nowrap;
+}
+.sub-box .url.empty { color: var(--animal-text-placeholder); font-style: italic; font-weight: 500; }
+
+/* ---------- 二维码 ---------- */
+.qr-wrap {
+  display: inline-block;
+  padding: 14px;
+  background: #fff;
+  border: 2.5px solid var(--animal-border);
+  border-radius: var(--animal-radius-lg);
+  box-shadow: 0 4px 0 0 var(--animal-shadow-input);
+  margin: 10px 0;
+}
+.qr-wrap canvas, .qr-wrap img { display: block; }
+.qr-wrap .qr-empty {
+  width: 180px; height: 180px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--animal-text-placeholder);
+  font-size: 0.85rem; text-align: center;
+  background: var(--animal-bg-content);
+  border-radius: var(--animal-radius-md);
+  font-weight: 600;
+}
+
+/* ---------- 提示框 ---------- */
+.tip {
+  border-left: 6px solid var(--animal-primary);
+  background: var(--animal-primary-bg);
+  padding: 14px 18px;
+  border-radius: 0 var(--animal-radius-md) var(--animal-radius-md) 0;
+  margin: 14px 0;
+  font-size: 0.95rem;
+  color: var(--animal-text-body);
+}
+.tip.warn { border-color: var(--animal-warning); background: #fff8e0; }
+.tip.danger { border-color: var(--animal-error); background: #fde4e4; }
+.tip strong { color: var(--animal-text-primary); }
+
+/* ---------- App 下载卡 ---------- */
+.app-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px; margin: 14px 0;
+}
+.app-card {
+  background: #fff;
+  border: 2.5px solid var(--animal-border-input);
+  border-radius: var(--animal-radius-md);
+  padding: 14px 16px;
+  box-shadow: 0 3px 0 0 var(--animal-shadow-input);
+  display: flex; gap: 12px; align-items: center;
+  text-decoration: none;
+  color: var(--animal-text-body);
+  transition: var(--animal-transition);
+}
+.app-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 0 0 var(--animal-shadow-input);
+  text-decoration: none;
+  border-color: var(--animal-primary);
+}
+.app-card .ico { font-size: 2rem; }
+.app-card .info b {
+  display: block;
+  color: var(--animal-text-primary);
+  font-weight: 800;
+}
+.app-card .info small { color: var(--animal-text-muted); font-size: 0.8rem; font-weight: 600; }
+
+/* ---------- 返回首页按钮 ---------- */
+.back-home {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 16px;
+  background: var(--animal-bg-content);
+  color: var(--animal-text-primary);
+  border: 2.5px solid var(--animal-border);
+  border-radius: var(--animal-radius-pill);
+  font-weight: 700;
+  box-shadow: 0 3px 0 0 var(--animal-shadow-btn);
+  text-decoration: none;
+  font-size: 0.88rem;
+  margin-bottom: 14px;
+  transition: var(--animal-transition);
+}
+.back-home:hover {
+  background: #fff;
+  text-decoration: none;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 0 0 var(--animal-shadow-btn);
+  color: var(--animal-text-primary);
+}
+.back-home:active { transform: translateY(2px); box-shadow: 0 1px 0 0 var(--animal-shadow-btn); }
+
+/* ---------- Footer ---------- */
+.footer {
+  margin-top: 60px;
+  padding: 40px 20px 60px;
+  text-align: center;
+  color: var(--animal-text-muted);
+  font-size: 0.88rem;
+  font-weight: 600;
+  background: url('assets/footer/footer-tree.webp') bottom center/cover no-repeat;
+  min-height: 140px;
+  position: relative;
+}
+.footer .paw { font-size: 1.4rem; margin: 0 6px; }
+.footer small { display: inline-block; margin-top: 6px; }
+
+/* ---------- Divider 装饰分割线 ---------- */
+.divider {
+  width: 100%; height: 14px;
+  background: url('assets/dividers/divider-line-brown.svg') center/contain no-repeat;
+  margin: 24px 0;
+}
+.divider.teal { background-image: url('assets/dividers/divider-line-teal.svg'); }
+.divider.yellow { background-image: url('assets/dividers/divider-line-yellow.svg'); }
+.divider.wave { background-image: url('assets/dividers/wave-yellow.svg'); }
+
+/* ---------- FAQ Collapse ---------- */
+details.faq {
+  background: #fff;
+  border: 2.5px solid var(--animal-border-input);
+  border-radius: var(--animal-radius-md);
+  padding: 14px 18px;
+  margin-bottom: 12px;
+  box-shadow: 0 3px 0 0 var(--animal-shadow-input);
+  transition: var(--animal-transition);
+}
+details.faq[open] {
+  border-color: var(--animal-primary);
+}
+details.faq summary {
+  cursor: pointer;
+  font-weight: 800;
+  color: var(--animal-text-primary);
+  padding: 4px 0;
+  list-style: none;
+  display: flex; align-items: center; gap: 10px;
+}
+details.faq summary::-webkit-details-marker { display: none; }
+details.faq summary::before {
+  content: "+";
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--animal-primary);
+  color: #fff;
+  font-weight: 900;
+  font-size: 1.15rem;
+  transition: transform 0.25s ease;
+  flex-shrink: 0;
+}
+details.faq[open] summary::before { content: "−"; transform: rotate(180deg); }
+details.faq[open] summary { color: var(--animal-primary-active); }
+details.faq p:first-of-type { margin-top: 10px; }
+
+/* ---------- 表格 ---------- */
+table.simple {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0;
+  background: #fff;
+  border-radius: var(--animal-radius-md);
+  overflow: hidden;
+  box-shadow: 0 3px 0 0 var(--animal-shadow-input);
+  border: 2px solid var(--animal-border-input);
+}
+table.simple th, table.simple td {
+  padding: 11px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--animal-border-input);
+}
+table.simple th {
+  background: var(--animal-bg-content);
+  color: var(--animal-text-primary);
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+table.simple tr:last-child td { border-bottom: none; }
+
+/* ---------- input/textarea (focus = 黄色而非蓝色) ---------- */
+input[type="text"], input[type="url"], input[type="email"], textarea {
+  height: 40px;
+  padding: 0 18px;
+  font-size: 14px;
+  font-family: var(--animal-font);
+  font-weight: 500;
+  color: var(--animal-text-body);
+  background: #fff;
+  border: 2.5px solid var(--animal-border-input);
+  border-radius: var(--animal-radius-pill);
+  box-shadow: 0 3px 0 0 var(--animal-shadow-input);
+  outline: none;
+  transition: var(--animal-transition);
+}
+textarea { height: auto; padding: 12px 18px; border-radius: var(--animal-radius-md); }
+input:hover, textarea:hover { border-color: var(--animal-border-input-hover); }
+input:focus, textarea:focus {
+  border-color: var(--animal-focus-yellow);
+  box-shadow: 0 3px 0 0 var(--animal-focus-yellow-dark), 0 0 0 3px rgba(255,204,0,0.15);
+}
+::placeholder { color: var(--animal-text-placeholder); font-weight: 400; }
+
+/* ---------- Loading 岛屿 ---------- */
+.loading-island {
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+  padding: 30px;
+  color: var(--animal-text-muted);
+  font-weight: 700;
+}
+.loading-island::before {
+  content: "🏝️";
+  font-size: 3.6rem;
+  animation: animal-loading-bob 1.4s ease-in-out infinite;
+}
+@keyframes animal-loading-bob {
+  0%, 100% { transform: translateY(0) rotate(-6deg); }
+  50%      { transform: translateY(-12px) rotate(6deg); }
+}
+
+/* ---------- Typewriter（首页大字效果，无 JS 也能近似） ---------- */
+.typewriter {
+  display: inline-block;
+  letter-spacing: 0.04em;
+}
+
+/* ---------- 滚动条 ---------- */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--animal-bg-content); }
+::-webkit-scrollbar-thumb {
+  background: var(--animal-border-input);
+  border-radius: var(--animal-radius-pill);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--animal-border); }
+
+/* ---------- 选中文本 ---------- */
+::selection {
+  background: var(--animal-focus-yellow);
+  color: var(--animal-text-body);
+}
+
+/* ---------- 响应式 ---------- */
+@media (max-width: 720px) {
+  .hero h1 { font-size: 1.9rem; }
+  .hero { padding: 26px 22px; border-radius: 32px; }
+  .hero .mascot { width: 92px; height: 92px; font-size: 3.2rem; }
+  .container { padding: 20px 14px 60px; }
+  .navbar { padding: 10px 14px; flex-wrap: nowrap; gap: 10px; }
+  .navbar .logo { font-size: 1.05rem; flex-shrink: 0; }
+  .navbar .nav-links {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    min-width: 0;
+    flex: 1 1 auto;
+    justify-content: flex-end;
+    padding-bottom: 2px;
+  }
+  .navbar .nav-links::-webkit-scrollbar { display: none; }
+  .navbar .nav-links a { padding: 6px 10px; font-size: 0.84rem; flex-shrink: 0; white-space: nowrap; }
+  .device-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .device-card { padding: 16px 10px 14px; border-radius: 22px; }
+  .device-card .emoji { width: 60px; height: 60px; font-size: 2.1rem; border-radius: 18px; }
+  .device-card .name { font-size: 0.92rem; }
+  .device-card .desc { font-size: 0.74rem; }
+  .nookphone-card { padding: 18px 18px; border-radius: 28px; }
+  .nookphone-card::before { width: 70px; height: 70px; right: -6px; top: -14px; }
+  .card { padding: 18px 18px; }
+  h1 { font-size: 1.9rem; }
+  h2 { font-size: 1.35rem; }
+}
+
+/* ===================================================== *
+ * 官方动态壁纸 v0.3 (2026-05-16)                          *
+ * 1:1 复刻 animal-island-ui demo/App.tsx 的 homeBg        *
+ * ===================================================== */
+
+body.home {
+  background: url('assets/home_bg.webp') 0 0 / auto repeat, #7DC395;
+  animation: bgScroll 80s linear infinite;
+}
+@keyframes bgScroll {
+  0%   { background-position: 100% 0%; }
+  100% { background-position: 0% 100%; }
+}
+
+/* 章节标题前脉动点 */
+.container h2::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--animal-primary, #19c8b9);
+  border-radius: 50%;
+  margin-right: 10px;
+  vertical-align: middle;
+  box-shadow: 0 2px 0 #11a89b;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%      { transform: scale(1.35); opacity: 0.7; }
+}
+
+/* 卡片 hover 上浮 */
+.device-card, .nookphone-card, .card {
+  transition: transform 0.25s cubic-bezier(.34,1.56,.64,1), box-shadow 0.25s;
+}
+.device-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(114, 93, 66, 0.18);
+}
+.device-card:hover .icon,
+.device-card:hover img {
+  animation: iconBounce 0.5s ease;
+}
+@keyframes iconBounce {
+  0%   { transform: translateY(0) scale(1); }
+  35%  { transform: translateY(-12px) scale(1.06); }
+  70%  { transform: translateY(0) scale(0.96); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+/* mascot 狐狸轻 bobble */
+.mascot, .navbar .badge {
+  display: inline-block;
+  animation: mascotBobble 2.8s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+@keyframes mascotBobble {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50%      { transform: translateY(-6px) rotate(3deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* ===================================================== *
+ * 按钮颜色修正 v0.3 · 严格按官方 .btn-primary             *
+ * 官方主按钮 = 米黄底 + 棕字 + 灰立体阴影                   *
+ * 薄荷青只用于强调（tag/link/dot）, 不作按钮主色              *
+ * ===================================================== */
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  height: 45px; padding: 0 22px;
+  background: #f8f8f0;
+  color: #794f27;
+  border: 2px solid #f8f8f0;
+  font-family: var(--animal-font, "Nunito", "Noto Sans SC", "Zen Maru Gothic", sans-serif);
+  font-weight: 700; font-size: 0.95rem; letter-spacing: 0.02em;
+  border-radius: 50px;
+  box-shadow: 0 5px 0 0 #bdaea0;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.2s;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.btn:hover:not(:disabled) {
+  background: #f8f8f0;
+  border-color: #f8f8f0;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 0 0 #bdaea0;
+  color: #794f27;
+}
+.btn:active:not(:disabled) {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 0 #bdaea0;
+}
+.btn:focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 2px;
+}
+
+/* 警告/亮按钮 = focus yellow */
+.btn.btn-warm,
+.btn.btn-warning {
+  background: #ffcc00;
+  border-color: #ffcc00;
+  color: #725d42;
+  box-shadow: 0 5px 0 0 #e0b800;
+}
+.btn.btn-warm:hover, .btn.btn-warning:hover { box-shadow: 0 6px 0 0 #e0b800; transform: translateY(-1px); background: #ffd633; border-color: #ffd633; }
+.btn.btn-warm:active, .btn.btn-warning:active { box-shadow: 0 1px 0 0 #e0b800; }
+
+/* 危险按钮 = 错误红 */
+.btn.btn-danger {
+  background: #e05a5a;
+  border-color: #e05a5a;
+  color: #fff;
+  box-shadow: 0 5px 0 0 #b04545;
+}
+.btn.btn-danger:hover { box-shadow: 0 6px 0 0 #b04545; transform: translateY(-1px); }
+.btn.btn-danger:active { box-shadow: 0 1px 0 0 #b04545; }
+
+/* 幽灵透明按钮 = .btn-text */
+.btn.btn-ghost {
+  background: transparent;
+  border-color: transparent;
+  color: #794f27;
+  box-shadow: none;
+}
+.btn.btn-ghost:hover { background: rgba(247, 243, 223, 0.6); box-shadow: none; }
+
+/* 小尺寸 */
+.btn.btn-sm {
+  height: 36px;
+  padding: 0 16px;
+  font-size: 0.85rem;
+  box-shadow: 0 4px 0 0 #bdaea0;
+}
+.btn.btn-sm:hover { box-shadow: 0 5px 0 0 #bdaea0; }
+.btn.btn-sm:active { box-shadow: 0 1px 0 0 #bdaea0; }
+
+/* .btn-primary 别名（教程页直接下载按钮使用） */
+.btn.btn-primary {
+  background: #19c8b9;
+  border-color: #19c8b9;
+  color: #fff;
+  box-shadow: 0 5px 0 0 #11a89b;
+}
+.btn.btn-primary:hover { background: #3dd4c6; border-color: #3dd4c6; color: #fff; box-shadow: 0 6px 0 0 #11a89b; }
+.btn.btn-primary:active { box-shadow: 0 1px 0 0 #11a89b; }
+
+/* 下载按钮组：多按钮换行 + 旁注小字 */
+.download-row {
+  display: flex; flex-wrap: wrap; gap: 10px;
+  align-items: center;
+  margin: 14px 0 10px;
+}
+.download-row .meta-note {
+  font-size: 0.82rem;
+  color: var(--animal-text-muted);
+  font-weight: 600;
+}
+
+/* ===================================================== *
+ * select / number input Animal Island 统一样式 v0.4      *
+ * ===================================================== */
+
+.signup-form input[type="number"],
+.signup-form input[type="text"],
+.signup-form select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2.5px solid var(--animal-border-input, #aaa69d);
+  border-radius: var(--animal-radius-pill, 50px);
+  background: #fffdf2;
+  color: var(--animal-text-body, #725d42);
+  font-family: var(--animal-font, "Nunito", "Noto Sans SC", sans-serif);
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.18s ease;
+  box-sizing: border-box;
+}
+
+.signup-form input[type="number"]:focus,
+.signup-form input[type="text"]:focus,
+.signup-form select:focus {
+  outline: none;
+  border-color: var(--animal-primary, #19c8b9);
+  box-shadow: 0 0 0 3px var(--animal-primary-bg, #e6f9f6);
+}
+
+.signup-form select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23794f27'%3E%3Cpath d='M3 5l5 6 5-6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 18px center;
+  background-size: 14px;
+  padding-right: 42px;
+  cursor: pointer;
+}
+
+.signup-form select option {
+  background: #fffdf2;
+  color: #794f27;
+  font-weight: 600;
+  padding: 8px 14px;
+}
+
+/* 隐藏 number 输入框的箭头（更干净） */
+.signup-form input[type="number"]::-webkit-outer-spin-button,
+.signup-form input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.signup-form input[type="number"] { -moz-appearance: textfield; }
+
+/* ===================================================== *
+ * v0.5 · 全局表单/Modal/Toast/状态 pill 强制 Animal Island
+ * ===================================================== */
+
+/* 凡是带 .ai-form 容器，里面所有 input/select/textarea 一律 Animal Island 样式 */
+.ai-form input[type="text"],
+.ai-form input[type="password"],
+.ai-form input[type="email"],
+.ai-form input[type="url"],
+.ai-form input[type="number"],
+.ai-form input[type="search"],
+.ai-form select,
+.ai-form textarea {
+  width: 100%;
+  padding: 12px 18px;
+  border: 2.5px solid var(--animal-border-input);
+  border-radius: var(--animal-radius-pill);
+  background: #fffdf2;
+  color: var(--animal-text-body);
+  font-family: var(--animal-font);
+  font-size: 1rem;
+  font-weight: 600;
+  box-shadow: 0 3px 0 0 var(--animal-shadow-input);
+  transition: all 0.18s ease;
+  box-sizing: border-box;
+  outline: none;
+  height: auto;
+}
+.ai-form textarea {
+  border-radius: var(--animal-radius-md);
+  padding-top: 12px; padding-bottom: 12px;
+  min-height: 80px;
+}
+.ai-form input:hover, .ai-form select:hover, .ai-form textarea:hover {
+  border-color: var(--animal-border-input-hover);
+}
+.ai-form input:focus, .ai-form select:focus, .ai-form textarea:focus {
+  border-color: var(--animal-primary);
+  box-shadow: 0 3px 0 0 var(--animal-shadow-input), 0 0 0 3px var(--animal-primary-bg);
+}
+.ai-form select {
+  appearance: none; -webkit-appearance: none; -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23794f27'%3E%3Cpath d='M3 5l5 6 5-6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 18px center;
+  background-size: 14px;
+  padding-right: 42px;
+  cursor: pointer;
+}
+.ai-form select option {
+  background: #fffdf2; color: #794f27; font-weight: 600;
+}
+.ai-form input[type="number"]::-webkit-outer-spin-button,
+.ai-form input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.ai-form input[type="number"] { -moz-appearance: textfield; }
+
+.ai-form .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+.ai-form .field label { font-weight: 800; color: var(--animal-text-primary); font-size: 0.92rem; }
+.ai-form .field .hint { color: var(--animal-text-muted); font-size: 0.82rem; font-weight: 600; }
+
+/* 状态 pill：基础 .tag 已有，这里加语义化别名 */
+.tag.tag-active   { background: #e9f7d8; border-color: var(--animal-success); color: var(--animal-success-active); box-shadow: 0 2px 0 0 #b7d99a; }
+.tag.tag-disabled { background: #fde8e8; border-color: var(--animal-error); color: var(--animal-error-active); box-shadow: 0 2px 0 0 #d99595; }
+.tag.tag-locked   { background: #fff3cf; border-color: var(--animal-warning); color: var(--animal-warning-active); box-shadow: 0 2px 0 0 #e0c870; }
+.tag.tag-muted    { background: var(--animal-bg-content); border-color: var(--animal-border-input); color: var(--animal-text-muted); }
+.tag.tag-info     { background: var(--animal-primary-bg); border-color: var(--animal-primary); color: var(--animal-primary-active); box-shadow: 0 2px 0 0 #a8e0d8; }
+
+/* Modal · Animal Island 风 */
+.ai-modal-mask {
+  position: fixed; inset: 0;
+  background: rgba(121, 79, 39, 0.5);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  display: none;
+  align-items: center; justify-content: center;
+  z-index: 9000;
+  padding: 20px;
+  animation: ai-modal-fade 0.18s ease;
+}
+.ai-modal-mask.show { display: flex; }
+@keyframes ai-modal-fade { from { opacity: 0; } to { opacity: 1; } }
+
+.ai-modal {
+  background: var(--animal-bg-content);
+  border: 2.5px solid var(--animal-border);
+  border-radius: var(--animal-radius-lg);
+  box-shadow: 0 6px 0 0 var(--animal-shadow-btn), 0 16px 36px rgba(107,92,67,0.30);
+  padding: 26px 28px;
+  max-width: 560px;
+  width: 100%;
+  max-height: 86vh;
+  overflow-y: auto;
+  position: relative;
+  animation: ai-modal-pop 0.22s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes ai-modal-pop {
+  from { transform: translateY(20px) scale(0.95); opacity: 0; }
+  to   { transform: translateY(0) scale(1); opacity: 1; }
+}
+.ai-modal h3 { margin-top: 0; }
+.ai-modal .ai-modal-body { color: var(--animal-text-body); font-weight: 600; line-height: 1.65; }
+.ai-modal .ai-modal-body dl { margin: 8px 0; }
+.ai-modal .ai-modal-body dt {
+  font-weight: 800; color: var(--animal-text-primary);
+  margin-top: 10px; font-size: 0.88rem;
+}
+.ai-modal .ai-modal-body dd {
+  margin: 4px 0 0; padding: 8px 12px;
+  background: #fffdf2;
+  border: 1.5px solid var(--animal-border-input);
+  border-radius: var(--animal-radius-sm);
+  font-family: 'SF Mono','Fira Code',Consolas,monospace;
+  font-size: 0.88rem;
+  word-break: break-all;
+}
+.ai-modal-actions {
+  display: flex; gap: 10px; flex-wrap: wrap;
+  justify-content: flex-end;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1.5px dashed var(--animal-border-input);
+}
+
+/* Toast · 右下角浮出 */
+.ai-toast-stack {
+  position: fixed;
+  right: 20px; bottom: 24px;
+  z-index: 9500;
+  display: flex; flex-direction: column; gap: 10px;
+  pointer-events: none;
+}
+.ai-toast {
+  background: var(--animal-bg-content);
+  border: 2.5px solid var(--animal-border);
+  border-radius: var(--animal-radius-pill);
+  box-shadow: 0 5px 0 0 var(--animal-shadow-btn), 0 10px 20px rgba(107,92,67,0.25);
+  padding: 12px 22px;
+  font-weight: 700;
+  color: var(--animal-text-body);
+  min-width: 200px;
+  max-width: 360px;
+  pointer-events: auto;
+  animation: ai-toast-in 0.25s cubic-bezier(.34,1.56,.64,1);
+}
+.ai-toast.fade { animation: ai-toast-out 0.3s ease forwards; }
+.ai-toast.ok   { border-color: var(--animal-success); background: #e9f7d8; color: #4d7e1a; }
+.ai-toast.err  { border-color: var(--animal-error);   background: #fde8e8; color: #c94444; }
+.ai-toast.warn { border-color: var(--animal-warning); background: #fff8e0; color: var(--animal-warning-active); }
+@keyframes ai-toast-in {
+  from { transform: translateX(50px); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+@keyframes ai-toast-out {
+  from { transform: translateX(0); opacity: 1; }
+  to   { transform: translateX(50px); opacity: 0; }
+}
+
+/* signups 表头 / 行 — 用 .ai-table 别名让 setup signups 也能享用 invites 风 */
+table.ai-table {
+  width: 100%; border-collapse: collapse;
+  margin-top: 10px;
+  background: var(--animal-bg-content);
+  border-radius: var(--animal-radius-md);
+  overflow: hidden;
+  border: 2px solid var(--animal-border-input);
+}
+table.ai-table th, table.ai-table td {
+  padding: 11px 14px;
+  text-align: left;
+  border-bottom: 1.5px solid var(--animal-border-input);
+  font-size: 0.92rem;
+  vertical-align: middle;
+}
+table.ai-table th {
+  background: var(--animal-bg-content);
+  color: var(--animal-text-primary);
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+table.ai-table tr:last-child td { border-bottom: none; }
+table.ai-table tr:hover td { background: rgba(255,253,242,0.5); }
+
+/* ===== Vega SVG Icons (Lucide sprite) ===== */
+.vega-icon {
+  width: 1.1em;
+  height: 1.1em;
+  display: inline-block;
+  vertical-align: -0.18em;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
+.vega-icon-sm { width: 0.9em; height: 0.9em; vertical-align: -0.12em; }
+.vega-icon-lg { width: 1.6em; height: 1.6em; vertical-align: -0.28em; }
+.vega-icon-xl {
+  width: 2.4em;
+  height: 2.4em;
+  vertical-align: middle;
+  stroke-width: 1.8;
+}
+/* nook-phone card 中 .np-icon 位置的大图标：棕框、米黄圆角底 */
+.np-icon .vega-icon,
+.np-icon .vega-icon-xl {
+  width: 60%;
+  height: 60%;
+  color: var(--animal-brown-dark, #6b4a2b);
+}
+/* 内联图标后留点呼吸 */
+h1 .vega-icon, h2 .vega-icon, h3 .vega-icon,
+button .vega-icon, a .vega-icon, label .vega-icon,
+.btn .vega-icon, .pill .vega-icon, .badge .vega-icon,
+.tag .vega-icon, .chip .vega-icon {
+  margin-right: 0.32em;
+}
+/* "DE" 旗替代标记 */
+.vega-flag {
+  display: inline-block;
+  padding: 0 0.45em;
+  margin-right: 0.32em;
+  font-size: 0.72em;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #fff8e7;
+  background: var(--animal-brown-dark, #6b4a2b);
+  border-radius: 4px;
+  vertical-align: 0.12em;
+}
+
+/* ===================================================== *
+ * 容器内 SVG 居中 + 填充修正 v0.6                          *
+ * device-card .emoji / .np-icon 内的 SVG 强制居中铺满      *
+ * ===================================================== */
+.device-card .emoji,
+.nookphone-card .np-icon {
+  /* 已经是 flex center, 但 inline svg vertical-align 干扰，重置 */
+  line-height: 0;
+}
+
+.device-card .emoji .vega-icon,
+.device-card .emoji svg,
+.nookphone-card .np-icon .vega-icon,
+.nookphone-card .np-icon svg {
+  display: block;
+  width: 56%;
+  height: 56%;
+  vertical-align: middle;
+  stroke-width: 1.8;
+  color: var(--animal-text-primary, #794f27);
+  margin: 0;
+}
+
+/* 设备图标尺寸再大一点占满方框 */
+.device-card .emoji .vega-icon { width: 60%; height: 60%; }
+.nookphone-card .np-icon .vega-icon { width: 58%; height: 58%; }
+
+
+/* ===================================================== *
+ * SVG icon 居中 终极修正 v0.7 · CSS Grid place-items     *
+ * ===================================================== */
+.device-card .emoji,
+.nookphone-card .np-icon {
+  display: grid !important;
+  place-items: center;
+  line-height: 0;
+  font-size: 0;
+  padding: 0;
+}
+.device-card .emoji > svg.vega-icon,
+.nookphone-card .np-icon > svg.vega-icon {
+  display: block;
+  width: 64%;
+  height: 64%;
+  margin: 0;
+  vertical-align: middle;
+  stroke-width: 1.8;
+  color: var(--animal-text-primary, #794f27);
+}
+
+/* 资源监控卡片 */
+.rm-card {
+  background: #fffdf2;
+  border: 2.5px solid var(--animal-text-primary, #794f27);
+  border-radius: 18px;
+  padding: 14px 16px;
+  box-shadow: 0 4px 0 0 var(--animal-shadow-btn);
+  text-align: left;
+}
+.rm-card.rm-total { background: var(--animal-primary-bg, #e6f9f6); border-color: var(--animal-primary, #19c8b9); }
+.rm-card .rm-label { color: var(--animal-text-muted, #9f927d); font-size: 0.85rem; font-weight: 700; margin-bottom: 4px; }
+.rm-card .rm-val { color: var(--animal-text-primary, #794f27); font-size: 1.4rem; font-weight: 900; line-height: 1.1; }
+.rm-card .rm-sub { color: var(--animal-text-body, #725d42); font-size: 0.82rem; margin-top: 4px; font-weight: 700; }
+
+.rm-card.rm-clickable { cursor: pointer; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+.rm-card.rm-clickable:hover { transform: translateY(-2px); box-shadow: 0 6px 0 0 var(--animal-shadow-btn); }
+.rm-card.rm-clickable.selected {
+  border-color: var(--animal-primary, #19c8b9) !important;
+  box-shadow: 0 4px 0 0 var(--animal-primary-active, #11a89b);
+}
+
+/* 资源监控卡 selected 加强视觉 */
+.rm-card.rm-clickable.selected {
+  border-color: var(--animal-primary, #19c8b9) !important;
+  border-width: 3px;
+  box-shadow: 0 6px 0 0 var(--animal-primary-active, #11a89b), 0 0 0 3px rgba(25, 200, 185, 0.15);
+  transform: translateY(-2px);
+}
+/* 移动端 3 列 → 2 列 → 1 列 */
+@media (max-width: 900px) { #rm_grid { grid-template-columns: repeat(2, 1fr) !important; } }
+@media (max-width: 520px) { #rm_grid { grid-template-columns: 1fr !important; } }
+
+/* navbar logo badge 内 SVG 居中 */
+.navbar .logo .badge {
+  line-height: 0;
+  font-size: 0;
+  padding: 0;
+}
+.navbar .logo .badge .vega-icon,
+.navbar .logo .badge svg {
+  display: block;
+  width: 60%;
+  height: 60%;
+  color: #fffdf2;
+  stroke-width: 2;
+}
+
+/* 全站 select 统一 Animal Island 样式（自动应用，不依赖 class） */
+select:not([data-no-animal-style]) {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 10px 42px 10px 16px;
+  border: 2.5px solid var(--animal-border-input, #c4b89e);
+  border-radius: var(--animal-radius-pill, 50px);
+  background: #fffdf2 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23794f27'%3E%3Cpath d='M3 5l5 6 5-6z'/%3E%3C/svg%3E") no-repeat right 14px center;
+  background-size: 14px;
+  font-family: var(--animal-font);
+  font-weight: 600;
+  color: var(--animal-text-body, #725d42);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+select:not([data-no-animal-style]):focus {
+  outline: none;
+  border-color: var(--animal-primary, #19c8b9);
+  box-shadow: 0 0 0 3px var(--animal-primary-bg, #e6f9f6);
+}
+select:not([data-no-animal-style]) option {
+  background: #fffdf2;
+  color: #794f27;
+  font-weight: 600;
+}
+
+/* ==================================================== *
+ * <details> 平滑展开动画 v0.8                            *
+ * ==================================================== */
+details.faq, details {
+  overflow: hidden;
+}
+details > *:not(summary) {
+  animation: ai-collapse-open 0.32s cubic-bezier(.34, 1.2, .64, 1);
+  transform-origin: top;
+}
+@keyframes ai-collapse-open {
+  0%   { opacity: 0; transform: translateY(-6px); max-height: 0; }
+  60%  { opacity: 0.7; }
+  100% { opacity: 1; transform: translateY(0); max-height: 1000px; }
+}
+details summary {
+  cursor: pointer;
+  list-style: none;
+  position: relative;
+  padding-right: 28px;
+  user-select: none;
+  transition: color 0.2s ease;
+}
+details summary::-webkit-details-marker { display: none; }
+details summary::after {
+  content: "";
+  position: absolute;
+  right: 6px; top: 50%;
+  width: 10px; height: 10px;
+  border-right: 2.5px solid var(--animal-text-primary, #794f27);
+  border-bottom: 2.5px solid var(--animal-text-primary, #794f27);
+  transform: translateY(-70%) rotate(45deg);
+  transition: transform 0.28s cubic-bezier(.34, 1.2, .64, 1);
+}
+details[open] summary::after {
+  transform: translateY(-30%) rotate(-135deg);
+}
+
+/* ==================================================== *
+ * Animal Island Switch (toggle) ai-switch                *
+ * 用法: <button class="ai-switch [on]" data-toggle>     *
+ * ==================================================== */
+.ai-switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-width: 52px;
+  height: 28px;
+  padding: 0;
+  background: #d4c9b4;
+  border: 2.5px solid #c4b89e;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(.34, 1.2, .64, 1);
+  outline: none;
+  box-shadow: inset 0 2px 4px rgba(114, 93, 66, 0.15);
+  vertical-align: middle;
+}
+.ai-switch::after {
+  content: "";
+  position: absolute;
+  left: 1px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background: #fffdf2;
+  border: 2px solid #a89878;
+  border-radius: 50%;
+  box-shadow: 0 2px 0 0 rgba(0,0,0,0.08);
+  transition: left 0.22s cubic-bezier(.34, 1.6, .64, 1), border-color 0.22s ease;
+}
+.ai-switch:hover:not(:disabled) { border-color: #a89878; }
+.ai-switch:focus-visible { outline: 2px solid #ffcc00; outline-offset: 2px; }
+.ai-switch.on {
+  background: #86d67a;
+  border-color: #6fba2c;
+  box-shadow: inset 0 2px 4px rgba(90, 158, 30, 0.2);
+}
+.ai-switch.on::after {
+  left: calc(100% - 22px);
+  border-color: #5a9e1e;
+}
+.ai-switch:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ===== 教程内"去我的账户拿订阅"CTA 卡片 (v0.6.2.0) ===== */
+.sub-cta-card {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  background: var(--animal-primary-bg, #e6f7f5);
+  border: 2.5px solid var(--animal-primary, #19c8b9);
+  border-radius: 18px;
+  padding: 14px 16px;
+  margin: 14px 0 18px;
+  box-shadow: 0 5px 0 0 #bdaea0;
+}
+.sub-cta-card .sub-cta-icon {
+  flex-shrink: 0;
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  background: #fffdf2;
+  border: 2px solid var(--animal-primary, #19c8b9);
+  display: flex; align-items: center; justify-content: center;
+}
+.sub-cta-card .sub-cta-icon svg { width: 28px; height: 28px; color: var(--animal-primary, #19c8b9); }
+.sub-cta-card .sub-cta-body { flex: 1; min-width: 0; }
+.sub-cta-card .sub-cta-body strong { display: block; color: var(--animal-text-primary, #794f27); font-size: 1rem; margin-bottom: 4px; }
+.sub-cta-card .sub-cta-body p { margin: 0 0 10px; font-size: 0.88rem; color: var(--animal-text-secondary, #8a6a44); line-height: 1.5; }
+.sub-cta-card .btn { margin: 0; }
+@media (max-width: 520px) { .sub-cta-card { flex-direction: column; align-items: stretch; } .sub-cta-card .sub-cta-icon { width: 44px; height: 44px; } }
+
+/* protocols.html · 星级评分 SVG icon 着色 (v0.6.2.1) */
+.proto-stars { display: inline-flex; gap: 1px; vertical-align: middle; }
+.proto-stars .vega-icon.star { width: 16px; height: 16px; color: var(--animal-warning, #f5c31c); fill: var(--animal-warning, #f5c31c); }

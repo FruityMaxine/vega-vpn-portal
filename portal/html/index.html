@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Vega VPN · 通往世界的小动物驿站</title>
+<meta name="description" content="家用 VPN 朋友自助门户 · 一键查看你的设备配置教程" />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="animal-components.css" />
+<script src="animal-components.js" defer></script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23a67c52'/%3E%3Cpath d='M32 12 L50 20 V32 C50 44 32 54 32 54 C32 54 14 44 14 32 V20 Z' fill='none' stroke='%23fff8e7' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E" />
+<script src="/favicon-today.js"></script>
+</head>
+<body class="home">
+
+<header class="navbar">
+  <div class="logo">
+    <span class="badge"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-cat"/></svg></span>
+    <span>Vega VPN · 小动物驿站</span>
+  </div>
+  <nav class="nav-links">
+    <a href="index.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-home"/></svg> 首页</a>
+    <a href="downloads.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-package"/></svg> 下载</a>
+    <a href="devices/help.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-help"/></svg> 求助</a>
+    <a data-when-logged-out href="me.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-unlock"/></svg> 登录</a>
+    <a data-when-logged-out href="signup.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-ticket"/></svg> 注册</a>
+    <a data-when-logged-in href="me.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-user"/></svg> <span data-username-slot>—</span></a>
+    <a data-when-logged-in href="#" data-action="logout"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-log-out"/></svg> 退出</a>
+  </nav>
+</header>
+
+<main class="container">
+
+  <section class="hero">
+    <div class="mascot"><img src="assets/animal_icon.png" alt="Vega VPN mascot" style="width:100%; height:100%; object-fit:contain;" /></div>
+    <div style="flex:1; min-width:240px;">
+      <h1 class="typewriter">嘿，旅人～ 选你的小动物驿站！</h1>
+      <p>挑下面的设备图标，我们带你 30 秒接入德国岛。<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-globe"/></svg><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-sparkles"/></svg></p>
+    </div>
+  </section>
+
+  <!-- 未登录态卡片 -->
+  <section class="nookphone-card" data-when-logged-out>
+    <div class="np-icon"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-ticket"/></svg></div>
+    <div class="np-body">
+      <h2 style="margin-top:0">第一次来？看这里</h2>
+      <p style="margin-top:0">流程：拿到邀请码 → 注册账户 → 拿订阅 URL → 装 App。所有邀请码<strong>一次性</strong>使用。</p>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
+        <a class="btn btn-primary" href="signup.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-ticket"/></svg> 我有邀请码 · 去注册</a>
+        <a class="btn btn-warning" href="me.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-unlock"/></svg> 已有账户 · 登录</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 已登录态卡片 -->
+  <section class="nookphone-card" data-when-logged-in>
+    <div class="np-icon"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-hand"/></svg></div>
+    <div class="np-body">
+      <h2 style="margin-top:0">嗨，<span data-username-slot>朋友</span>！</h2>
+      <p style="margin-top:0">你已经登录。看你的订阅、加新订阅、查流量全在 <strong>"我的账户"</strong>。</p>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
+        <a class="btn btn-primary" href="me.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-bar-chart-3"/></svg> 我的账户 · 订阅 / 流量</a>
+        <a class="btn btn-ghost" href="#" data-action="logout"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-log-out"/></svg> 退出登录</a>
+      </div>
+    </div>
+  </section>
+
+
+  <div class="divider teal"></div>
+
+  <section>
+    <h2><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-paw-print"/></svg> 我用什么设备？</h2>
+    <p>戳一下你的设备，我们就给你专属教程 ↓</p>
+    <div class="device-grid">
+
+      <a class="device-card" data-device="iphone" data-color="pink" href="devices/iphone.html">
+        <div class="emoji"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-smartphone"/></svg></div>
+        <div class="name">iPhone / iPad</div>
+        <div class="desc">零 App · 描述文件</div>
+      </a>
+
+      <a class="device-card" data-device="mac" data-color="blue" href="devices/mac.html">
+        <div class="emoji"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-laptop"/></svg></div>
+        <div class="name">Mac · macOS</div>
+        <div class="desc">原生 IKEv2 / ClashX</div>
+      </a>
+
+      <a class="device-card" data-device="android" data-color="green" href="devices/android.html">
+        <div class="emoji"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-bot"/></svg></div>
+        <div class="name">Android 手机</div>
+        <div class="desc">v2rayNG / NekoBox</div>
+      </a>
+
+      <a class="device-card" data-device="windows" data-color="blue" href="devices/windows.html">
+        <div class="emoji"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-app-window"/></svg></div>
+        <div class="name">Windows PC</div>
+        <div class="desc">NekoRay / Hiddify</div>
+      </a>
+
+      <a class="device-card" data-device="linux" data-color="brown" href="devices/linux.html">
+        <div class="emoji"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-bird"/></svg></div>
+        <div class="name">Linux</div>
+        <div class="desc">sing-box CLI</div>
+      </a>
+
+      <a class="device-card" data-device="androidtv" data-color="lime" href="devices/androidtv.html">
+        <div class="emoji"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-tv"/></svg></div>
+        <div class="name">Android TV 盒子</div>
+        <div class="desc">小米 / Shield / Onn</div>
+      </a>
+
+      <a class="device-card" data-device="appletv" data-color="purple" href="devices/appletv.html">
+        <div class="emoji"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-apple"/></svg></div>
+        <div class="name">Apple TV</div>
+        <div class="desc">路由器层方案</div>
+      </a>
+
+      <a class="device-card" data-device="smarttv" data-color="yellow" href="devices/smarttv.html">
+        <div class="emoji"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-satellite-dish"/></svg></div>
+        <div class="name">智能电视</div>
+        <div class="desc">三星 / LG / 华为</div>
+      </a>
+
+      <a class="device-card" data-device="router" data-color="teal" href="devices/router.html">
+        <div class="emoji"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-wifi"/></svg></div>
+        <div class="name">路由器</div>
+        <div class="desc">OpenWRT / Merlin</div>
+      </a>
+
+      <a class="device-card" data-device="help" data-color="red" href="devices/help.html">
+        <div class="emoji"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-life-buoy"/></svg></div>
+        <div class="name">求助 · FAQ</div>
+        <div class="desc">故障排查</div>
+      </a>
+
+    </div>
+  </section>
+
+  <div class="divider yellow"></div>
+
+  <section class="card" style="background:linear-gradient(135deg, var(--animal-primary-bg) 0%, #fff7d8 100%); border:2px solid var(--animal-primary);">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-shield"/></svg> 协议对比 · 4 选 1</h2>
+    <p style="margin-top:0">你的订阅自带 4 个协议节点 (VLESS Reality / Shadowsocks-2022 / Trojan / VMess) · 各有所长 · 出问题怎么切？</p>
+    <a class="btn btn-primary" href="devices/protocols.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-bar-chart-3"/></svg> 看 4 协议详细对比</a>
+  </section>
+
+  
+
+  <section class="card" style="margin-top:14px">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg> 四步搞定（新流程·自助注册）</h2>
+    <ol class="steps">
+      <li>
+        <h4>第一步：你所收到的邀请码（XXX-XXXX-XXXX 格式）</h4>
+        <p>邀请码看上去像 <code>AIY-7K2M-P3LX</code>。每个邀请码 <strong>只能用一次</strong>，用完即失效。如果还没有，联系朋友要一个。</p>
+      </li>
+      <li>
+        <h4>第二步：用邀请码注册</h4>
+        <p>到 <a href="signup.html"><strong>"注册"页面</strong></a> 输入你的邀请码 + 给自己起个名字（用来识别这条订阅）→ 点提交。<strong>30 秒</strong> 拿到你专属的订阅 URL + 二维码。</p>
+        <a class="btn btn-primary" href="signup.html" style="margin-top:8px;"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-ticket"/></svg> 立即去注册</a>
+      </li>
+      <li>
+        <h4>第三步：选你的设备 → 装 App → 导入订阅</h4>
+        <p>把订阅 URL 复制到对应的 App（iPhone Shadowrocket / Android v2rayNG / 电脑 Clash Verge 等），各设备具体步骤见下方<strong>设备教程网格</strong>。教程页内嵌"直接下载 App"按钮 <svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-download"/></svg>，点一下就跳到官方源。</p>
+      </li>
+      <li>
+        <h4>第四步：随时查自己的流量</h4>
+        <p>到 <a href="me.html"><strong>"我的账户"页面</strong></a> 粘贴你的订阅 token 即可看到：当前周期已用 / 剩余 / 重置倒计时 / 链接到期日。</p>
+        <a class="btn btn-warning" href="me.html" style="margin-top:8px;"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-bar-chart-3"/></svg> 查流量剩余</a>
+      </li>
+    </ol>
+  </section>
+
+  <section class="card" id="resource-monitor">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-bar-chart-3"/></svg> 项目资源占用</h2>
+    <p style="margin-top:0; color:var(--animal-text-muted); font-size:0.88rem">每秒刷新 · 点卡片切换下方图表。<span id="rm_ts">—</span></p>
+    <div id="rm_grid" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:14px; margin-top:14px;">
+      <div class="rm-card rm-clickable selected" data-key="vega-vpn-marzban" data-metric="mem_mb" data-label="Marzban · Xray RAM (MB)">
+        <div class="rm-label">Marzban · Xray 引擎</div>
+        <div class="rm-val"><span data-mem>—</span> MB</div>
+        <div class="rm-sub"><span data-cpu>—</span>% CPU</div>
+      </div>
+      <div class="rm-card rm-clickable" data-key="vega-vpn-portal" data-metric="mem_mb" data-label="门户 nginx RAM (MB)">
+        <div class="rm-label">门户 nginx</div>
+        <div class="rm-val"><span data-mem>—</span> MB</div>
+        <div class="rm-sub"><span data-cpu>—</span>% CPU</div>
+      </div>
+      <div class="rm-card rm-clickable" data-key="vega-vpn-signup" data-metric="mem_mb" data-label="注册服务 RAM (MB)">
+        <div class="rm-label">注册服务</div>
+        <div class="rm-val"><span data-mem>—</span> MB</div>
+        <div class="rm-sub"><span data-cpu>—</span>% CPU</div>
+      </div>
+      <div class="rm-card rm-total rm-clickable" data-key="__total__" data-metric="mem_mb" data-label="本项目合计 RAM (MB)">
+        <div class="rm-label">本项目合计</div>
+        <div class="rm-val" id="rm_total_mem">—</div>
+        <div class="rm-sub" id="rm_total_cpu">— CPU</div>
+      </div>
+      <div class="rm-card rm-clickable" data-key="__traffic_rx__" data-metric="rx_mbps" data-label="出口下行 (Mbps)">
+        <div class="rm-label">出口流量 · 下行</div>
+        <div class="rm-val"><span id="rm_rx">—</span> Mbps</div>
+        <div class="rm-sub">峰值 1 Gbps · 包月 20 TB</div>
+      </div>
+      <div class="rm-card rm-clickable" data-key="__traffic_tx__" data-metric="tx_mbps" data-label="出口上行 (Mbps)">
+        <div class="rm-label">出口流量 · 上行</div>
+        <div class="rm-val"><span id="rm_tx">—</span> Mbps</div>
+        <div class="rm-sub">峰值 1 Gbps · 包月 20 TB</div>
+      </div>
+    </div>
+    <div id="rm_chart_box" style="margin-top:18px;">
+      <div id="rm_chart_label" style="font-weight:800; color:var(--animal-text-primary); margin-bottom:8px;">Marzban · Xray RAM</div>
+      <div id="rm_chart_wrap" style="position:relative; background:#fffdf2; border:2.5px solid var(--animal-text-primary); border-radius:14px; padding:14px 16px 8px; box-shadow:0 4px 0 0 var(--animal-shadow-btn);">
+        <svg id="rm_chart" viewBox="0 0 600 140" preserveAspectRatio="none" style="width:100%; height:140px; display:block;">
+          <defs>
+            <linearGradient id="rm_grad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="var(--animal-primary,#19c8b9)" stop-opacity="0.35"/>
+              <stop offset="100%" stop-color="var(--animal-primary,#19c8b9)" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <path id="rm_chart_area" d="" fill="url(#rm_grad)" stroke="none"/>
+          <polyline id="rm_chart_line" points="" fill="none" stroke="var(--animal-primary, #19c8b9)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+        </svg>
+        <div id="rm_chart_empty" style="position:absolute; inset:0; display:none; align-items:center; justify-content:center; color:var(--animal-text-muted); font-weight:700; font-size:0.92rem;">数据采集中… 至少需要 5 个采样点才会绘图</div>
+        <div style="display:flex; justify-content:space-between; font-size:0.78rem; color:var(--animal-text-muted); margin-top:6px;">
+          <span>最低 <span id="rm_chart_min_v">—</span></span>
+          <span>平均 <span id="rm_chart_avg_v">—</span></span>
+          <span>最高 <span id="rm_chart_max_v">—</span></span>
+        </div>
+      </div>
+    </div>
+    <script>
+    (function(){
+      let LATEST = null;
+      let HIST = [];
+      let CURRENT_KEY = 'vega-vpn-marzban';
+      let CURRENT_METRIC = 'mem_mb';
+      let CURRENT_LABEL = 'Marzban · Xray RAM (MB) · 最近 5 分钟';
+
+      async function pull(){
+        try {
+          const [r1, r2] = await Promise.all([
+            fetch('/stats/current.json?_='+Date.now()),
+            fetch('/stats/history.json?_='+Date.now())
+          ]);
+          LATEST = await r1.json();
+          HIST = await r2.json();
+          renderCards(); renderChart();
+        } catch(e){ console.warn('stats fail', e); }
+      }
+
+      function renderCards(){
+        if(!LATEST) return;
+        document.getElementById('rm_ts').textContent = '最后更新 ' + LATEST.ts_human;
+        for (const c of document.querySelectorAll('.rm-card[data-key^="vega-vpn-"]')) {
+          const k=c.dataset.key; const v=LATEST.containers[k]||{};
+          c.querySelector('[data-mem]').textContent = (v.mem_mb||0).toFixed(0);
+          c.querySelector('[data-cpu]').textContent = (v.cpu_pct||0).toFixed(2);
+        }
+        document.getElementById('rm_total_mem').textContent = (LATEST.vega_vpn_total.mem_mb).toFixed(0)+' MB';
+        document.getElementById('rm_total_cpu').textContent = (LATEST.vega_vpn_total.cpu_pct).toFixed(2)+'% CPU';
+        document.getElementById('rm_rx').textContent = (LATEST.traffic.rx_mbps).toFixed(2);
+        document.getElementById('rm_tx').textContent = (LATEST.traffic.tx_mbps).toFixed(2);
+      }
+
+      function seriesFor(key, metric){
+        return HIST.map(h => {
+          if (key === '__total__') return Object.values(h.containers).reduce((s,v)=>s+(v[metric]||0), 0);
+          if (key === '__traffic_rx__') return h.traffic?.rx_mbps || 0;
+          if (key === '__traffic_tx__') return h.traffic?.tx_mbps || 0;
+          return h.containers?.[key]?.[metric] || 0;
+        });
+      }
+
+      function fmt(v) { return v >= 100 ? v.toFixed(0) : v.toFixed(2); }
+
+      function renderChart(){
+        const data = seriesFor(CURRENT_KEY, CURRENT_METRIC);
+        const empty = document.getElementById('rm_chart_empty');
+        const svg = document.getElementById('rm_chart');
+        const label = document.getElementById('rm_chart_label');
+        label.textContent = CURRENT_LABEL + ' · ' + data.length + '/300 采样';
+
+        if (data.length < 5) {
+          empty.style.display = 'flex';
+          svg.style.opacity = '0.3';
+          empty.textContent = `数据采集中… ${data.length}/5 个采样后开始绘图`;
+          document.getElementById('rm_chart_line').setAttribute('points', '');
+          document.getElementById('rm_chart_area').setAttribute('d', '');
+          ['rm_chart_min_v','rm_chart_avg_v','rm_chart_max_v'].forEach(id => document.getElementById(id).textContent = '—');
+          return;
+        }
+        empty.style.display = 'none';
+        svg.style.opacity = '1';
+
+        const mn = Math.min(...data), mx = Math.max(...data);
+        const avg = data.reduce((s,v)=>s+v, 0) / data.length;
+        // 防止微小抖动被放大: 至少给 10% 余量
+        let yMin = mn, yMax = mx;
+        const yRange = Math.max(yMax - yMin, Math.max(mx * 0.05, 1));  // 至少 5% 或 1 单位的视觉范围
+        const center = (yMin + yMax) / 2;
+        yMin = center - yRange / 2;
+        yMax = center + yRange / 2;
+
+        const w = 600, h = 140, pad = 10;
+        const pts = data.map((y, i) => {
+          const x = pad + (i / (data.length-1)) * (w - pad*2);
+          const ny = h - pad - ((y - yMin) / (yMax - yMin)) * (h - pad*2);
+          return `${x.toFixed(1)},${ny.toFixed(1)}`;
+        });
+        document.getElementById('rm_chart_line').setAttribute('points', pts.join(' '));
+        // 填充区域 (line 下方淡色渐变)
+        const areaD = `M ${pts[0]} L ` + pts.slice(1).join(' L ') + ` L ${w-pad},${h-pad} L ${pad},${h-pad} Z`;
+        document.getElementById('rm_chart_area').setAttribute('d', areaD);
+
+        document.getElementById('rm_chart_min_v').textContent = fmt(mn);
+        document.getElementById('rm_chart_avg_v').textContent = fmt(avg);
+        document.getElementById('rm_chart_max_v').textContent = fmt(mx);
+      }
+
+      document.querySelectorAll('.rm-clickable').forEach(c => {
+        c.addEventListener('click', () => {
+          document.querySelectorAll('.rm-clickable').forEach(x => x.classList.remove('selected'));
+          c.classList.add('selected');
+          CURRENT_KEY = c.dataset.key;
+          CURRENT_METRIC = c.dataset.metric;
+          CURRENT_LABEL = c.dataset.label;
+          renderChart();
+        });
+      });
+
+      pull(); setInterval(pull, 1000);
+    })();
+    </script>
+  </section>
+
+  <section class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-leaf"/></svg> 关于这个驿站</h2>
+    <p>
+      节点位置：<strong><span class="vega-flag" aria-label="Germany">DE</span> 德国 · 法兰克福</strong>，带宽峰值 <strong>1 Gbps</strong>。
+    </p>
+    <p>
+      支持协议：<span class="tag"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-zap"/></svg> VLESS-Reality</span> <span class="tag"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-shield"/></svg> Shadowsocks-2022</span> <span class="tag"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-waves"/></svg> Trojan</span> <span class="tag"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-wand-2"/></svg> VMess</span>
+     &nbsp; <a href="devices/protocols.html"><strong>看 4 协议对比 →</strong></a></p>
+    <p>
+      <strong>注意：可能无法使用的场景</strong>
+    </p>
+    <ul>
+      <li><strong>Netflix HD/4K</strong> ── Hetzner 数据中心 IP 被 Netflix 标记，多半会显示"检测到 VPN 解锁工具"，看不了 HD。能解锁的是 480p 兜底（无 DRM 资源）。</li>
+      <li><strong>Disney+ / HBO Max / Hulu</strong> ── 同上，数据中心 IP 多半被屏。</li>
+      <li><strong>iCloud Private Relay / Apple 隐身中继</strong> ── 苹果系统设置层面优先，与本 VPN 同开会绕过。</li>
+      <li><strong>P2P / BitTorrent 大流量</strong> ── 不禁，但管理员保留追查能力，请别下盗版。</li>
+      <li><strong>境内某些银行/政务 App</strong> ── 走 VPN 时部分国内 App 拒服务（GeoIP 风控），用时请关 VPN。</li>
+    </ul>
+    <p>
+      可以正常使用：YouTube / Twitter / Discord / GitHub / Reddit / Spotify / Twitch / 暗网 Tor / 海外学习平台 / 海外 SaaS。
+    </p>
+  </section>
+
+  <!-- 管理员卡片：只在 admin 账户登录时显示 -->
+  <section class="card" data-when-admin style="background: linear-gradient(135deg, rgba(247,243,223,0.95), rgba(230,249,246,0.95)); border:2px dashed var(--animal-primary, #19c8b9);">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-wrench"/></svg> 管理员控制台</h2>
+    <p style="margin-top:0">你已是 <strong>admin</strong> 账户，下面两个入口免密直进。</p>
+    <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:14px;">
+      <a class="btn btn-primary" href="/dashboard-login.html" target="_blank" rel="noopener"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-wrench"/></svg> 打开 Marzban 后台</a>
+      <a class="btn btn-warning" href="/setup.html" target="_blank" rel="noopener"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-ticket"/></svg> 邀请码 / 朋友账户管理</a>
+    </div>
+    <p style="margin-top:14px; font-size:0.85rem; color:var(--animal-text-muted)">
+      <strong>Marzban 后台</strong>：直接增删改所有 VPN 用户。<br>
+      <strong>邀请码 / 账户管理</strong>：生成一次性邀请码 + 看朋友注册情况 + 改/禁朋友账户。
+    </p>
+  </section>
+
+  <section class="card" id="disclaimer">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-scale"/></svg> 使用须知</h2>
+    <ul>
+      <li>本驿站<strong>仅供个人合法用途</strong>：访问国外学习资料、技术文档、海外正版媒体、跨国办公等。</li>
+      <li>请勿用于任何违反<strong>所在国 / 目标国 / 服务器所在国（德国）</strong>法律的活动，包括但不限于：未授权入侵、垃圾邮件、版权盗用、暴力/色情内容传播。</li>
+      <li>请勿将专属链接转发给陌生人。链接=钥匙，泄露即任何人都能蹭你的流量额度。</li>
+      <li>本服务不收费，不保证 100% 可用，遇宕机请耐心等待管理员修复。</li>
+      <li>使用即视为同意以上条款。如果你不同意，请关闭页面。</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <span class="paw"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-paw-print"/></svg></span>
+  Vega VPN · 德国法兰克福节点
+  <span class="paw"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-paw-print"/></svg></span>
+  <br>
+  <small>不存日志 · 不收费用 · 仅限好友 · 风格致敬 <a href="https://github.com/guokaigdg/animal-island-ui" target="_blank" rel="noopener">animal-island-ui</a></small>
+  <br>
+  <small style="opacity:0.5; font-size:0.75rem; margin-top:6px; display:inline-block;">
+    <a href="/admin-gate.html?to=setup" style="color:inherit; text-decoration:none;" title="管理员通道，需密码"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-lock"/></svg> 管理员</a>
+  </small>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script src="app.js"></script>
+<script src="/nav-state.js"></script>
+</body>
+</html>

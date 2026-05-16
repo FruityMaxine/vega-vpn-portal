@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Vega VPN · 邀请码自助注册</title>
+<meta name="description" content="拿到邀请码？30 秒生成你专属的 Vega VPN 订阅" />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="animal-components.css" />
+<script src="animal-components.js" defer></script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23a67c52'/%3E%3Cpath d='M32 12 L50 20 V32 C50 44 32 54 32 54 C32 54 14 44 14 32 V20 Z' fill='none' stroke='%23fff8e7' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E" />
+<style>
+  .signup-form { display: flex; flex-direction: column; gap: 14px; }
+  .signup-form label { font-weight: 700; color: var(--animal-text-primary); }
+  .signup-form input {
+    width: 100%; padding: 12px 16px;
+    border: 2.5px solid var(--animal-border-input);
+    border-radius: var(--animal-radius-pill);
+    background: #fffdf2;
+    font-family: var(--animal-font);
+    font-size: 1rem; font-weight: 600;
+    color: var(--animal-text-body);
+    transition: var(--animal-transition);
+  }
+  .signup-form input:focus {
+    outline: none;
+    border-color: var(--animal-primary);
+    box-shadow: 0 0 0 3px var(--animal-primary-bg);
+  }
+  .result-box { display: none; margin-top: 22px; }
+  .result-box.show { display: block; }
+  .qr-wrap { display: flex; justify-content: center; margin: 14px 0; }
+  .qr-wrap img { width: 200px; height: 200px; border: 3px solid var(--animal-text-primary); border-radius: 16px; background: #fff; padding: 10px; }
+  .err {
+    background: #fde8e8; color: #c94444;
+    border: 2px solid #e05a5a; border-radius: var(--animal-radius-sm);
+    padding: 10px 14px; margin-top: 10px; font-weight: 700;
+  }
+  .ok-banner {
+    background: #e9f7d8; color: #4d7e1a;
+    border: 2px solid #6fba2c; border-radius: var(--animal-radius-sm);
+    padding: 10px 14px; margin-bottom: 14px; font-weight: 700;
+  }
+</style>
+<script src="/favicon-today.js"></script>
+</head>
+<body class="home">
+
+<header class="navbar">
+  <div class="logo">
+    <span class="badge"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-ticket"/></svg></span>
+    <span>Vega VPN · 邀请码注册</span>
+  </div>
+  <nav class="nav-links">
+    <a href="index.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-home"/></svg> 首页</a>
+    <a href="me.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-unlock"/></svg> 已有账户？登录</a>
+    <a href="devices/help.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-help"/></svg> 求助</a>
+  </nav>
+</header>
+
+<main class="container">
+
+  <section class="hero">
+    <div class="mascot"><img src="assets/animal_icon.png" alt="Vega VPN mascot" style="width:100%; height:100%; object-fit:contain;" /></div>
+    <div style="flex:1; min-width:240px;">
+      <h1>嘿，新朋友～</h1>
+      <p>拿到邀请码就能 30 秒拥有你的小动物驿站通行证 <svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-ticket"/></svg></p>
+    </div>
+  </section>
+
+  <section class="nookphone-card" id="form-card">
+    <div class="np-icon"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-ticket"/></svg></div>
+    <div class="np-body">
+      <h2 style="margin-top:0">用邀请码激活账号</h2>
+      <form class="signup-form" id="signupForm" autocomplete="off">
+        <div>
+          <label for="invite_code">邀请码</label>
+          <input type="text" id="invite_code" name="invite_code" required minlength="6" maxlength="32"
+                 placeholder="如 ABC-1234-5678（你所收到的）" style="text-transform:uppercase" />
+        </div>
+        <div>
+          <label for="acc_username">用户名（2-24 位，字母/数字/下划线）</label>
+          <input type="text" id="acc_username" name="acc_username" required minlength="2" maxlength="24"
+                 placeholder="如 alice、bob_99（登录时用）" autocomplete="username" />
+        </div>
+        <div>
+          <label for="acc_password">密码（至少 6 位）</label>
+          <input type="password" id="acc_password" name="acc_password" required minlength="6" maxlength="128"
+                 placeholder="至少 6 位字符" autocomplete="new-password" />
+        </div>
+        <div>
+          <label for="acc_password2">确认密码</label>
+          <input type="password" id="acc_password2" name="acc_password2" required minlength="6" maxlength="128"
+                 placeholder="再输一次" autocomplete="new-password" />
+        </div>
+
+        <div id="preview_box" style="display:none;">
+          <div>
+            <label for="opt_data">每月流量（GB）</label>
+            <input type="number" id="opt_data" min="1" step="1" placeholder="如 100" />
+          </div>
+          <div>
+            <label for="opt_expire">链接有效期（天）</label>
+            <input type="number" id="opt_expire" min="1" step="1" placeholder="如 30" />
+          </div>
+          <div>
+            <label for="opt_reset">重置频率</label>
+            <select id="opt_reset" data-ai-select></select>
+          </div>
+        </div>
+
+        <button type="submit" class="btn" id="submit_btn" disabled><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-rocket"/></svg> 注册账户 + 激活订阅</button>
+        <div id="err" class="err" style="display:none"></div>
+      </form>
+    </div>
+  </section>
+
+  <section class="card result-box" id="result">
+    <div class="ok-banner"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-check"/></svg> 账号创建成功！订阅链接已生成，请妥善保存。</div>
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-party-popper"/></svg> 你的专属订阅</h2>
+    <p>用户名：<span class="tag" id="r_username"></span></p>
+    <p>套餐：<span class="tag" id="r_plan"></span></p>
+
+    <p style="margin-top:14px"><strong>订阅链接</strong>（这是你的"钥匙"，不要外传）</p>
+    <div class="sub-box">
+      <span class="url" id="r_sub_url"></span>
+      <button class="btn btn-sm" id="r_copy"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-clipboard"/></svg> 复制</button>
+    </div>
+
+    <p style="margin-top:14px"><strong>二维码</strong>（手机 v2rayNG/NekoBox 直接扫描）</p>
+    <div class="qr-wrap"><img id="r_qr" alt="订阅二维码" /></div>
+
+    <div class="divider teal"></div>
+
+    <h3>下一步</h3>
+    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+      <a class="btn" id="r_me_link" href="#"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-bar-chart-3"/></svg> 看我的流量</a>
+      <a class="btn" href="index.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-book-open"/></svg> 设备教程</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <span class="paw"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-paw-print"/></svg></span>
+  Vega VPN · 通往世界的小动物驿站
+  <span class="paw"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-paw-print"/></svg></span>
+</footer>
+
+<script>
+(function() {
+  const form = document.getElementById('signupForm');
+  const errBox = document.getElementById('err');
+  const result = document.getElementById('result');
+  const inviteInput = document.getElementById('invite_code');
+  const previewBox = document.getElementById('preview_box');
+  const previewCaps = document.getElementById('preview_caps');
+  const optData = document.getElementById('opt_data');
+  const optExpire = document.getElementById('opt_expire');
+  const optReset = document.getElementById('opt_reset');
+  const submitBtn = document.getElementById('submit_btn');
+
+  const RESET_ZH = { day: '每日', week: '每周', month: '每月', year: '每年', no_reset: '不重置' };
+
+  // 内部记上限，提交时校验
+  let CAPS = { max_data_limit_gb: 0, max_expire_days: 0, allowed_reset_strategies: [] };
+
+  function showErr(msg) {
+    const ENG2CN = {
+      'Not Found': '请输入正确的邀请码（格式如 XXX-XXXX-XXXX）',
+      'Internal Server Error': '服务暂时不可用，请稍后再试',
+      'Unprocessable Entity': '输入内容格式不正确',
+      'Bad Request': '请求参数不正确'
+    };
+    msg = ENG2CN[msg] || msg;
+    errBox.style.display = 'block';
+    errBox.innerHTML = '<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-triangle-alert"/></svg> ' + msg;
+  }
+  function clearErr() { errBox.style.display = 'none'; errBox.textContent = ''; }
+
+  function hidePreview() {
+    previewBox.style.display = 'none';
+    submitBtn.disabled = true;
+  }
+
+  let lastPreviewCode = '';
+  let previewTimer = null;
+
+  async function fetchPreview() {
+    const code = inviteInput.value.trim().toUpperCase();
+    if (code.length < 6) { hidePreview(); return; }
+    if (code === lastPreviewCode) return;
+    lastPreviewCode = code;
+    clearErr();
+    try {
+      const r = await fetch('/api/signup/preview/' + encodeURIComponent(code));
+      const data = await r.json();
+      if (!r.ok) {
+        hidePreview();
+        showErr(data.detail || ('HTTP ' + r.status));
+        return;
+      }
+      // 内部记上限，不显示给用户
+      CAPS.max_data_limit_gb = data.max_data_limit_gb;
+      CAPS.max_expire_days = data.max_expire_days;
+      CAPS.allowed_reset_strategies = data.allowed_reset_strategies;
+      // 输入框不预填默认值，朋友自由输入
+      optData.value = '';
+      optExpire.value = '';
+      optReset.innerHTML = data.allowed_reset_strategies.map(
+        s => `<option value="${s}">${RESET_ZH[s] || s}</option>`
+      ).join('');
+      optReset.value = data.allowed_reset_strategies[0];
+      previewBox.style.display = 'block';
+      previewBox.style.flexDirection = 'column';
+      previewBox.style.gap = '14px';
+      previewBox.style.display = 'flex';
+      submitBtn.disabled = false;
+    } catch (e) {
+      hidePreview();
+      showErr('网络错误: ' + e.message);
+    }
+  }
+
+  inviteInput.addEventListener('input', () => {
+    if (previewTimer) clearTimeout(previewTimer);
+    previewTimer = setTimeout(fetchPreview, 400);
+  });
+  inviteInput.addEventListener('blur', fetchPreview);
+
+  // 支持 URL ?code=XXX 预填
+  const urlCode = new URLSearchParams(location.search).get('code');
+  if (urlCode) { inviteInput.value = urlCode.toUpperCase(); fetchPreview(); }
+
+  form.addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    clearErr();
+    const btn = form.querySelector('button[type=submit]');
+    const old = btn.textContent;
+    // 前端校验（不暴露上限文字，但越界时给具体数字提示）
+    const dataVal = parseInt(optData.value);
+    const expVal = parseInt(optExpire.value);
+    if (!dataVal || dataVal < 1) { showErr('请输入每月流量（GB）'); btn.disabled=false; btn.textContent=old; return; }
+    if (dataVal > CAPS.max_data_limit_gb) {
+      showErr('每月流量请选择小于等于 ' + CAPS.max_data_limit_gb + ' GB 的数');
+      btn.disabled=false; btn.textContent=old; return;
+    }
+    if (!expVal || expVal < 1) { showErr('请输入链接有效期（天）'); btn.disabled=false; btn.textContent=old; return; }
+    if (expVal > CAPS.max_expire_days) {
+      showErr('链接有效期请选择小于等于 ' + CAPS.max_expire_days + ' 天的天数');
+      btn.disabled=false; btn.textContent=old; return;
+    }
+    if (!CAPS.allowed_reset_strategies.includes(optReset.value)) {
+      showErr('请重新选择重置频率');
+      btn.disabled=false; btn.textContent=old; return;
+    }
+    const acc_user = document.getElementById('acc_username').value.trim();
+    const acc_pw = document.getElementById('acc_password').value;
+    const acc_pw2 = document.getElementById('acc_password2').value;
+    if (!/^[A-Za-z0-9_]{2,24}$/.test(acc_user)) { showErr('用户名 2-24 位，字母/数字/下划线'); return; }
+    if (acc_pw.length < 6) { showErr('密码至少 6 位'); return; }
+    if (acc_pw !== acc_pw2) { showErr('两次密码不一致'); return; }
+    btn.disabled = true; btn.innerHTML = '<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-hourglass"/></svg> 注册中…';
+    try {
+      const body = {
+        invite_code: inviteInput.value.trim().toUpperCase(),
+        username: acc_user,
+        password: acc_pw,
+        data_limit_gb: dataVal,
+        expire_days: expVal,
+        reset_strategy: optReset.value,
+      };
+      const r = await fetch('/api/account/signup', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(body),
+      });
+      const data = await r.json();
+      if (!r.ok) {
+        showErr(data.detail || ('HTTP ' + r.status));
+        return;
+      }
+      // 成功 → 跳 me.html（已设 cookie）
+      try { localStorage.setItem('vega_vpn_token', data.subscription_token); } catch(_) {}
+      location.href = '/me.html';
+      return;
+      // 下面是兜底渲染（理论上跳过去了）
+      document.getElementById('r_username').textContent = data.username_marzban;
+      const planParts = [`${data.data_limit_gb} GB / ${data.reset_strategy}`];
+      if (data.expire_days) planParts.push(`${data.expire_days} 天有效`);
+      document.getElementById('r_plan').textContent = planParts.join(' · ');
+      document.getElementById('r_sub_url').textContent = data.subscription_url;
+      document.getElementById('r_qr').src = data.qrcode_data_url;
+      document.getElementById('r_me_link').href = '/me.html';
+      document.getElementById('r_copy').onclick = async () => {
+        try { await navigator.clipboard.writeText(data.subscription_url); document.getElementById('r_copy').innerHTML = '<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-check"/></svg> 已复制'; setTimeout(()=>document.getElementById('r_copy').innerHTML='<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-clipboard"/></svg> 复制', 1600); } catch(_) {}
+      };
+      // 顺便把订阅 token 写入 localStorage，让 index.html 自动绑定
+      try { localStorage.setItem('vega_vpn_token', data.subscription_token); } catch (_) {}
+      result.classList.add('show');
+      form.style.display = 'none';
+      result.scrollIntoView({ behavior: 'smooth' });
+    } catch (e) {
+      showErr('网络错误: ' + e.message);
+    } finally {
+      btn.disabled = false; btn.textContent = old;
+    }
+  });
+})();
+</script>
+<script src="/nav-state.js"></script>
+</body>
+</html>

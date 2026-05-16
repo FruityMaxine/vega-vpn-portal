@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>iPhone / iPad · Vega VPN 教程</title>
+<link rel="stylesheet" href="../style.css" />
+<link rel="stylesheet" href="../animal-components.css" />
+<script src="../animal-components.js" defer></script>
+<script src="/favicon-today.js"></script>
+</head>
+<body class="home">
+<header class="navbar">
+  <div class="logo"><span class="badge"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-smartphone"/></svg></span><span>iPhone / iPad</span></div>
+  <nav class="nav-links"><a href="../index.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-home"/></svg> 首页</a><a href="help.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-help"/></svg> 求助</a></nav>
+</header>
+
+<main class="container">
+
+<div style="background:var(--animal-primary-bg); border:2.5px dashed var(--animal-primary); border-radius:14px; padding:10px 16px; margin-bottom:14px; font-weight:700; color:var(--animal-text-primary);">
+你的订阅含 4 个协议节点（VLESS / SS / Trojan / VMess）· <a href="protocols.html"><strong>看哪个该用 / 怎么切 →</strong></a>
+</div>
+  <a href="../index.html" class="back-home"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-arrow-left"/></svg> 返回首页</a>
+
+  <section class="hero" style="background:linear-gradient(135deg,#f8a6b2 0%,#FFD68A 60%,#69B5E1 100%);">
+    <div class="mascot"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-smartphone"/></svg></div>
+    <div style="flex:1;min-width:240px">
+      <h1>iPhone / iPad 接入指南</h1>
+      <p>苹果原生支持 IKEv2，连 App 都不用装！<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-party-popper"/></svg></p>
+    </div>
+  </section>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-cat"/></svg> 推荐方案：原生 IKEv2 描述文件</h2>
+    <div class="meta">
+      <span class="tag easy"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-check"/></svg> 简单</span>
+      <span class="tag time"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-clock"/></svg> 30 秒 ~ 1 分钟</span>
+      <span class="tag app"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-package"/></svg> 零 App（推荐）</span>
+    </div>
+    <p>iPhone 和 iPad 系统自带 IKEv2 VPN 协议。你只需要点一下我们发给你的 <strong>描述文件链接</strong>，系统会引导你安装一个 .mobileconfig 配置文件，整个过程不超过 30 秒，连 App Store 都不用打开。</p>
+
+    <p><strong>你的描述文件订阅链接（专属）：</strong></p>
+  <div class="sub-cta-card">
+    <div class="sub-cta-icon"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-ticket"/></svg></div>
+    <div class="sub-cta-body">
+      <strong>到这一步需要你的订阅链接 / 二维码？</strong>
+      <p>所有订阅都在「我的账户」里管理（含多个订阅时可自选）。点下面按钮跳过去复制 URL 或扫二维码。</p>
+      <a class="btn btn-primary" href="/me.html#subs"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-link"/></svg> 去「我的账户」拿订阅</a>
+    </div>
+  </div>
+    <ol class="steps">
+      <li>
+        <h4>用 Safari（必须 Safari）打开订阅链接</h4>
+        <p>把上面那条 URL 复制到 iPhone 自带的 <strong>Safari 浏览器</strong>打开。注意不要用微信 / 抖音内置浏览器，那些会拦截描述文件。</p>
+        </li>
+      <li>
+        <h4>允许下载配置描述文件</h4>
+        <p>Safari 会弹出"此网站正在尝试下载一个配置描述文件"，点 <strong>允许</strong>。然后系统提示"描述文件已下载"，点 <strong>关闭</strong>。</p>
+      </li>
+      <li>
+        <h4>打开 <em>设置</em> → <em>已下载描述文件</em></h4>
+        <p>回到桌面，打开"设置"。最上面（你的 Apple ID 下方）会出现一个新的条目"已下载描述文件"，点进去。</p>
+        </li>
+      <li>
+        <h4>安装描述文件</h4>
+        <p>右上角点 <strong>安装</strong>，输入你的 iPhone 锁屏密码，再点一次 <strong>安装</strong>。完成后点 <strong>完成</strong>。</p>
+      </li>
+      <li>
+        <h4>开启 VPN</h4>
+        <p>回到"设置"主页，往下滑找到 <strong>VPN</strong>（或"通用 → VPN与设备管理"，iOS 版本不同位置不同），把开关打开。状态栏会出现 <code>VPN</code> 图标。</p>
+        </li>
+      <li>
+        <h4>测试是否成功</h4>
+        <p>Safari 打开 <a href="https://ipinfo.io" target="_blank" rel="noopener">https://ipinfo.io</a>，看看 country 是不是 <strong>DE (Germany)</strong>、city 是不是 <strong>Frankfurt</strong>。是的话恭喜你，已经在德国岛了！<span class="vega-flag" aria-label="Germany">DE</span></p>
+      </li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-rabbit"/></svg> 备用方案 A：Shadowrocket（小火箭）</h2>
+    <div class="meta">
+      <span class="tag medium"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-dot"/></svg> 中等</span>
+      <span class="tag time"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-clock"/></svg> 3 分钟</span>
+      <span class="tag app"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-package"/></svg> 需付费 App ¥18</span>
+    </div>
+    <p>如果你想用 VLESS-Reality 这种抗封锁性更强的协议（IKEv2 在某些苛刻网络下会被识别），推荐 <strong>Shadowrocket</strong>（小火箭）。它在中国区 App Store 买不到，需要美区 / 港区 Apple ID。</p>
+
+    <div class="download-row">
+      <a class="btn btn-primary" href="https://apps.apple.com/app/shadowrocket/id932747118" target="_blank" rel="noopener"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-download"/></svg> 下载 Shadowrocket (App Store)</a>
+      <a class="btn btn-warning" href="https://apps.apple.com/app/stash/id1596063349" target="_blank" rel="noopener"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-download"/></svg> 下载 Stash (备选)</a>
+      <span class="meta-note">付费 $2.99 / $3.99 · iOS 15+ · 需美/港区 Apple ID</span>
+    </div>
+
+    <p>你的 <strong>Shadowrocket / Clash 兼容</strong>订阅：</p>
+  <div class="sub-cta-card">
+    <div class="sub-cta-icon"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-ticket"/></svg></div>
+    <div class="sub-cta-body">
+      <strong>到这一步需要你的订阅链接 / 二维码？</strong>
+      <p>所有订阅都在「我的账户」里管理（含多个订阅时可自选）。点下面按钮跳过去复制 URL 或扫二维码。</p>
+      <a class="btn btn-primary" href="/me.html#subs"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-link"/></svg> 去「我的账户」拿订阅</a>
+    </div>
+  </div>
+    <ol class="steps">
+      <li><h4>从 App Store 安装 Shadowrocket（¥18）</h4><p>需要非大陆区 Apple ID。如果没有，可以让朋友送你一份兑换码，或注册个美区/港区 Apple ID（不需要绑卡）。</p></li>
+      <li><h4>打开 Shadowrocket → 左上角 + 号 → 选"类型: Subscribe"</h4><p>URL 粘贴上面那条订阅链接。Remark 起个名字（比如"德国岛"）。右上角"完成"。</p></li>
+      <li><h4>回主页面选中节点 → 顶部"未连接"开关打开</h4><p>第一次会弹出"添加 VPN 配置"请求，点允许。状态栏出现 VPN 即成功。</p></li>
+      <li><h4>测试：访问 ipinfo.io 看 IP</h4></li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-turtle"/></svg> 备用方案 B：Streisand（免费）</h2>
+    <div class="meta">
+      <span class="tag medium"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-dot"/></svg> 中等</span>
+      <span class="tag time"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-clock"/></svg> 3 分钟</span>
+      <span class="tag app"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-package"/></svg> 免费 App</span>
+    </div>
+    <p><strong>Streisand</strong> 是 Shadowrocket 的免费替代，功能基本一致，支持 VLESS / VMess / Trojan / Hysteria2。同样需要非大陆区 Apple ID（美区 / 日区均可）。</p>
+    <div class="download-row">
+      <a class="btn btn-primary" href="https://apps.apple.com/app/streisand/id6450534064" target="_blank" rel="noopener"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-download"/></svg> 下载 Streisand (免费)</a>
+      <a class="btn btn-primary" href="https://apps.apple.com/app/sing-box-vt/id6673731168" target="_blank" rel="noopener"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-download"/></svg> 下载 sing-box for iOS (免费)</a>
+      <span class="meta-note">免费 · iOS 15+ · 需美/港/日区 Apple ID</span>
+    </div>
+    <ol class="steps">
+      <li><h4>App Store 搜 Streisand → 免费下载</h4></li>
+      <li><h4>打开 App → 右上角 + → 从剪贴板/URL 导入订阅</h4><p>把上面的 Clash 订阅链接粘进去。</p></li>
+      <li><h4>选节点 → 右下角连接图标</h4></li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-target"/></svg> 协议对比 · 选哪个？</h2>
+    <table class="simple">
+      <thead><tr><th>协议</th><th>App</th><th>速度</th><th>抗封锁</th><th>适合场景</th></tr></thead>
+      <tbody>
+        <tr><td>IKEv2 (推荐)</td><td>零</td><td><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg></td><td><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg></td><td>普通家用 · 4G/5G/WiFi</td></tr>
+        <tr><td>VLESS-Reality</td><td>Shadowrocket</td><td><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg></td><td><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg></td><td>苛刻网络 · 校园网</td></tr>
+        <tr><td>Hysteria2</td><td>Streisand</td><td><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg></td><td><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg></td><td>看 4K 视频 · 大带宽</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tip">
+    <strong><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-lightbulb"/></svg> 小贴士：</strong>在 iPhone 上 IKEv2 是省电王者，因为是系统级 VPN，不需要常驻 App 进程。如果只是日常用，IKEv2 完全够。
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-life-buoy"/></svg> 常见问题</h2>
+    <details class="faq"><summary>装完描述文件，VPN 开关一开就自动关？</summary><p>多半是网络不通到德国 IP。在墙内国家使用 IKEv2 可能被 ISP 干扰，请尝试切换 WiFi/4G，或改用 VLESS-Reality 方案。</p></details>
+    <details class="faq"><summary>状态栏有 VPN 图标但还是上不了 Google？</summary><p>用 Safari 访问 <a href="https://ipinfo.io" target="_blank">ipinfo.io</a>，如果 IP 已经是德国 IP 但 google.com 仍然慢，可能是 DNS 缓存。在"设置 → 通用 → 还原 → 还原网络设置"试一次。</p></details>
+    <details class="faq"><summary>Safari 不让我下描述文件？</summary><p>不能用微信/QQ/抖音内置浏览器！必须用系统自带 Safari。把链接复制到 Safari 重新打开。</p></details>
+    <details class="faq"><summary>如何卸载？</summary><p>设置 → 通用 → VPN与设备管理 → 选中描述文件 → 移除描述文件。</p></details>
+  </div>
+
+  <p><a href="help.html" class="btn btn-ghost"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-life-buoy"/></svg> 还是不行？看完整 FAQ</a></p>
+</main>
+
+<footer class="footer"><span class="paw"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-paw-print"/></svg></span> Vega VPN · iPhone 教程 <span class="paw"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-paw-print"/></svg></span></footer>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script src="../app.js"></script>
+</body>
+</html>

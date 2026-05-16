@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>客户端镜像下载 · Vega VPN</title>
+<meta name="description" content="所有 VPN 客户端官方安装包本地镜像，德国 Hetzner 直链，中国友好" />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="animal-components.css" />
+<script src="animal-components.js" defer></script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23a67c52'/%3E%3Cpath d='M32 12 L50 20 V32 C50 44 32 54 32 54 C32 54 14 44 14 32 V20 Z' fill='none' stroke='%23fff8e7' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E" />
+<style>
+  .mirror-table { width:100%; border-collapse:separate; border-spacing:0 10px; }
+  .mirror-table th { text-align:left; color:var(--animal-text-secondary); font-weight:600; padding:6px 12px; font-size:0.85rem; }
+  .mirror-table td { background:var(--animal-bg-content); padding:14px 12px; border-top:1px solid var(--animal-shadow-input); border-bottom:1px solid var(--animal-shadow-input); }
+  .mirror-table tr td:first-child { border-left:1px solid var(--animal-shadow-input); border-top-left-radius:14px; border-bottom-left-radius:14px; }
+  .mirror-table tr td:last-child  { border-right:1px solid var(--animal-shadow-input); border-top-right-radius:14px; border-bottom-right-radius:14px; }
+  .mirror-table .app-name { font-weight:700; color:var(--animal-text-primary); }
+  .mirror-table .plat { display:inline-block; padding:2px 10px; border-radius:50px; background:var(--animal-primary-bg); color:var(--animal-primary-active); font-size:0.78rem; }
+  .mirror-table .size { color:var(--animal-text-muted); font-size:0.85rem; white-space:nowrap; }
+  .mirror-table .sha  { color:var(--animal-text-muted); font-family:ui-monospace,monospace; font-size:0.72rem; }
+  .mirror-table .src  { font-size:0.78rem; }
+  .mirror-table .btn  { padding:8px 14px; font-size:0.88rem; }
+  .updated-meta { color:var(--animal-text-muted); font-size:0.85rem; margin-top:4px; }
+  @media (max-width: 720px) {
+    .mirror-table thead { display:none; }
+    .mirror-table, .mirror-table tbody, .mirror-table tr, .mirror-table td { display:block; width:100%; }
+    .mirror-table tr { margin-bottom:10px; }
+    .mirror-table td { border:1px solid var(--animal-shadow-input); border-radius:14px !important; margin-bottom:6px; }
+  }
+</style>
+<script src="/favicon-today.js"></script>
+</head>
+<body class="home">
+
+<header class="navbar">
+  <div class="logo">
+    <span class="badge"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-package"/></svg></span>
+    <span>Vega VPN · 客户端镜像</span>
+  </div>
+  <nav class="nav-links">
+    <a href="index.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-home"/></svg> 首页</a>
+    <a href="devices/help.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-help"/></svg> 求助</a>
+  </nav>
+</header>
+
+<main class="container">
+
+  <section class="nookphone-card">
+    <div class="np-icon"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-package"/></svg></div>
+    <div class="np-body">
+      <h2 style="margin-top:0">所有客户端 · 德国直链下载</h2>
+      <div class="tag" style="margin:4px 0 14px"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-zap"/></svg> 本服务器在德国 Hetzner，中国可直连 HTTPS</div>
+      <p style="margin-top:0">下面是所有主流 VPN 客户端的<strong>官方安装包镜像</strong>，原始来源 GitHub releases，已同步到 Vega 本服务器，直接下载即可。</p>
+      <p style="font-size:0.88rem; color:var(--animal-text-muted)">每个包附了原始 GitHub URL 和 SHA-256 校验值，可自行对比验证完整性。</p>
+      <p class="updated-meta"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-clock"/></svg> 最后同步：<span id="updated-at">加载中…</span></p>
+    </div>
+  </section>
+
+  <div class="divider teal"></div>
+
+  <section>
+    <h2><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-clipboard"/></svg> 镜像清单</h2>
+    <table class="mirror-table" id="mirror-table">
+      <thead>
+        <tr>
+          <th>App</th>
+          <th>平台</th>
+          <th>大小</th>
+          <th>下载</th>
+          <th>原始源</th>
+        </tr>
+      </thead>
+      <tbody id="mirror-tbody">
+        <tr><td colspan="5" style="text-align:center; color:var(--animal-text-muted)"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-satellite-dish"/></svg> 正在加载镜像清单…</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.85rem; color:var(--animal-text-muted); margin-top:18px">
+      <svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-lightbulb"/></svg> 不确定挑哪个？回 <a href="index.html">首页</a>，选你的设备，对应教程页会引导你选正确的安装包。
+    </p>
+  </section>
+
+  <div class="divider teal"></div>
+
+  <section class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-wrench"/></svg> 管理员区</h2>
+    <p style="font-size:0.9rem; color:var(--animal-text-muted)">在服务器上手动跑刷新脚本拉取最新版本（root SSH 执行）：</p>
+    <div class="sub-box">
+      <span class="url" style="font-family:ui-monospace,monospace">bash portal/html/downloads/refresh.sh</span>
+      <button class="btn btn-sm" data-copy-text="bash portal/html/downloads/refresh.sh"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-clipboard"/></svg> 复制</button>
+    </div>
+    <p style="font-size:0.82rem; color:var(--animal-text-muted); margin-top:10px">
+      建议每月手动跑一次或挂 cron。脚本自动从 GitHub API 拉 latest release，按文件名 regex 匹配 asset 然后下载到本目录，生成 <code>index.json</code>。
+    </p>
+  </section>
+
+</main>
+
+<footer style="text-align:center; padding:30px 16px; color:var(--animal-text-muted); font-size:0.85rem;">
+  <svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-cat"/></svg> Vega VPN · 小动物驿站 · 客户端镜像由本服务器（德国 Hetzner）提供
+</footer>
+
+<script>
+(function () {
+  function fmtSize(b) {
+    if (b < 1024) return b + ' B';
+    if (b < 1024*1024) return (b/1024).toFixed(1) + ' KB';
+    if (b < 1024*1024*1024) return (b/1024/1024).toFixed(1) + ' MB';
+    return (b/1024/1024/1024).toFixed(2) + ' GB';
+  }
+  function platOf(name) {
+    if (/android|arm64.*apk|universal.*apk/i.test(name)) return '<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-bot"/></svg> Android';
+    if (/win64|windows/i.test(name)) return '<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-app-window"/></svg> Windows';
+    if (/mac|aarch64\.dmg|x64\.dmg|macos/i.test(name)) return '<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-apple"/></svg> macOS';
+    if (/linux/i.test(name)) return '<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-bird"/></svg> Linux';
+    return '<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-package"/></svg> 通用';
+  }
+  function appOf(name) {
+    if (/v2rayng/i.test(name)) return 'v2rayNG';
+    if (/nekobox/i.test(name)) return 'NekoBox';
+    if (/nekoray/i.test(name)) return 'NekoRay';
+    if (/clash-verge-rev/i.test(name)) return 'Clash Verge Rev';
+    if (/sing-box/i.test(name)) return 'sing-box';
+    if (/hiddify/i.test(name)) return 'Hiddify';
+    return name;
+  }
+  function escapeHtml(s) { return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+  fetch('/downloads/index.json', { cache: 'no-cache' })
+    .then(r => r.json())
+    .then(data => {
+      const tbody = document.getElementById('mirror-tbody');
+      document.getElementById('updated-at').textContent = data.updated_at || '未知';
+      if (!data.files || data.files.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center">没有镜像文件，请管理员先跑 refresh.sh</td></tr>';
+        return;
+      }
+      tbody.innerHTML = data.files.map(f => `
+        <tr>
+          <td><span class="app-name">${escapeHtml(appOf(f.name))}</span><br><span class="sha" title="SHA-256">${escapeHtml(f.sha256.slice(0,16))}…</span></td>
+          <td><span class="plat">${platOf(f.name)}</span></td>
+          <td><span class="size">${fmtSize(f.size)}</span></td>
+          <td><a class="btn btn-primary" href="/downloads/${encodeURIComponent(f.name)}" download><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-zap"/></svg> 下载</a></td>
+          <td class="src"><a href="${escapeHtml(f.source_url)}" target="_blank" rel="noopener"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-globe"/></svg> GitHub 原始</a></td>
+        </tr>
+      `).join('');
+    })
+    .catch(err => {
+      document.getElementById('mirror-tbody').innerHTML =
+        '<tr><td colspan="5" style="text-align:center; color:var(--animal-error)"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-triangle-alert"/></svg> 加载 index.json 失败：' + escapeHtml(String(err)) + '</td></tr>';
+    });
+
+  // 复制按钮
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('[data-copy-text]');
+    if (!btn) return;
+    navigator.clipboard.writeText(btn.dataset.copyText).then(() => {
+      const old = btn.textContent; btn.innerHTML = '<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-check"/></svg> 已复制';
+      setTimeout(() => btn.textContent = old, 1200);
+    });
+  });
+})();
+</script>
+<script src="/nav-state.js"></script>
+</body>
+</html>

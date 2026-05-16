@@ -1,0 +1,28 @@
+# Runtime secrets — never commit
+marzban/.env
+marzban/secrets.env
+marzban/reality-keys.txt
+*.env
+
+# Runtime data
+marzban/data/
+signup-service/data/
+portal/html/stats/
+backups/
+
+# Downloaded binaries (run portal/html/downloads/refresh.sh to populate)
+portal/html/downloads/*.apk
+portal/html/downloads/*.dmg
+portal/html/downloads/*.exe
+portal/html/downloads/*.zip
+portal/html/downloads/*.tar.gz
+portal/html/downloads/*.AppImage
+portal/html/downloads/refresh.log
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Editor
+.DS_Store

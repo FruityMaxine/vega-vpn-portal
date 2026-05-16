@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vega VPN · 登录中…</title>
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="animal-components.css" />
+<script src="animal-components.js" defer></script>
+<script src="/favicon-today.js"></script>
+</head>
+<body class="home">
+<main class="container" style="text-align:center; padding-top:80px;">
+  <section class="nookphone-card" style="max-width:480px; margin:0 auto;">
+    <div class="np-icon"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-wrench"/></svg></div>
+    <div class="np-body">
+      <h2 style="margin-top:0">正在登录 Marzban 管理后台…</h2>
+      <p id="msg"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-lock"/></svg> 自动用密码登录中</p>
+      <p style="font-size:0.85rem; color:var(--animal-text-muted)">几秒后自动跳转，如果一直没动 → <a href="/dashboard/">手动进入</a></p>
+    </div>
+  </section>
+</main>
+<script>
+(async function() {
+  const msg = document.getElementById('msg');
+  try {
+    const fd = new FormData();
+    fd.append('username', 'admin');
+    fd.append('password', window.__MARZBAN_ADMIN_PASS__ || prompt('Marzban admin password:'));
+    const r = await fetch('/api/admin/token', { method: 'POST', body: fd });
+    const d = await r.json();
+    if (!r.ok || !d.access_token) throw new Error(d.detail || 'token fetch fail');
+    localStorage.setItem('token', d.access_token);
+    msg.innerHTML = '<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-check"/></svg> 登录成功，跳转中…';
+    setTimeout(() => location.href = '/dashboard/', 400);
+  } catch (e) {
+    msg.innerHTML = '<svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-triangle-alert"/></svg> 自动登录失败: ' + e.message + '<br><a href="/dashboard/">手动登录</a>';
+  }
+})();
+</script>
+</body>
+</html>

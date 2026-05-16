@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>路由器 · Vega VPN 教程</title>
+<link rel="stylesheet" href="../style.css" />
+<link rel="stylesheet" href="../animal-components.css" />
+<script src="../animal-components.js" defer></script>
+<script src="/favicon-today.js"></script>
+</head>
+<body class="home">
+<header class="navbar">
+  <div class="logo"><span class="badge"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-wifi"/></svg></span><span>路由器教程</span></div>
+  <nav class="nav-links"><a href="../index.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-home"/></svg> 首页</a><a href="help.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-help"/></svg> 求助</a></nav>
+</header>
+
+<main class="container">
+
+<div style="background:var(--animal-primary-bg); border:2.5px dashed var(--animal-primary); border-radius:14px; padding:10px 16px; margin-bottom:14px; font-weight:700; color:var(--animal-text-primary);">
+你的订阅含 4 个协议节点（VLESS / SS / Trojan / VMess）· <a href="protocols.html"><strong>看哪个该用 / 怎么切 →</strong></a>
+</div>
+  <a href="../index.html" class="back-home"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-arrow-left"/></svg> 返回首页</a>
+
+  <section class="hero" style="background:linear-gradient(135deg,#82d5bb 0%,#69B5E1 60%,#FFF4D2 100%);">
+    <div class="mascot"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-wifi"/></svg></div>
+    <div style="flex:1;min-width:240px">
+      <h1>路由器层 VPN · 全家通</h1>
+      <p>OpenWRT / 华硕 Merlin / 小米 Padavan / GL.iNet</p>
+    </div>
+  </section>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-cat"/></svg> 为什么用路由器层 VPN？</h2>
+    <div class="meta">
+      <span class="tag medium"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-dot"/></svg> 中等</span>
+      <span class="tag hard"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-x"/></svg> 部分机型刷固件</span>
+      <span class="tag time"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-clock"/></svg> 30 分钟 ~ 2 小时</span>
+    </div>
+    <ul>
+      <li><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-check"/></svg> <strong>所有设备自动走 VPN</strong>，包括 Apple TV、智能电视、PlayStation、Switch、智能音箱、IoT 设备等无法装客户端的设备</li>
+      <li><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-check"/></svg> <strong>一次配好，永久受益</strong>，新增设备只要连 WiFi 就有 VPN</li>
+      <li><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-check"/></svg> <strong>Netflix / Disney+ 区域解锁</strong>对整家有效</li>
+      <li><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-check"/></svg> 客户端零开销，省电省 CPU</li>
+      <li><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-triangle-alert"/></svg> 需要硬件支持，普通运营商光猫做不了，要刷固件或买专用路由器</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-trophy"/></svg> 推荐方案：GL.iNet（开箱即用）</h2>
+    <p>如果你不想刷固件 / 折腾 OpenWRT，<strong>GL.iNet 路由器</strong>是最省事的选择。出厂带定制 OpenWRT GUI，原生 V2Ray / sing-box 支持，导入订阅 URL 即用。</p>
+
+    <div class="download-row">
+      <a class="btn btn-primary" href="https://search.jd.com/Search?keyword=GL.iNet%20%E8%B7%AF%E7%94%B1%E5%99%A8" target="_blank" rel="noopener"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-link"/></svg> 京东搜「GL.iNet 路由器」</a>
+      <a class="btn btn-warning" href="https://s.taobao.com/search?q=GL.iNet+%E8%B7%AF%E7%94%B1%E5%99%A8" target="_blank" rel="noopener"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-link"/></svg> 淘宝搜「GL.iNet 路由器」</a>
+      <span class="meta-note">国内电商有货 · ¥150~800 · 出厂即用 sing-box · 免折腾</span>
+    </div>
+
+    <table class="simple">
+      <thead><tr><th>型号</th><th>WiFi</th><th>VPN 速度</th><th>价格</th><th>适合</th></tr></thead>
+      <tbody>
+        <tr><td>GL-MT300N-V2</td><td>WiFi 4</td><td>~30 Mbps</td><td>¥150</td><td>单设备旁路（Apple TV）</td></tr>
+        <tr><td>GL-MT3000 (Beryl AX)</td><td>WiFi 6 AX3000</td><td>~600 Mbps</td><td>¥380</td><td>家庭主路由 / 多设备</td></tr>
+        <tr><td>GL-MT6000 (Flint 2)</td><td>WiFi 6 AX6000</td><td>~900 Mbps</td><td>¥800</td><td>千兆宽带 + 多设备 4K</td></tr>
+        <tr><td>GL-AX1800 (Flint)</td><td>WiFi 6 AX1800</td><td>~500 Mbps</td><td>¥500</td><td>性价比之选</td></tr>
+      </tbody>
+    </table>
+
+    <h3><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-paw-print"/></svg> GL.iNet 配置步骤</h3>
+    <ol class="steps">
+      <li><h4>电脑/手机连 GL 路由器默认 WiFi</h4><p>背面贴纸有 SSID 和默认密码。或网线连 LAN 口。</p></li>
+      <li><h4>浏览器打开 <code>http://192.168.8.1</code></h4><p>设管理员密码 + 设上行（WAN 接你家光猫 / 父路由的 LAN 口）。</p></li>
+      <li>
+        <h4>左侧菜单 → 应用程序 → "Sing-Box" 或 "V2Ray"</h4>
+        <p>新版固件（4.x）建议用 Sing-Box（更新协议支持）。点"配置 → 添加订阅 URL"。</p>
+      </li>
+      <li>
+        <h4>粘贴你的 sing-box 订阅</h4>
+  <div class="sub-cta-card">
+    <div class="sub-cta-icon"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-ticket"/></svg></div>
+    <div class="sub-cta-body">
+      <strong>到这一步需要你的订阅链接 / 二维码？</strong>
+      <p>所有订阅都在「我的账户」里管理（含多个订阅时可自选）。点下面按钮跳过去复制 URL 或扫二维码。</p>
+      <a class="btn btn-primary" href="/me.html#subs"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-link"/></svg> 去「我的账户」拿订阅</a>
+    </div>
+  </div>
+      </li>
+      <li><h4>选节点 → 启动 → 模式选"透明代理 / TUN"</h4><p>透明代理模式下，整个 LAN 的流量都自动走 VPN。</p></li>
+      <li><h4>家里设备连 GL 路由 WiFi → 测试</h4><p>手机连上后访问 ipinfo.io 看是不是德国 IP。</p></li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-wrench"/></svg> 方案 B：OpenWRT 通用方案</h2>
+    <p>如果你的路由器能刷 OpenWRT（参考 <a href="https://openwrt.org/toh/start" target="_blank">兼容设备列表</a>），可以装 <strong>OpenClash</strong> 或 <strong>passwall</strong> 插件，比 GL.iNet 自带 GUI 更灵活。</p>
+
+    <div class="download-row">
+      <a class="btn btn-primary" href="https://openwrt.org/docs/guide-quick-start/factory_installation" target="_blank" rel="noopener"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-download"/></svg> OpenWRT 刷机指引</a>
+      <a class="btn btn-warning" href="https://github.com/sbwml/openwrt_helloworld" target="_blank" rel="noopener"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-download"/></svg> sing-box for OpenWRT (LuCI 一键)</a>
+      <a class="btn btn-ghost" href="https://github.com/vernesong/OpenClash/releases/latest" target="_blank" rel="noopener"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-download"/></svg> OpenClash ipk</a>
+      <span class="meta-note">开源免费 · 适合能刷机的中高端路由</span>
+    </div>
+
+    <h3>装 OpenClash</h3>
+    <pre><code># SSH 进路由器
+opkg update
+opkg install luci-app-openclash
+# 或下载 ipk 手动装：
+# https://github.com/vernesong/OpenClash/releases
+opkg install /tmp/luci-app-openclash_*.ipk</code></pre>
+
+    <ol class="steps">
+      <li><h4>LuCI 后台 → Services → OpenClash → 启动</h4></li>
+      <li><h4>配置 → 订阅 → 粘贴 Clash 订阅 URL</h4>
+  <div class="sub-cta-card">
+    <div class="sub-cta-icon"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-ticket"/></svg></div>
+    <div class="sub-cta-body">
+      <strong>到这一步需要你的订阅链接 / 二维码？</strong>
+      <p>所有订阅都在「我的账户」里管理（含多个订阅时可自选）。点下面按钮跳过去复制 URL 或扫二维码。</p>
+      <a class="btn btn-primary" href="/me.html#subs"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-link"/></svg> 去「我的账户」拿订阅</a>
+    </div>
+  </div>
+      </li>
+      <li><h4>运行模式选 "Fake-IP 增强" 或 "Redir-Host"</h4></li>
+      <li><h4>路由模式选"全局" / "规则"</h4></li>
+      <li><h4>启动 OpenClash</h4></li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-target"/></svg> 方案 C：华硕路由器 + Merlin 固件</h2>
+    <p>华硕 AX86U / AX88U / GT-AX11000 等型号支持刷第三方 <strong>Merlin / Asuswrt-Merlin</strong> 固件，固件官方支持 OpenVPN 客户端，配合 <strong>"X3mRouting"</strong> 脚本可以走 V2Ray。</p>
+
+    <div class="download-row">
+      <a class="btn btn-primary" href="https://www.asuswrt-merlin.net/download" target="_blank" rel="noopener"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-download"/></svg> 下载 Asuswrt-Merlin 固件</a>
+      <span class="meta-note">免费 · 支持华硕高端型号 · 注意备份原厂固件</span>
+    </div>
+
+    <ol class="steps">
+      <li><h4>下载对应型号 Merlin 固件 → 在原厂 GUI 升级固件页面刷入</h4><p>注意备份原厂固件。</p></li>
+      <li><h4>开启 SSH + JFFS 自定义脚本</h4></li>
+      <li><h4>装 <strong>Entware</strong> 包管理：<code>amtm</code> → 选 entware</h4></li>
+      <li><h4>装 sing-box：<code>opkg install sing-box</code></h4></li>
+      <li><h4>下载订阅到 <code>/jffs/configs/sing-box.json</code></h4></li>
+      <li><h4>写自启脚本 <code>/jffs/scripts/post-mount</code> 启动 sing-box + iptables 透明代理规则</h4></li>
+    </ol>
+    <p>这是高级玩法，建议参考 <a href="https://github.com/SagerNet/sing-box" target="_blank">sing-box 官方文档</a>的"透明代理"章节。</p>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-dot"/></svg> 方案 D：小米路由器 / Padavan 固件</h2>
+    <p>小米路由器 4 / Pro / AX 系列大多支持刷 Padavan / OpenWRT。流程：</p>
+
+    <div class="download-row">
+      <a class="btn btn-primary" href="https://gitlab.com/hadzhioglu/padavan-ng/-/releases" target="_blank" rel="noopener"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-download"/></svg> 下载 Padavan-NG 固件</a>
+      <a class="btn btn-ghost" href="https://www.right.com.cn/forum/" target="_blank" rel="noopener"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-link"/></svg> 恩山论坛（机型固件 / 救砖）</a>
+      <span class="meta-note">免费开源 · 对应你的小米/红米型号 · 刷错可砖</span>
+    </div>
+    <ol class="steps">
+      <li><h4>解锁 SSH（小米开放平台申请 token + 工具刷开启）</h4></li>
+      <li><h4>用 <code>breed</code> bootloader 刷入 Padavan / OpenWRT</h4><p>具体看你型号在 <a href="https://www.right.com.cn/forum/" target="_blank">恩山论坛</a>的教程。</p></li>
+      <li><h4>装 ShadowSocksR-Plus+ / Passwall / OpenClash 插件</h4></li>
+      <li><h4>导入订阅，启动</h4></li>
+    </ol>
+    <div class="tip warn"><strong><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-triangle-alert"/></svg> 风险：</strong>刷固件会失保修，刷错可能变砖。请确认你的型号有可用固件再动手。</div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-target"/></svg> 进阶：策略路由（PBR）</h2>
+    <p>"全家都走 VPN"未必是好事——抖音 / B站 / 淘宝在德国看会慢。<strong>策略路由</strong>让你按 MAC 地址 / 域名 / 端口选择哪些设备 / 流量走 VPN，哪些走直连。</p>
+
+    <h3>典型策略</h3>
+    <ul>
+      <li><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-apple"/></svg> <strong>Apple TV / 智能电视</strong> → 走 VPN（看 Netflix / YouTube）</li>
+      <li><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-smartphone"/></svg> <strong>手机 / 平板</strong> → 走直连（默认快）</li>
+      <li><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-laptop"/></svg> <strong>工作笔记本</strong> → 域名分流（github / google → VPN，其他直连）</li>
+      <li><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-gamepad-2"/></svg> <strong>游戏机</strong> → 走直连或专门游戏加速节点</li>
+    </ul>
+
+    <p>OpenClash / Passwall / GL.iNet 后台都支持 GUI 配置 PBR。GL.iNet 的入口在"VPN 仪表盘 → VPN 策略"。</p>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-life-buoy"/></svg> 常见问题</h2>
+    <details class="faq"><summary>路由器配好了但测速很慢？</summary><p>(1) 看路由器 CPU 负载（Top）是不是满了——加密算法吃 CPU，老路由器跑 V2Ray 可能瓶颈在 50Mbps；(2) 换协议为 Hysteria2（基于 QUIC，CPU 占用更低）；(3) 升级到 GL-MT3000 / Flint 2 等带硬件加速的型号。</p></details>
+    <details class="faq"><summary>OpenWRT 刷砸了变砖？</summary><p>开 TTL 救砖，或 breed unbrick 模式（小米机型）。建议刷前先备份原厂固件 + 看完恩山论坛该机型救砖帖。</p></details>
+    <details class="faq"><summary>路由器走 VPN 后 DNS 泄漏？</summary><p>OpenClash → "DNS 设置" → 启用 Fake-IP 模式，强制所有 DNS 查询走代理。或在防火墙规则里拦截 53 端口直接出局。</p></details>
+    <details class="faq"><summary>家里部分设备登不上微信 / 支付宝？</summary><p>开 PBR 把这些 App 的域名 (wechat.com / alipay.com) 加入直连白名单，或把这台设备整体 MAC 走直连。</p></details>
+    <details class="faq"><summary>路由器重启后 VPN 没自启？</summary><p>OpenClash 后台 → "插件设置 → 自启动" 打开。GL.iNet 默认就开自启。</p></details>
+    <details class="faq"><summary>双路由器组网？</summary><p>"VPN 路由 + 主路由"串接，VPN 路由 WAN 接主路由 LAN。或单网段（同子网）旁路 + 改静态路由把电视 IP 网关指向 VPN 路由。</p></details>
+  </div>
+
+  <p><a href="help.html" class="btn btn-ghost"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-life-buoy"/></svg> 完整 FAQ</a></p>
+</main>
+
+<footer class="footer"><span class="paw"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-paw-print"/></svg></span> Vega VPN · 路由器教程 <span class="paw"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-paw-print"/></svg></span></footer>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script src="../app.js"></script>
+</body>
+</html>

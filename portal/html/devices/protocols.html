@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Vega VPN · 4 协议对比 · 选哪个 / 出问题切哪个</title>
+<link rel="stylesheet" href="../style.css" />
+<link rel="stylesheet" href="../animal-components.css" />
+<script src="../animal-components.js" defer></script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23a67c52'/%3E%3Cpath d='M32 12 L50 20 V32 C50 44 32 54 32 54 C32 54 14 44 14 32 V20 Z' fill='none' stroke='%23fff8e7' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E" />
+<style>
+  .proto-card {
+    background: #fffdf2;
+    border: 2.5px solid var(--animal-text-primary);
+    border-radius: 18px;
+    padding: 18px 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 5px 0 0 var(--animal-shadow-btn);
+  }
+  .proto-card h3 { margin: 0 0 6px; font-size: 1.15rem; color: var(--animal-text-primary); }
+  .proto-tagline { color: var(--animal-text-muted); margin-bottom: 12px; font-weight: 700; }
+  .proto-stars { color: var(--animal-primary); font-weight: 900; letter-spacing: 2px; }
+  .proto-table { width: 100%; border-collapse: collapse; margin: 14px 0; }
+  .proto-table th, .proto-table td {
+    padding: 10px 12px;
+    border-bottom: 1.5px solid var(--animal-border-input);
+    text-align: left;
+    font-size: 0.92rem;
+  }
+  .proto-table th { background: var(--animal-bg-content); color: var(--animal-text-primary); font-weight: 800; }
+  .proto-flow {
+    background: var(--animal-primary-bg);
+    border: 2.5px solid var(--animal-primary);
+    border-radius: 16px;
+    padding: 16px 20px;
+    margin-top: 18px;
+  }
+  .proto-flow ol { margin: 8px 0 0; padding-left: 22px; }
+  .proto-flow li { margin: 6px 0; font-weight: 700; color: var(--animal-text-primary); }
+</style>
+<script src="/favicon-today.js"></script>
+</head>
+<body class="home">
+
+<header class="navbar">
+  <div class="logo">
+    <span class="badge"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-shield"/></svg></span>
+    <span>Vega VPN · 协议对比</span>
+  </div>
+  <nav class="nav-links">
+    <a href="../index.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-home"/></svg> 首页</a>
+    <a href="help.html"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-circle-help"/></svg> 求助</a>
+  </nav>
+</header>
+
+<main class="container">
+
+  <section class="hero">
+    <div class="mascot"><img src="../assets/animal_icon.png" alt="" style="width:100%; height:100%; object-fit:contain;" /></div>
+    <div style="flex:1; min-width:240px;">
+      <h1>4 个协议 · 选哪个 · 怎么切</h1>
+      <p>你的订阅里有 4 个节点 · 它们走 4 个不同协议 · 各有所长。下面是简明对比与<strong>切换建议</strong>。</p>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-bar-chart-3"/></svg> 总对比表</h2>
+    <table class="proto-table">
+      <thead>
+        <tr><th>协议</th><th>抗封锁</th><th>速度</th><th>兼容性</th><th>定位</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>VLESS Reality</strong></td>
+          <td><span class="proto-stars"><svg class="vega-icon star" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon star" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon star" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon star" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon star" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg></span></td>
+          <td><span class="proto-stars"><svg class="vega-icon star" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon star" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon star" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon star" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg></span></td>
+          <td>现代</td>
+          <td><strong>主用</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Shadowsocks-2022</strong></td>
+          <td><span class="proto-stars"><svg class="vega-icon star" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon star" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon star" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg></span></td>
+          <td><span class="proto-stars"><svg class="vega-icon star" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon star" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon star" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon star" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon star" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg></span></td>
+          <td>全平台</td>
+          <td>速度备用</td>
+        </tr>
+        <tr>
+          <td><strong>Trojan</strong></td>
+          <td><span class="proto-stars"><svg class="vega-icon star" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon star" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon star" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon star" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg></span></td>
+          <td><span class="proto-stars"><svg class="vega-icon star" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon star" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon star" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon star" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg></span></td>
+          <td>主流</td>
+          <td>抗封备用</td>
+        </tr>
+        <tr>
+          <td><strong>VMess</strong></td>
+          <td><span class="proto-stars"><svg class="vega-icon star" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon star" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg></span></td>
+          <td><span class="proto-stars"><svg class="vega-icon star" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon star" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg><svg class="vega-icon star" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-star"/></svg></span></td>
+          <td>老牌广泛</td>
+          <td>兜底应急</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="proto-card">
+    <h3>1. VLESS Reality <span style="color:var(--animal-primary)">— 主用</span></h3>
+    <p class="proto-tagline">伪装成 microsoft.com 的 TLS 握手，看上去就是访问微软官网</p>
+    <p><strong>原理</strong>：跟 server 握手时模拟一个正常的 microsoft.com HTTPS 请求，GFW 看到 TLS Server Hello 完全是 microsoft 的指纹，几乎无法识别为 VPN。</p>
+    <p><strong>优点</strong>：</p>
+    <ul>
+      <li>抗封锁最强（2023+ 主流方案，至今未被大规模封）</li>
+      <li>无握手特征，被动探测难度极高</li>
+      <li>速度高（加密轻 + 无额外封装）</li>
+    </ul>
+    <p><strong>缺点</strong>：</p>
+    <ul>
+      <li>老客户端不支持（必须 Clash Meta / Mihomo / v2rayNG / NekoBox / sing-box）</li>
+      <li>FL Clash / Clash Meta 系都支持</li>
+    </ul>
+    <p><strong>用在</strong>：日常 90% 时间走它就够</p>
+  </section>
+
+  <section class="proto-card">
+    <h3>2. Shadowsocks-2022 <span style="color:var(--animal-primary)">— 最快备用</span></h3>
+    <p class="proto-tagline">2022 年新规范，纯加密无握手，最简单最快</p>
+    <p><strong>原理</strong>：用对称密码加密 TCP/UDP 数据流，几乎没有任何协议封装开销。SS-2022 引入了认证防重放，比老 SS 安全。</p>
+    <p><strong>优点</strong>：</p>
+    <ul>
+      <li>速度最快（单次握手 + 轻量加密）</li>
+      <li>UDP 支持好（适合游戏 / 视频通话）</li>
+      <li>所有客户端都兼容</li>
+    </ul>
+    <p><strong>缺点</strong>：</p>
+    <ul>
+      <li>无握手伪装，流量特征比 Reality 明显</li>
+      <li>2024-2025 年部分省份对 SS 端口有 QoS 限速</li>
+    </ul>
+    <p><strong>用在</strong>：VLESS 卡时切换，主要看视频 / 下载场景</p>
+  </section>
+
+  <section class="proto-card">
+    <h3>3. Trojan <span style="color:var(--animal-primary)">— 抗封备用</span></h3>
+    <p class="proto-tagline">伪装成普通 HTTPS 站点的访问</p>
+    <p><strong>原理</strong>：握手 + 通信完全走 TLS（HTTPS），看上去就是访问一个普通 https 网站。GFW 看到的是 TLS 流量，无 VPN 特征。</p>
+    <p><strong>优点</strong>：</p>
+    <ul>
+      <li>抗封锁中上（伪装成 HTTPS 难以筛除）</li>
+      <li>速度还行（TLS 加密开销可控）</li>
+      <li>客户端兼容好</li>
+    </ul>
+    <p><strong>缺点</strong>：</p>
+    <ul>
+      <li>2024+ GFW 用 SNI 黑白名单 + 主动探测识别有效，不如 Reality</li>
+      <li>TLS 握手开销比 Reality 大</li>
+    </ul>
+    <p><strong>用在</strong>：VLESS + SS 都被限时的二备选</p>
+  </section>
+
+  <section class="proto-card">
+    <h3>4. VMess <span style="color:var(--animal-primary)">— 兜底应急</span></h3>
+    <p class="proto-tagline">老一辈协议，特征明显但所有客户端都认</p>
+    <p><strong>原理</strong>：用 UUID 认证的 V2Ray 原生协议，2018 年前后流行，现已是历史遗留方案。</p>
+    <p><strong>优点</strong>：</p>
+    <ul>
+      <li>客户端兼容最广（任何 V2Ray 系都支持）</li>
+      <li>万一其他协议都被检测，这个最后兜底</li>
+    </ul>
+    <p><strong>缺点</strong>：</p>
+    <ul>
+      <li>协议头部特征明显，2023+ 被 GFW 频繁主动识别</li>
+      <li>速度比 Reality 慢</li>
+    </ul>
+    <p><strong>用在</strong>：兜底备用，平时建议不开</p>
+  </section>
+
+  <section class="proto-flow">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-rocket"/></svg> 出问题怎么切？</h2>
+    <ol>
+      <li>默认选 <strong>VLESS Reality</strong> · 平时用它就够</li>
+      <li>卡 / 慢 → 切 <strong>Shadowsocks-2022</strong> · 速度立即起飞</li>
+      <li>SS 也卡 → 切 <strong>Trojan</strong> · 伪装成 HTTPS 抗封</li>
+      <li>Trojan 还不行 → <strong>VMess</strong> · 最后兜底</li>
+      <li>全部都打不通 → 节点本身被屏，<a href="help.html">看故障排查 →</a></li>
+    </ol>
+  </section>
+
+  <section class="card">
+    <h2 style="margin-top:0"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-lightbulb"/></svg> 几个常问的</h2>
+    <details class="faq" style="margin-bottom:12px">
+      <summary>4 个协议性能差距大吗？</summary>
+      <p>同一个 server 上，VLESS Reality 跟 SS-2022 速度差距通常 &lt; 20%，VMess 比它们慢 30-50%。差距在协议封装开销 + 加密复杂度。</p>
+    </details>
+    <details class="faq" style="margin-bottom:12px">
+      <summary>能同时开几个协议吗？</summary>
+      <p>不能。客户端一次只能用 1 个协议（节点）。你可以在 Clash / v2rayNG 里手动切换主节点。</p>
+    </details>
+    <details class="faq" style="margin-bottom:12px">
+      <summary>"自动选择"会自动切吗？</summary>
+      <p>会，但只是基于"延迟"测速。如果一个协议延迟低但实际被限速，自动选择不会切。建议遇卡的时候手动切。</p>
+    </details>
+    <details class="faq">
+      <summary>哪些客户端支持哪些协议？</summary>
+      <ul>
+        <li><strong>v2rayNG</strong> (Android)：4 个全支持</li>
+        <li><strong>NekoBox</strong> (Android / Win)：4 个全支持</li>
+        <li><strong>Clash Meta / FlClash</strong> (Android / Win / Mac)：VLESS / SS / Trojan / VMess 全支持</li>
+        <li><strong>sing-box</strong> (全平台)：4 个全支持</li>
+        <li><strong>Shadowrocket</strong> (iOS)：4 个全支持</li>
+        <li><strong>原版 ClashX</strong> (Mac)：仅 SS / VMess / Trojan，**不支持 VLESS Reality**（要装 ClashX Meta）</li>
+      </ul>
+    </details>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <span class="paw"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-paw-print"/></svg></span>
+  Vega VPN · 德国法兰克福节点
+  <span class="paw"><svg class="vega-icon" aria-hidden="true" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><use href="/icons.svg#icon-paw-print"/></svg></span>
+</footer>
+<script src="/nav-state.js"></script>
+</body>
+</html>
